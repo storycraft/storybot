@@ -11,7 +11,7 @@ export default {
 
     //라인 챗 봇 설정
     "line": {
-        "enabled": true,
+        "enabled": false,
 
         "channelId": "",
         "channelSecret": "",
@@ -21,7 +21,7 @@ export default {
 
     //페이스북 메신져 설정
     "facebook": {
-        "enabled": true,
+        "enabled": false,
 
         "email": "",
         "password": "",

@@ -1,0 +1,28 @@
+{
+  "name": "storybot",
+  "version": "1.0.0",
+  "description": "StoryBot",
+  "main": "dist/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/main.js",
+    "build": "babel src -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/storycraft/storybot.git"
+  },
+  "author": "storycraft",
+  "license": "UNLICENCED",
+  "bugs": {
+    "url": "https://github.com/storycraft/storybot/issues"
+  },
+  "homepage": "https://github.com/storycraft/storybot#readme",
+  "dependencies": {
+    "storybot-core": "^1.0.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  }
+}
