@@ -2,7 +2,6 @@ import Storybot from 'storybot-core';
 
 import CommandManager from './command/command-manager.js';
 import botSettings from './resources/bot-settings';
-import DiveTemperature from './command/dive-temperature.js';
 
 export default class Main {
     constructor(){

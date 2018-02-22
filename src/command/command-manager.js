@@ -1,5 +1,6 @@
 import { EventEmitter } from "events";
 import HelpMessage from "./help-message";
+import DiveTemperature from "./dive-temperature";
 
 const COMMAND_PREFIX = '*';
 

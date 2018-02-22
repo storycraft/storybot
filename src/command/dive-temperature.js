@@ -52,7 +52,7 @@ export default class DiveTemperature extends CommandListener {
                 }
             });
         }).catch(() => {
-            soure.send('가즈아!!!');
+            source.send('가즈아!!!');
         });
     }
 }
