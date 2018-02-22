@@ -14,7 +14,7 @@ export default class Main {
             console.log('> ' + msg.Source.Name + ' ' + msg.User.Name + ' ' + msg.Message);
 
             if (msg.Message == '스토링')
-                msg.reply('스토리에요!');
+                msg.reply('네, 스토리에요!');
         });
     }
 
@@ -28,9 +28,7 @@ export default class Main {
 
     async start(){
         await this.Bot.initialize(botSettings);
-
-        this.addCommands();
-
+        
         console.log('Storybot이 시작 되었습니다');
     }
 }
