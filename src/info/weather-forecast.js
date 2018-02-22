@@ -96,7 +96,9 @@ ${currentWeather['summary']}
 풍속: ${currentWeather['windSpeed']} m/s ,가시 거리: ${currentWeather['visibility']} km`;
 
                             if (currentWeather['precipType'])
-                                infoText += `\n${PRECIP_DESCRIPTION[currentWeather['precipType']]} 이(가) 내릴 확률 ${currentWeather['precipProbability'] * 100} %`;
+                                infoText += `\n${PRECIP_DESCRIPTION[currentWeather['precipType']]} 이(가) 내릴 확률 ${currentWeather['precipProbability'] * 100} %\n`;
+                            
+                            infoText += '`Powered by Dark Sky`'
 
                             this.editStatus(msg, infoText);
 
