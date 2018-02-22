@@ -2,7 +2,7 @@ import Storybot from 'storybot-core';
 
 import CommandManager from './command/command-manager.js';
 import botSettings from './resources/bot-settings';
-import DiveTemperature from './command/dive-temperature/dive-temperature.js';
+import DiveTemperature from './command/dive-temperature.js';
 
 export default class Main {
     constructor(){
@@ -33,10 +33,6 @@ export default class Main {
         this.addCommands();
 
         console.log('Storybot이 시작 되었습니다');
-    }
-
-    addCommands(){
-        new DiveTemperature(this);
     }
 }
 

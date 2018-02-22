@@ -1,4 +1,5 @@
 import { EventEmitter } from "events";
+import HelpMessage from "./help-message";
 
 const COMMAND_PREFIX = '!';
 
@@ -7,8 +8,12 @@ export default class CommandManager extends EventEmitter {
         super();
 
         this.main = main;
+        
+        this.commandInfoList = [];
 
         this.Bot.on('message', this.onCommand.bind(this));
+
+        this.initCommands();
     }
 
     get Main(){
@@ -17,6 +22,10 @@ export default class CommandManager extends EventEmitter {
 
     get Bot(){
         return this.Main.Bot;
+    }
+
+    get CommandInfoList(){
+        return this.commandInfoList;
     }
 
     onCommand(msg){
@@ -33,5 +42,34 @@ export default class CommandManager extends EventEmitter {
 
         //WTF best idea ever
         this.emit(command, args, msg.User, this.Bot, msg.Source);
+    }
+
+    addCommandInfo(command){
+        this.CommandInfoList.push(command);
+    }
+
+    removeCommandInfo(command){
+        this.CommandInfoList.splice(this.CommandInfoList.indexOf(command), 1);
+    }
+
+    initCommands(){
+        this.addCommandInfo(new HelpMessage(this));
+
+        this.addCommandInfo(new DiveTemperature(this));
+        
+    }
+}
+
+export class CommandListener {
+    constructor(){
+
+    }
+
+    get Description(){
+        return '';
+    }
+
+    get Aliases(){
+        return [];
     }
 }

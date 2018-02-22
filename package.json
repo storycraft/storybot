@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/storycraft/storybot#readme",
   "dependencies": {
-    "storybot-core": "^1.0.8"
+    "storybot-core": "^1.0.9"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
