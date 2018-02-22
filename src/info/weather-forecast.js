@@ -42,8 +42,8 @@ export default class WeatherForecast extends CommandListener {
     }
 
     async getGeometryInfo(address){
-        let data = await RequestHelper.get(`https://maps.googleapis.com/maps/api/geocode/json?key=${GOOGLE_MAP_KEY}&address=${address}`);
-
+        //인코딩 설정
+        let data = await RequestHelper.get(`https://maps.googleapis.com/maps/api/geocode/json?key=${GOOGLE_MAP_KEY}&address=${encodeURI(address)}`);
         return JSON.parse(data);
     }
 
@@ -55,11 +55,9 @@ export default class WeatherForecast extends CommandListener {
 
     async editStatus(msg, text){
         if (msg.Editable){
-            console.log('a');
             return await msg.edit(text);
         }
         else{
-            console.log('b');
             return (await msg.Source.send(text))[0];
         }
     }
@@ -71,7 +69,9 @@ export default class WeatherForecast extends CommandListener {
         }
 
         let text = args.join(' ');
-        source.send('날씨 데이터 받아오는중').then((msg) => {
+        source.send('날씨 데이터 받아오는중').then((messages) => {
+            var msg = messages[0];
+
             this.getGeometryInfo(text).then((json) => {
                 switch (json['status']){
                     case 'ZERO_RESULTS':
@@ -86,12 +86,14 @@ export default class WeatherForecast extends CommandListener {
                         this.getWeatherInfo(location['lat'], location['lng']).then((weatherJson) => {
                             let currentWeather = weatherJson['currently'];
 
+                            //텍스트공백 제거
                             let infoText = `
-                            ${result['formatted_address']} 의 현재 날씨\n
-                            ${ICON_DESCRIPTION[currentWeather['summary']]}\n
-                            현재 온도: ${currentWeather['temperature']} °C, 채감 온도: ${currentWeather['apparentTemperature']} °C\n
-                            습도: ${currentWeather['humidity'] * 100} %, 자외선 지수: ${currentWeather['uvIndex']}\n
-                            풍속: ${currentWeather['windSpeed']} m/s ,가시 거리: ${currentWeather['visibility']} km`;
+${result['formatted_address']} 의 현재 날씨
+${ICON_DESCRIPTION[currentWeather['icon']]}
+${currentWeather['summary']}
+현재 온도: ${currentWeather['temperature']} °C, 채감 온도: ${currentWeather['apparentTemperature']} °C
+습도: ${currentWeather['humidity'] * 100} %, 자외선 지수: ${currentWeather['uvIndex']}
+풍속: ${currentWeather['windSpeed']} m/s ,가시 거리: ${currentWeather['visibility']} km`;
 
                             if (currentWeather['precipType'])
                                 infoText += `\n${PRECIP_DESCRIPTION[currentWeather['precipType']]} 이(가) 내릴 확률 ${currentWeather['precipProbability'] * 100} %`;
@@ -99,7 +101,7 @@ export default class WeatherForecast extends CommandListener {
                             this.editStatus(msg, infoText);
 
                         }).catch((e) => {
-                            this.editStatus(msg, '날씨 정보를 받아 오는중 오류가 발생했습니다');
+                            this.editStatus(msg, '날씨 정보를 받아 오는중 오류가 발생했습니다 몇번 더 처 보고 안되면 떄려치세요\n' + e);
                         });
                         break;
 
@@ -111,15 +113,19 @@ export default class WeatherForecast extends CommandListener {
                         this.editStatus(msg, '요청이 거부되었습니다(?)');
                         break;
 
+                    case 'INVALID_REQUEST':
+                        this.editStatus(msg, '이상한 문자 처 넣지 마세요');
+                        break;
+
                     case 'UNKNOWN_ERROR':
-                        this.editStatus(msg, '알 수 없는 에러라는데.. 다시 시도해 보세요');
+                        this.editStatus(msg, '알 수 없는 에러라는데, 다시 시도해 보세요');
                         break;
 
                     default:
                         break;
                 }
             }).catch((e) => {
-                this.editStatus(msg, '정보를 받아오는중 오류가 발생했습니다');
+                this.editStatus(msg, '위치 정보를 받아오는중 오류가 발생했습니다 몇번 더 처 보고 안되면 떄려치세요\n' + e);
             });
         });
     }
