@@ -66,8 +66,14 @@ class WeatherForecast extends _commandListener2.default {
         return JSON.parse(data);
     }
 
-    editStatus(msg, text) {
-        if (msg.Editable) msg.edit(text);else msg.Source.send(text);
+    async editStatus(msg, text) {
+        if (msg.Editable) {
+            console.log('a');
+            return await msg.edit(text);
+        } else {
+            console.log('b');
+            return (await msg.Source.send(text))[0];
+        }
     }
 
     onCommand(args, user, bot, source) {
