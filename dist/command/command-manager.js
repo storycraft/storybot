@@ -6,13 +6,17 @@ Object.defineProperty(exports, "__esModule", {
 
 var _events = require("events");
 
-var _helpMessage = require("./help-message");
+var _helpMessage = require("../info/help-message");
 
 var _helpMessage2 = _interopRequireDefault(_helpMessage);
 
-var _diveTemperature = require("./dive-temperature");
+var _diveTemperature = require("../info/dive-temperature");
 
 var _diveTemperature2 = _interopRequireDefault(_diveTemperature);
+
+var _weatherForecast = require("../info/weather-forecast");
+
+var _weatherForecast2 = _interopRequireDefault(_weatherForecast);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -69,6 +73,7 @@ class CommandManager extends _events.EventEmitter {
         this.addCommandInfo(new _helpMessage2.default(this));
 
         this.addCommandInfo(new _diveTemperature2.default(this));
+        this.addCommandInfo(new _weatherForecast2.default(this));
     }
 }
 exports.default = CommandManager;

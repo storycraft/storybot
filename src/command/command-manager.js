@@ -1,6 +1,8 @@
 import { EventEmitter } from "events";
-import HelpMessage from "./help-message";
-import DiveTemperature from "./dive-temperature";
+
+import HelpMessage from "../info/help-message";
+import DiveTemperature from "../info/dive-temperature";
+import WeatherForecast from "../info/weather-forecast";
 
 const COMMAND_PREFIX = '*';
 
@@ -57,5 +59,6 @@ export default class CommandManager extends EventEmitter {
         this.addCommandInfo(new HelpMessage(this));
 
         this.addCommandInfo(new DiveTemperature(this));
+        this.addCommandInfo(new WeatherForecast(this));
     }
 }

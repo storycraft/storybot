@@ -1,4 +1,4 @@
-import CommandListener from './command-listener';
+import CommandListener from '../command/command-listener';
 
 export default class HelpMessage extends CommandListener {
     constructor(commandManager){
@@ -32,7 +32,7 @@ export default class HelpMessage extends CommandListener {
 
         infoMessage += '}\n```';
 
-        source.send('Storybot 명령어 목록').then(() => {
+        source.send('Storybot이 가능한 짓 거리 목록\n 커맨드 접두사: *').then(() => {
             source.send(infoMessage);
         });
     }

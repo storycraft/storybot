@@ -1,5 +1,5 @@
-import http from 'http';
-import CommandListener from './command-listener';
+import CommandListener from '../command/command-listener';
+import RequestHelper from '../network/request-helper';
 
 const REQUEST_URL = 'http://hangang.dkserver.wo.tc/';
 /* 
@@ -23,14 +23,7 @@ export default class DiveTemperature extends CommandListener {
     }
 
     static async getTemperatureJSON(){
-        var res = await new Promise((resolve, reject) => http.get(REQUEST_URL,resolve));
-        if (res.statusCode != 200)
-                return {};
-
-        var data = '';
-        res.on('data', (chunk) => data += chunk);
-
-        await new Promise((resolve, reject) => res.on('end', resolve));
+        let data = await RequestHelper.get(REQUEST_URL);
         
         let json = JSON.parse(data);
 
@@ -51,7 +44,7 @@ export default class DiveTemperature extends CommandListener {
                     source.send('지금 점프하시면 2D로 가는 포탈을 탈수 있어요!');
                 }
             });
-        }).catch(() => {
+        }).catch((e) => {
             source.send('가즈아!!!');
         });
     }

@@ -1,0 +1,122 @@
+import CommandListener from '../command/command-listener';
+import RequestHelper from '../network/request-helper';
+
+const GOOGLE_MAP_KEY = 'AIzaSyAmti-O_lwOk6bmECOfKCbYItc4g21PAYk';
+const DARKSKY_API_KEY = 'defffc5f4a37378fb204b634ca7ef8d9';
+
+const ICON_DESCRIPTION = {
+    'clear-day': '맑음',
+    'clear-night': '맑음',
+    'rain': '비 내림',
+    'snow': '눈 내림',
+    'sleet': '진눈깨비가 날림',
+    'wind': '바람',
+    'fog': '안개',
+    'cloudy': '구름 낌',
+    'partly-cloudy-day': '약간 구름 낌',
+    'partly-cloudy-night': '약간 구름 낌'
+}
+
+const PRECIP_DESCRIPTION = {
+    'rain': '비',
+    'snow': '눈',
+    'sleet': '진눈깨비'
+}
+
+export default class WeatherForecast extends CommandListener {
+    constructor(commandManager){
+        super();
+
+        this.commandManager = commandManager;
+
+        this.commandManager.on('날씨', this.onCommand.bind(this));
+        this.commandManager.on('weather', this.onCommand.bind(this));
+    }
+
+    get Description(){
+        return '이불 밖은 위험해요. ㄷㄷ | 사용법: *날씨 <위치>';
+    }
+
+    get Aliases(){
+        return ['날씨', 'weather'];
+    }
+
+    async getGeometryInfo(address){
+        let data = await RequestHelper.get(`https://maps.googleapis.com/maps/api/geocode/json?key=${GOOGLE_MAP_KEY}&address=${address}`);
+
+        return JSON.parse(data);
+    }
+
+    async getWeatherInfo(lat, lng){
+        let data = await RequestHelper.get(`https://api.darksky.net/forecast/${DARKSKY_API_KEY}/${lat},${lng}?exclude=minutely,hourly,daily,alerts,flags&units=si`);
+
+        return JSON.parse(data);
+    }
+
+    editStatus(msg, text){
+        if (msg.Editable)
+            msg.edit(text);
+        else
+            msg.Source.send(text);
+    }
+
+    onCommand(args, user, bot, source){
+        if (args.length < 1){
+            source.send('적절한 사용법: *날씨 <위치>');
+            return;
+        }
+
+        let text = args.join(' ');
+        source.send('날씨 데이터 받아오는중').then((msg) => {
+            this.getGeometryInfo(text).then((json) => {
+                switch (json['status']){
+                    case 'ZERO_RESULTS':
+                        this.editStatus(msg, text + ' 위치를 찾을수가 없어요 ㅜㅜ');
+                        break;
+                    
+                    case 'OK':
+                        //자동으로 첫번째 위치 선택
+                        var result = json['results'][0];
+
+                        var location = result['geometry']['location'];
+                        this.getWeatherInfo(location['lat'], location['lng']).then((weatherJson) => {
+                            let currentWeather = weatherJson['currently'];
+
+                            let infoText = `
+                            ${result['formatted_address']} 의 현재 날씨\n
+                            ${ICON_DESCRIPTION[currentWeather['summary']]}\n
+                            현재 온도: ${currentWeather['temperature']} °C, 채감 온도: ${currentWeather['apparentTemperature']} °C\n
+                            습도: ${currentWeather['humidity'] * 100} %, 자외선 지수: ${currentWeather['uvIndex']}\n
+                            풍속: ${currentWeather['windSpeed']} m/s ,가시 거리: ${currentWeather['visibility']} km`;
+
+                            if (currentWeather['precipType'])
+                                infoText += `\n${PRECIP_DESCRIPTION[currentWeather['precipType']]} 이(가) 내릴 확률 ${currentWeather['precipProbability'] * 100} %`;
+
+                            this.editStatus(msg, infoText);
+
+                        }).catch((e) => {
+                            this.editStatus(msg, '날씨 정보를 받아 오는중 오류가 발생했습니다');
+                        });
+                        break;
+
+                    case 'OVER_QUERY_LIMIT':
+                        this.editStatus(msg, '요청가능 할당량이 초과 됐대요 개발자 갈구셈 ㅇㅇ');
+                        break;
+
+                    case 'REQUEST_DENIED':
+                        this.editStatus(msg, '요청이 거부되었습니다(?)');
+                        break;
+
+                    case 'UNKNOWN_ERROR':
+                        this.editStatus(msg, '알 수 없는 에러라는데.. 다시 시도해 보세요');
+                        break;
+
+                    default:
+                        break;
+                }
+            }).catch((e) => {
+                this.editStatus(msg, '정보를 받아오는중 오류가 발생했습니다');
+            });
+        });
+    }
+}
