@@ -54,10 +54,14 @@ export default class WeatherForecast extends CommandListener {
     }
 
     async editStatus(msg, text){
-        if (msg.Editable)
+        if (msg.Editable){
+            console.log('a');
             return await msg.edit(text);
-        else
+        }
+        else{
+            console.log('b');
             return (await msg.Source.send(text))[0];
+        }
     }
 
     onCommand(args, user, bot, source){
