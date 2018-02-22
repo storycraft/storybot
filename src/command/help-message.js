@@ -21,7 +21,7 @@ export default class HelpMessage extends CommandListener {
     onCommand(args, user, bot, source){
         var commandInfoList = this.commandManager.CommandInfoList;
 
-        var infoMessage = '```\n {\n';
+        var infoMessage = '```json\n{\n';
 
         for (let command of commandInfoList){
             let commands = command.Aliases.join(', ');
