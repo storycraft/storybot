@@ -16,10 +16,6 @@ var _botSettings = require('./resources/bot-settings');
 
 var _botSettings2 = _interopRequireDefault(_botSettings);
 
-var _diveTemperature = require('./command/dive-temperature/dive-temperature.js');
-
-var _diveTemperature2 = _interopRequireDefault(_diveTemperature);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class Main {
@@ -32,7 +28,7 @@ class Main {
         this.bot.on('message', msg => {
             console.log('> ' + msg.Source.Name + ' ' + msg.User.Name + ' ' + msg.Message);
 
-            if (msg.Message == '스토링') msg.reply('스토리에요!');
+            if (msg.Message == '스토링') msg.reply('네, 스토리에요!');
         });
     }
 
@@ -47,13 +43,7 @@ class Main {
     async start() {
         await this.Bot.initialize(_botSettings2.default);
 
-        this.addCommands();
-
         console.log('Storybot이 시작 되었습니다');
-    }
-
-    addCommands() {
-        new _diveTemperature2.default(this);
     }
 }
 
