@@ -8,7 +8,9 @@ var _http = require('http');
 
 var _http2 = _interopRequireDefault(_http);
 
-var _commandManager = require('./command-manager');
+var _commandListener = require('./command-listener');
+
+var _commandListener2 = _interopRequireDefault(_commandListener);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -16,7 +18,7 @@ const REQUEST_URL = 'http://hangang.dkserver.wo.tc/';
 /* 
  * Sample Text 
  */
-class DiveTemperature extends _commandManager.CommandListener {
+class DiveTemperature extends _commandListener2.default {
     constructor(commandManager) {
         super();
         this.commandManager = commandManager;

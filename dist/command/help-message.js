@@ -4,9 +4,13 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _commandManager = require('./command-manager');
+var _commandListener = require('./command-listener');
 
-class HelpMessage extends _commandManager.CommandListener {
+var _commandListener2 = _interopRequireDefault(_commandListener);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+class HelpMessage extends _commandListener2.default {
     constructor(commandManager) {
         super();
 

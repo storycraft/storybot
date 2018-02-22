@@ -57,20 +57,5 @@ export default class CommandManager extends EventEmitter {
         this.addCommandInfo(new HelpMessage(this));
 
         this.addCommandInfo(new DiveTemperature(this));
-
-    }
-}
-
-export class CommandListener {
-    constructor(){
-
-    }
-
-    get Description(){
-        return '';
-    }
-
-    get Aliases(){
-        return [];
     }
 }

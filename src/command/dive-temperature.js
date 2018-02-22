@@ -1,5 +1,5 @@
 import http from 'http';
-import { CommandListener } from './command-manager';
+import CommandListener from './command-listener';
 
 const REQUEST_URL = 'http://hangang.dkserver.wo.tc/';
 /* 

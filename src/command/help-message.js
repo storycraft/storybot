@@ -1,4 +1,4 @@
-import { CommandListener } from "./command-manager";
+import CommandListener from './command-listener';
 
 export default class HelpMessage extends CommandListener {
     constructor(commandManager){

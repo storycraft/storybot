@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.CommandListener = undefined;
 
 var _events = require("events");
 
@@ -72,17 +71,4 @@ class CommandManager extends _events.EventEmitter {
         this.addCommandInfo(new _diveTemperature2.default(this));
     }
 }
-
 exports.default = CommandManager;
-class CommandListener {
-    constructor() {}
-
-    get Description() {
-        return '';
-    }
-
-    get Aliases() {
-        return [];
-    }
-}
-exports.CommandListener = CommandListener;
