@@ -89,16 +89,18 @@ export default class WeatherForecast extends CommandListener {
                             //텍스트공백 제거
                             let infoText = `
 ${result['formatted_address']} 의 현재 날씨
+
 ${ICON_DESCRIPTION[currentWeather['icon']]}
 ${currentWeather['summary']}
+
 현재 온도: ${currentWeather['temperature']} °C, 채감 온도: ${currentWeather['apparentTemperature']} °C
 습도: ${currentWeather['humidity'] * 100} %, 자외선 지수: ${currentWeather['uvIndex']}
-풍속: ${currentWeather['windSpeed']} m/s ,가시 거리: ${currentWeather['visibility']} km`;
+풍속: ${currentWeather['windSpeed']} m/s ,가시 거리: ${currentWeather['visibility']} km\n`;
 
                             if (currentWeather['precipType'])
-                                infoText += `\n${PRECIP_DESCRIPTION[currentWeather['precipType']]} 이(가) 내릴 확률 ${currentWeather['precipProbability'] * 100} %\n`;
+                                infoText += `${PRECIP_DESCRIPTION[currentWeather['precipType']]} 이(가) 내릴 확률 ${currentWeather['precipProbability'] * 100} %\n`;
                             
-                            infoText += '`Powered by Dark Sky`'
+                            infoText += '`Powered by Dark Sky https://darksky.net/poweredby/`'
 
                             this.editStatus(msg, infoText);
 
