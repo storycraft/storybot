@@ -1,7 +1,7 @@
 import { EventEmitter } from "events";
 import HelpMessage from "./help-message";
 
-const COMMAND_PREFIX = '!';
+const COMMAND_PREFIX = '*';
 
 export default class CommandManager extends EventEmitter {
     constructor(main){
@@ -56,7 +56,7 @@ export default class CommandManager extends EventEmitter {
         this.addCommandInfo(new HelpMessage(this));
 
         this.addCommandInfo(new DiveTemperature(this));
-        
+
     }
 }
 
