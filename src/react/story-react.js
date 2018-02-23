@@ -1,6 +1,6 @@
 const AUTO_REPLY_LIST = [
     '뭐',
-    '왜',
+    '왜'
 ] 
 
 export default class StoryReact {
