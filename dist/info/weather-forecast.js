@@ -116,7 +116,7 @@ ${currentWeather['summary']}
 
                             this.editStatus(msg, infoText);
                         }).catch(e => {
-                            this.editStatus(msg, '날씨 정보를 받아 오는중 오류가 발생했습니다 몇번 더 처 보고 안되면 떄려치세요\n' + e);
+                            this.editStatus(msg, `날씨 정보를 받아 오는중 오류가 발생했습니다 몇번 더 처 보고 안되면 떄려치세요\n\`${e}\``);
                         });
                         break;
 
@@ -140,7 +140,7 @@ ${currentWeather['summary']}
                         break;
                 }
             }).catch(e => {
-                this.editStatus(msg, '위치 정보를 받아오는중 오류가 발생했습니다 몇번 더 처 보고 안되면 떄려치세요\n' + e);
+                this.editStatus(msg, `위치 정보를 받아오는중 오류가 발생했습니다 몇번 더 처 보고 안되면 떄려치세요\n\`${e}\``);
             });
         });
     }
