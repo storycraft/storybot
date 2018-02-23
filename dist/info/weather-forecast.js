@@ -54,7 +54,7 @@ class WeatherForecast extends _storybotCore.CommandListener {
 
     async getGeometryInfo(address) {
         //인코딩 설정
-        let data = await _requestHelper2.default.get(`https://maps.googleapis.com/maps/api/geocode/json?key=${GOOGLE_MAP_KEY}&address=${encodeURI(address)}`);
+        let data = await _requestHelper2.default.get(`https://maps.googleapis.com/maps/api/geocode/json?key=${GOOGLE_MAP_KEY}&language=ko&address=${encodeURI(address)}`);
         return JSON.parse(data);
     }
 
@@ -85,7 +85,7 @@ class WeatherForecast extends _storybotCore.CommandListener {
             this.getGeometryInfo(text).then(json => {
                 switch (json['status']) {
                     case 'ZERO_RESULTS':
-                        this.editStatus(msg, text + ' 위치를 찾을수가 없어요 ㅜㅜ');
+                        this.editStatus(msg, '`' + text + '` 위치를 찾을수가 없어요 ㅜㅜ');
                         break;
 
                     case 'OK':
@@ -103,12 +103,15 @@ ${result['formatted_address']} 의 현재 날씨
 ${ICON_DESCRIPTION[currentWeather['icon']]}
 ${currentWeather['summary']}
 
-현재 온도: ${currentWeather['temperature']} °C, 채감 온도: ${currentWeather['apparentTemperature']} °C
+현재 온도: ${currentWeather['temperature']} °C, 체감 온도: ${currentWeather['apparentTemperature']} °C
 습도: ${currentWeather['humidity'] * 100} %, 자외선 지수: ${currentWeather['uvIndex']}
-풍속: ${currentWeather['windSpeed']} m/s ,가시 거리: ${currentWeather['visibility']} km\n`;
+풍속: ${currentWeather['windSpeed']} m/s`;
 
-                            if (currentWeather['precipType']) infoText += `${PRECIP_DESCRIPTION[currentWeather['precipType']]} 이(가) 내릴 확률 ${currentWeather['precipProbability'] * 100} %\n`;
+                            if (currentWeather['visibility']) infoText += `, 가시 거리: ${currentWeather['visibility']} km`;
 
+                            if (currentWeather['precipType']) infoText += `\n${PRECIP_DESCRIPTION[currentWeather['precipType']]} 이(가) 내릴 확률 ${currentWeather['precipProbability'] * 100} %\n`;
+
+                            //Powered by text
                             infoText += '`Powered by Dark Sky https://darksky.net/poweredby/`';
 
                             this.editStatus(msg, infoText);

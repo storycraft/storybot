@@ -26,6 +26,10 @@ var _storyReact = require("./react/story-react");
 
 var _storyReact2 = _interopRequireDefault(_storyReact);
 
+var _namuSearcher = require("./info/namu-searcher");
+
+var _namuSearcher2 = _interopRequireDefault(_namuSearcher);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class Main {
@@ -64,6 +68,8 @@ class Main {
 
         commandManager.addCommandInfo(new _diveTemperature2.default(this));
         commandManager.addCommandInfo(new _weatherForecast2.default(this));
+
+        commandManager.addCommandInfo(new _namuSearcher2.default(this));
     }
 
     initReact() {

@@ -6,6 +6,7 @@ import WeatherForecast from "./info/weather-forecast";
 
 import botSettings from './resources/bot-settings';
 import StoryReact from './react/story-react';
+import NamuSearcher from './info/namu-searcher';
 
 export default class Main {
     constructor(){
@@ -44,6 +45,8 @@ export default class Main {
 
         commandManager.addCommandInfo(new DiveTemperature(this));
         commandManager.addCommandInfo(new WeatherForecast(this));
+
+        commandManager.addCommandInfo(new NamuSearcher(this));
     }
 
     initReact(){
