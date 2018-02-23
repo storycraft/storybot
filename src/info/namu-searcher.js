@@ -1,4 +1,5 @@
 import { CommandListener } from 'storybot-core';
+import RequestHelper from '../network/request-helper';
 
 const KEYWORD_SEARCHER = 'https://namu.wiki/complete';
 
@@ -47,7 +48,7 @@ export default class NamuSearcher extends CommandListener {
             }
 
         }).catch((e) => {
-            source.send('나무위키가 점검중이거나 서버 접속이 실패했습니다');
+            source.send('나무위키가 점검중이거나 서버 접속이 실패했습니다\n' + e);
         })
     }
 }

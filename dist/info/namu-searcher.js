@@ -6,6 +6,12 @@ Object.defineProperty(exports, "__esModule", {
 
 var _storybotCore = require('storybot-core');
 
+var _requestHelper = require('../network/request-helper');
+
+var _requestHelper2 = _interopRequireDefault(_requestHelper);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 const KEYWORD_SEARCHER = 'https://namu.wiki/complete';
 
 const SEARCH_RESULT = 'https://namu.wiki/search';
@@ -30,7 +36,7 @@ class NamuSearcher extends _storybotCore.CommandListener {
     }
 
     async getKeywords(str) {
-        let data = await RequestHelper.get(`${KEYWORD_SEARCHER}/${str}`);
+        let data = await _requestHelper2.default.get(`${KEYWORD_SEARCHER}/${str}`);
 
         return JSON.parse(data);
     }
@@ -51,7 +57,7 @@ class NamuSearcher extends _storybotCore.CommandListener {
                 source.send(`적절한 문서를 못 찾겠으니 직접 들어가서 찾으세요\n${SEARCH_RESULT}/${keyword}`);
             }
         }).catch(e => {
-            source.send('나무위키가 점검중이거나 서버 접속이 실패했습니다');
+            source.send('나무위키가 점검중이거나 서버 접속이 실패했습니다\n' + e);
         });
     }
 }
