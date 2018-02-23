@@ -4,20 +4,17 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _commandListener = require('../command/command-listener');
+var _storybotCore = require('storybot-core');
 
-var _commandListener2 = _interopRequireDefault(_commandListener);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-class HelpMessage extends _commandListener2.default {
-    constructor(commandManager) {
+class HelpMessage extends _storybotCore.CommandListener {
+    constructor(main) {
         super();
 
-        this.commandManager = commandManager;
+        this.main = main;
 
-        this.commandManager.on('?', this.onCommand.bind(this));
-        this.commandManager.on('help', this.onCommand.bind(this));
+        this.main.CommandManager.on('?', this.onCommand.bind(this));
+        this.main.CommandManager.on('help', this.onCommand.bind(this));
+        this.main.CommandManager.on('도움말', this.onCommand.bind(this));
     }
 
     get Description() {
@@ -25,11 +22,11 @@ class HelpMessage extends _commandListener2.default {
     }
 
     get Aliases() {
-        return ['?', 'help'];
+        return ['?', 'help', '도움말'];
     }
 
     onCommand(args, user, bot, source) {
-        var commandInfoList = this.commandManager.CommandInfoList;
+        var commandInfoList = this.main.CommandManager.CommandInfoList;
 
         var infoMessage = '```json\n{\n';
 

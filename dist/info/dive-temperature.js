@@ -4,9 +4,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _commandListener = require('../command/command-listener');
-
-var _commandListener2 = _interopRequireDefault(_commandListener);
+var _storybotCore = require('storybot-core');
 
 var _requestHelper = require('../network/request-helper');
 
@@ -18,13 +16,13 @@ const REQUEST_URL = 'http://hangang.dkserver.wo.tc/';
 /* 
  * Sample Text 
  */
-class DiveTemperature extends _commandListener2.default {
-    constructor(commandManager) {
+class DiveTemperature extends _storybotCore.CommandListener {
+    constructor(main) {
         super();
-        this.commandManager = commandManager;
+        this.main = main;
 
         //적절한 커맨드
-        this.commandManager.on('가즈아', this.onCommand.bind(this));
+        this.main.CommandManager.on('가즈아', this.onCommand.bind(this));
     }
 
     get Description() {

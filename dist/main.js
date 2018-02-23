@@ -1,28 +1,36 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _storybotCore = require('storybot-core');
+var _storybotCore = require("storybot-core");
 
-var _storybotCore2 = _interopRequireDefault(_storybotCore);
+var _helpMessage = require("./info/help-message");
 
-var _commandManager = require('./command/command-manager.js');
+var _helpMessage2 = _interopRequireDefault(_helpMessage);
 
-var _commandManager2 = _interopRequireDefault(_commandManager);
+var _diveTemperature = require("./info/dive-temperature");
 
-var _botSettings = require('./resources/bot-settings');
+var _diveTemperature2 = _interopRequireDefault(_diveTemperature);
+
+var _weatherForecast = require("./info/weather-forecast");
+
+var _weatherForecast2 = _interopRequireDefault(_weatherForecast);
+
+var _botSettings = require("./resources/bot-settings");
 
 var _botSettings2 = _interopRequireDefault(_botSettings);
+
+var _storyReact = require("./react/story-react");
+
+var _storyReact2 = _interopRequireDefault(_storyReact);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class Main {
     constructor() {
-        this.bot = new _storybotCore2.default();
-
-        this.commandManager = new _commandManager2.default(this);
+        this.bot = new _storybotCore.StoryBot();
 
         //테스트 명령어
         this.bot.on('message', msg => {
@@ -37,13 +45,29 @@ class Main {
     }
 
     get CommandManager() {
-        return this.commandManager;
+        return this.Bot.CommandManager;
     }
 
     async start() {
+        this.initCommand();
+        this.initReact();
+
         await this.Bot.initialize(_botSettings2.default);
 
         console.log('Storybot이 시작 되었습니다');
+    }
+
+    initCommand() {
+        var commandManager = this.CommandManager;
+
+        commandManager.addCommandInfo(new _helpMessage2.default(this));
+
+        commandManager.addCommandInfo(new _diveTemperature2.default(this));
+        commandManager.addCommandInfo(new _weatherForecast2.default(this));
+    }
+
+    initReact() {
+        new _storyReact2.default(this);
     }
 }
 

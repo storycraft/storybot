@@ -1,13 +1,14 @@
-import CommandListener from '../command/command-listener';
+import { CommandListener } from 'storybot-core';
 
 export default class HelpMessage extends CommandListener {
-    constructor(commandManager){
+    constructor(main){
         super();
 
-        this.commandManager = commandManager;
+        this.main = main;
 
-        this.commandManager.on('?', this.onCommand.bind(this));
-        this.commandManager.on('help', this.onCommand.bind(this));
+        this.main.CommandManager.on('?', this.onCommand.bind(this));
+        this.main.CommandManager.on('help', this.onCommand.bind(this));
+        this.main.CommandManager.on('도움말', this.onCommand.bind(this));
     }
 
     get Description(){
@@ -15,11 +16,11 @@ export default class HelpMessage extends CommandListener {
     }
 
     get Aliases(){
-        return ['?', 'help'];
+        return ['?', 'help', '도움말'];
     }
 
     onCommand(args, user, bot, source){
-        var commandInfoList = this.commandManager.CommandInfoList;
+        var commandInfoList = this.main.CommandManager.CommandInfoList;
 
         var infoMessage = '```json\n{\n';
 

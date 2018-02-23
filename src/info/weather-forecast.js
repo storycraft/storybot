@@ -1,4 +1,4 @@
-import CommandListener from '../command/command-listener';
+import { CommandListener } from 'storybot-core';
 import RequestHelper from '../network/request-helper';
 
 const GOOGLE_MAP_KEY = 'AIzaSyAmti-O_lwOk6bmECOfKCbYItc4g21PAYk';
@@ -24,13 +24,13 @@ const PRECIP_DESCRIPTION = {
 }
 
 export default class WeatherForecast extends CommandListener {
-    constructor(commandManager){
+    constructor(main){
         super();
 
-        this.commandManager = commandManager;
+        this.main = main;
 
-        this.commandManager.on('날씨', this.onCommand.bind(this));
-        this.commandManager.on('weather', this.onCommand.bind(this));
+        this.main.CommandManager.on('날씨', this.onCommand.bind(this));
+        this.main.CommandManager.on('weather', this.onCommand.bind(this));
     }
 
     get Description(){
@@ -118,11 +118,11 @@ ${currentWeather['summary']}
                         break;
 
                     case 'INVALID_REQUEST':
-                        this.editStatus(msg, '이상한 문자 처 넣지 마세요');
+                        this.editStatus(msg, '뭔 지거리를 하는거야');
                         break;
 
                     case 'UNKNOWN_ERROR':
-                        this.editStatus(msg, '알 수 없는 에러라는데, 다시 시도해 보세요');
+                        this.editStatus(msg, '알 수 없는 에러라는데, 다시 쳐봐요 ㅇㅇ');
                         break;
 
                     default:

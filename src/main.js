@@ -1,13 +1,15 @@
-import Storybot from 'storybot-core';
+import { StoryBot } from 'storybot-core';
 
-import CommandManager from './command/command-manager.js';
+import HelpMessage from "./info/help-message";
+import DiveTemperature from "./info/dive-temperature";
+import WeatherForecast from "./info/weather-forecast";
+
 import botSettings from './resources/bot-settings';
+import StoryReact from './react/story-react';
 
 export default class Main {
     constructor(){
-        this.bot = new Storybot();
-
-        this.commandManager = new CommandManager(this);
+        this.bot = new StoryBot();
 
         //테스트 명령어
         this.bot.on('message', (msg) => {
@@ -23,13 +25,29 @@ export default class Main {
     }
 
     get CommandManager(){
-        return this.commandManager;
+        return this.Bot.CommandManager;
     }
 
     async start(){
+        this.initCommand();
+        this.initReact();
+
         await this.Bot.initialize(botSettings);
-        
+
         console.log('Storybot이 시작 되었습니다');
+    }
+
+    initCommand(){
+        var commandManager = this.CommandManager;
+
+        commandManager.addCommandInfo(new HelpMessage(this));
+
+        commandManager.addCommandInfo(new DiveTemperature(this));
+        commandManager.addCommandInfo(new WeatherForecast(this));
+    }
+
+    initReact(){
+        new StoryReact(this);
     }
 }
 

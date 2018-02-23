@@ -1,4 +1,4 @@
-import CommandListener from '../command/command-listener';
+import { CommandListener } from 'storybot-core';
 import RequestHelper from '../network/request-helper';
 
 const REQUEST_URL = 'http://hangang.dkserver.wo.tc/';
@@ -6,12 +6,12 @@ const REQUEST_URL = 'http://hangang.dkserver.wo.tc/';
  * Sample Text 
  */
 export default class DiveTemperature extends CommandListener {
-    constructor(commandManager){
+    constructor(main){
         super();
-        this.commandManager = commandManager;
+        this.main = main;
 
         //적절한 커맨드
-        this.commandManager.on('가즈아', this.onCommand.bind(this));
+        this.main.CommandManager.on('가즈아', this.onCommand.bind(this));
     }
 
     get Description(){

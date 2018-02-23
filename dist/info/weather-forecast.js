@@ -4,9 +4,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _commandListener = require('../command/command-listener');
-
-var _commandListener2 = _interopRequireDefault(_commandListener);
+var _storybotCore = require('storybot-core');
 
 var _requestHelper = require('../network/request-helper');
 
@@ -36,14 +34,14 @@ const PRECIP_DESCRIPTION = {
     'sleet': '진눈깨비'
 };
 
-class WeatherForecast extends _commandListener2.default {
-    constructor(commandManager) {
+class WeatherForecast extends _storybotCore.CommandListener {
+    constructor(main) {
         super();
 
-        this.commandManager = commandManager;
+        this.main = main;
 
-        this.commandManager.on('날씨', this.onCommand.bind(this));
-        this.commandManager.on('weather', this.onCommand.bind(this));
+        this.main.CommandManager.on('날씨', this.onCommand.bind(this));
+        this.main.CommandManager.on('weather', this.onCommand.bind(this));
     }
 
     get Description() {
@@ -128,11 +126,11 @@ ${currentWeather['summary']}
                         break;
 
                     case 'INVALID_REQUEST':
-                        this.editStatus(msg, '이상한 문자 처 넣지 마세요');
+                        this.editStatus(msg, '뭔 지거리를 하는거야');
                         break;
 
                     case 'UNKNOWN_ERROR':
-                        this.editStatus(msg, '알 수 없는 에러라는데, 다시 시도해 보세요');
+                        this.editStatus(msg, '알 수 없는 에러라는데, 다시 쳐봐요 ㅇㅇ');
                         break;
 
                     default:

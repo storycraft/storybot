@@ -30,5 +30,7 @@ exports.default = {
 
         "email": "",
         "password": ""
-    }
+    },
+
+    "command-prefix": "*"
 };
