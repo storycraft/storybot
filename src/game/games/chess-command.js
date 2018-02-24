@@ -77,10 +77,10 @@ export default class ChessCommand extends CommandListener {
         if (this.queueUser.includes(user))
             return;
 
-        if (!this.queueMap.has(source))
-            this.queueMap.set(source, {});
+        if (!this.queueMap.has(channel))
+            this.queueMap.set(channel, {});
 
-        var channelQueue = this.queueMap.get(source);
+        var channelQueue = this.queueMap.get(channel);
 
         var queueCode = RandomGenerator.generate();
 
@@ -93,10 +93,10 @@ export default class ChessCommand extends CommandListener {
     }
 
     removeQueue(channel,user){
-        if (!this.queueUser.includes(user) || !this.queueMap.has(source))
+        if (!this.queueUser.includes(user) || !this.queueMap.has(channel))
             return;
 
-        var channelQueue = this.queueMap.get(source);
+        var channelQueue = this.queueMap.get(channel);
 
         for (let [key, value] of channelQueue){
             if (value['user'] == user){

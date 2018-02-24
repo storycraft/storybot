@@ -87,9 +87,9 @@ class ChessCommand extends _storybotCore.CommandListener {
     addQueue(channel, user) {
         if (this.queueUser.includes(user)) return;
 
-        if (!this.queueMap.has(source)) this.queueMap.set(source, {});
+        if (!this.queueMap.has(channel)) this.queueMap.set(channel, {});
 
-        var channelQueue = this.queueMap.get(source);
+        var channelQueue = this.queueMap.get(channel);
 
         var queueCode = _randomGenerator2.default.generate();
 
@@ -102,9 +102,9 @@ class ChessCommand extends _storybotCore.CommandListener {
     }
 
     removeQueue(channel, user) {
-        if (!this.queueUser.includes(user) || !this.queueMap.has(source)) return;
+        if (!this.queueUser.includes(user) || !this.queueMap.has(channel)) return;
 
-        var channelQueue = this.queueMap.get(source);
+        var channelQueue = this.queueMap.get(channel);
 
         for (let [key, value] of channelQueue) {
             if (value['user'] == user) {
