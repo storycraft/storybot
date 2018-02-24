@@ -178,10 +178,10 @@ export default class ChessGame extends Game {
                 source.send(`\`${user.Name}\`이 기권을 선언했습니다`);
 
                 if (user == this.WhitePlayer){
-                    winner = this.BlackPlayer;
+                    this.winner = this.BlackPlayer;
                 }
                 else if (user == this.BlackPlayer){
-                    winner = this.WhitePlayer;
+                    this.winner = this.WhitePlayer;
                 }
                 
                 this.stop();
