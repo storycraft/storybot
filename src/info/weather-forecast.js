@@ -101,10 +101,10 @@ ${currentWeather['summary']}
                                 infoText += `, 가시 거리: ${currentWeather['visibility']} km`;
                             
                             if (currentWeather['precipType'])
-                                infoText += `\n${PRECIP_DESCRIPTION[currentWeather['precipType']]} 이(가) 내릴 확률 ${currentWeather['precipProbability'] * 100} %\n`;
+                                infoText += `\n${PRECIP_DESCRIPTION[currentWeather['precipType']]} 이(가) 내릴 확률 ${currentWeather['precipProbability'] * 100} %`;
                             
                             //Powered by text
-                            infoText += '`Powered by Dark Sky https://darksky.net/poweredby/`'
+                            infoText += '\n`Powered by Dark Sky https://darksky.net/poweredby/`'
 
                             this.editStatus(msg, infoText);
 

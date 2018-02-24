@@ -18,6 +18,14 @@ var _weatherForecast = require("./info/weather-forecast");
 
 var _weatherForecast2 = _interopRequireDefault(_weatherForecast);
 
+var _namuSearcher = require("./info/namu-searcher");
+
+var _namuSearcher2 = _interopRequireDefault(_namuSearcher);
+
+var _gameManager = require("./game/game-manager");
+
+var _gameManager2 = _interopRequireDefault(_gameManager);
+
 var _botSettings = require("./resources/bot-settings");
 
 var _botSettings2 = _interopRequireDefault(_botSettings);
@@ -26,15 +34,17 @@ var _storyReact = require("./react/story-react");
 
 var _storyReact2 = _interopRequireDefault(_storyReact);
 
-var _namuSearcher = require("./info/namu-searcher");
+var _chessCommand = require("./game/games/chess-command");
 
-var _namuSearcher2 = _interopRequireDefault(_namuSearcher);
+var _chessCommand2 = _interopRequireDefault(_chessCommand);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class Main {
     constructor() {
         this.bot = new _storybotCore.StoryBot();
+
+        this.gameManager = new _gameManager2.default(this);
 
         //테스트 명령어
         this.bot.on('message', msg => {
@@ -50,6 +60,14 @@ class Main {
 
     get CommandManager() {
         return this.Bot.CommandManager;
+    }
+
+    get FirebaseManager() {
+        return this.Bot.FirebaseManager;
+    }
+
+    get GameManager() {
+        return this.gameManager;
     }
 
     async start() {
@@ -70,6 +88,7 @@ class Main {
         commandManager.addCommandInfo(new _weatherForecast2.default(this));
 
         commandManager.addCommandInfo(new _namuSearcher2.default(this));
+        commandManager.addCommandInfo(new _chessCommand2.default(this));
     }
 
     initReact() {

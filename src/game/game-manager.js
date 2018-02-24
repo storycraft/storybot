@@ -9,6 +9,14 @@ export default class GameManager {
         return this.main;
     }
 
+    get FirebaseGameDb(){
+        return this.Main.FirebaseManager.Database.ref('game');
+    }
+
+    get FirebaseGameStorage(){
+        return this.Main.FirebaseManager.Storage.ref('game');
+    }
+
     isPlayingGame(user){
         for (let game of this.gameList){
             if (game.PlayerList.includes(user))
@@ -27,6 +35,8 @@ export default class GameManager {
             throw new Error('game already added');
 
         this.gameList.push(game);
+        
+        game.start(this);
     }
 
     removeGame(game){

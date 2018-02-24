@@ -4,9 +4,13 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 class Game {
-    constructor() {
+    constructor(playChannel) {
+        this.playChannel = playChannel;
+
         this.playerList = [];
         this.started = false;
+
+        this.gameManager = null;
     }
 
     get PlayerList() {
@@ -17,9 +21,14 @@ class Game {
         return this.started;
     }
 
-    start() {
+    get PlayChannel() {
+        return this.playChannel;
+    }
+
+    start(gameManager) {
         if (this.Started) throw new Error('game already started');
         this.started = true;
+        this.gameManager = gameManager;
     }
 
     stop() {

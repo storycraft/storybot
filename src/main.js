@@ -3,14 +3,20 @@ import { StoryBot } from 'storybot-core';
 import HelpMessage from "./info/help-message";
 import DiveTemperature from "./info/dive-temperature";
 import WeatherForecast from "./info/weather-forecast";
+import NamuSearcher from './info/namu-searcher';
+
+import GameManager from './game/game-manager';
 
 import botSettings from './resources/bot-settings';
+
 import StoryReact from './react/story-react';
-import NamuSearcher from './info/namu-searcher';
+import ChessCommand from './game/games/chess-command';
 
 export default class Main {
     constructor(){
         this.bot = new StoryBot();
+
+        this.gameManager = new GameManager(this);
 
         //테스트 명령어
         this.bot.on('message', (msg) => {
@@ -27,6 +33,14 @@ export default class Main {
 
     get CommandManager(){
         return this.Bot.CommandManager;
+    }
+
+    get FirebaseManager(){
+        return this.Bot.FirebaseManager;
+    }
+
+    get GameManager(){
+        return this.gameManager;
     }
 
     async start(){
@@ -47,6 +61,7 @@ export default class Main {
         commandManager.addCommandInfo(new WeatherForecast(this));
 
         commandManager.addCommandInfo(new NamuSearcher(this));
+        commandManager.addCommandInfo(new ChessCommand(this));
     }
 
     initReact(){
