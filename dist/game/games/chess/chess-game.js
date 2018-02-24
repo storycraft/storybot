@@ -216,7 +216,7 @@ class ChessGame extends _game2.default {
         super.stop();
 
         this.gameManager.Main.CommandManager.removeListener('game', this.gameCommandBind);
-        this.gameManager.Main.CommandManager.removeListener('move', this.commandBind);
+        this.gameManager.Main.CommandManager.removeListener('move', this.moveCommandBind);
 
         if (this.winner) {
             this.statusMessage = `게임이 종료 되었습니다 \`${this.winner.Name}\`이(가) 승리했습니다`;
