@@ -76,7 +76,7 @@ export default class ChessCommand extends CommandListener {
         return this.queueUser.includes(user);
     }
 
-    addQueue(channel,user, onRemove, timeout){
+    addQueue(channel, user, onRemove, timeout){
         if (this.queueUser.includes(user))
             return;
 
@@ -110,7 +110,6 @@ export default class ChessCommand extends CommandListener {
 
         var channelQueue = this.queueMap.get(channel);
 
-        var queue = null;
         for (let key in channelQueue){
             if (channelQueue[key] == queue){
                 channelQueue[key] = null;

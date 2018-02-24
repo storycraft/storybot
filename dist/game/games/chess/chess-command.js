@@ -117,7 +117,6 @@ class ChessCommand extends _storybotCore.CommandListener {
 
         var channelQueue = this.queueMap.get(channel);
 
-        var queue = null;
         for (let key in channelQueue) {
             if (channelQueue[key] == queue) {
                 channelQueue[key] = null;
