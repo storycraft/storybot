@@ -67,6 +67,9 @@ export default class ChessCommand extends CommandListener {
             source.send(`대기 큐 \`${queueCode}\`이 생성되었습니다\n1 분내에 아무도 안 받을 경우 제거 됩니다\n참여 명령어: \`*chess ${queueCode}\``);
 
             setTimeout(() => {
+                if (!this.queueUser.includes(user))
+                    return;
+                    
                 this.removeQueue(source, user);
                 source.send(`대기 큐 \`${queueCode}\`가 시간 초과로 제거되었습니다`);
             }, 60000);

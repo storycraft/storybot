@@ -140,6 +140,8 @@ export default class ChessGame extends Game {
             if (piece.canMoveTo(this.gameboard, combinedMovePos)){
                 this.gameboard.movePieceTo(piece, combinedMovePos);
 
+                this.setNextTurn();
+
                 this.statusMessage = `\`${user.Name}\`의 차례입니다`;
                 this.sendInfoMessages();
             }
