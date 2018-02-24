@@ -38,6 +38,10 @@ var _chessCommand = require("./game/games/chess-command");
 
 var _chessCommand2 = _interopRequireDefault(_chessCommand);
 
+var _searchHelper = require("./info/search-helper");
+
+var _searchHelper2 = _interopRequireDefault(_searchHelper);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class Main {
@@ -88,6 +92,8 @@ class Main {
         commandManager.addCommandInfo(new _weatherForecast2.default(this));
 
         commandManager.addCommandInfo(new _namuSearcher2.default(this));
+        commandManager.addCommandInfo(new _searchHelper2.default(this));
+
         commandManager.addCommandInfo(new _chessCommand2.default(this));
     }
 
