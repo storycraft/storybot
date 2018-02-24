@@ -10,7 +10,7 @@ import GameManager from './game/game-manager';
 import botSettings from './resources/bot-settings';
 
 import StoryReact from './react/story-react';
-import ChessCommand from './game/games/chess-command';
+import ChessCommand from './game/games/chess/chess-command';
 import SearchHelper from './info/search-helper';
 
 export default class Main {

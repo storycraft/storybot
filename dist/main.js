@@ -34,7 +34,7 @@ var _storyReact = require("./react/story-react");
 
 var _storyReact2 = _interopRequireDefault(_storyReact);
 
-var _chessCommand = require("./game/games/chess-command");
+var _chessCommand = require("./game/games/chess/chess-command");
 
 var _chessCommand2 = _interopRequireDefault(_chessCommand);
 
