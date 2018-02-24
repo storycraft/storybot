@@ -11,6 +11,7 @@ import botSettings from './resources/bot-settings';
 
 import StoryReact from './react/story-react';
 import ChessCommand from './game/games/chess-command';
+import SearchHelper from './info/search-helper';
 
 export default class Main {
     constructor(){
@@ -61,6 +62,8 @@ export default class Main {
         commandManager.addCommandInfo(new WeatherForecast(this));
 
         commandManager.addCommandInfo(new NamuSearcher(this));
+        commandManager.addCommandInfo(new SearchHelper(this));
+
         commandManager.addCommandInfo(new ChessCommand(this));
     }
 
