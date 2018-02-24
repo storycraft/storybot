@@ -119,6 +119,8 @@ export default class ChessCommand extends CommandListener {
         }
 
         this.queueUser.splice(this.queueUser.indexOf(user));
+
+        clearTimeout(this.queueTimerMap.get(queue));
         this.queueTimerMap.delete(queue);
     }
 }
