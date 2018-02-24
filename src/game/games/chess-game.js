@@ -114,11 +114,11 @@ export default class ChessGame extends Game {
         }
 
         try{
-            var firstX = Number.parseInt('0x' + args[0][0]) - 11;//a부터 시작했고 배열은 0부터 시작하니 11씩 빼줍시다
-            var firstY = Number.parseInt('0x' + args[0][1]) - 1;//배열은 0부터 시작하니 1씩 빼줍시다
+            var firstX = Math.abs(args[0][0].toLowerCase().charCodeAt(0) - 97/*소문자 a 키 코드*/);//입력된 문자에서 a 키 코드 값을 빼서 위치를 구함
+            var firstY = Number.parseInt(args[0][1]) - 1;//배열은 0부터 시작하니 1씩 빼줍시다
             
-            var secX = Number.parseInt('0x' + args[1][0]) - 11;
-            var secY = Number.parseInt('0x' + args[1][1]) - 1;
+            var secX = Math.abs(args[1][0].toLowerCase().charCodeAt(0) - 97);
+            var secY = Number.parseInt(args[1][1]) - 1;
 
             if (firstX > 7 || firstY > 7 || secX > 7 || secY > 7)
                 throw new Error('숫자의 범위가 잘못 되었습니다 허용 범위 (1 ~ 8)');
@@ -405,7 +405,7 @@ class PawnPiece extends ChessPiece {
 
     //폰의 경우 말 처 먹을 수 있는것 빼고 모두 계산함
     canMoveTo(board, location){
-        if (!this.canMoveTo(location))
+        if (!super.canMoveTo(location))
             return true;
         
         let loc = BoardMathHelper.fromCombinedLocation(super.Location);
@@ -446,7 +446,7 @@ class RookPiece extends ChessPiece {
     }
 
     canMoveTo(board, location){
-        if (!this.canMoveTo(location))
+        if (!super.canMoveTo(location))
             return true;
 
         let loc = BoardMathHelper.fromCombinedLocation(this.Location);
@@ -480,10 +480,10 @@ class BishopPiece extends ChessPiece {
     }
 
     canMoveTo(board, location){
-        if (!this.canMoveTo(location))
+        if (!super.canMoveTo(location))
             return true;
 
-        let loc = BoardMathHelper.fromCombinedLocation(this.Location);
+        let loc = BoardMathHelper.fromCombinedLocation(super.Location);
         let to = BoardMathHelper.fromCombinedLocation(location);
 
         return (loc[0] - to[0]) == (loc[1] - to[1]);
@@ -518,10 +518,10 @@ class KnightPiece extends ChessPiece {
     }
 
     canMoveTo(board, location){
-        if (!this.canMoveTo(location))
+        if (!super.canMoveTo(location))
             return true;
 
-        let loc = BoardMathHelper.fromCombinedLocation(this.Location);
+        let loc = BoardMathHelper.fromCombinedLocation(super.Location);
         let to = BoardMathHelper.fromCombinedLocation(location);
 
         var x = Math.abs(to[0] - loc[0]);
@@ -551,10 +551,10 @@ class KingPiece extends ChessPiece {
     }
 
     canMoveTo(board, location){
-        if (!this.canMoveTo(location))
+        if (!super.canMoveTo(location))
             return true;
 
-        let loc = BoardMathHelper.fromCombinedLocation(this.Location);
+        let loc = BoardMathHelper.fromCombinedLocation(super.Location);
         let to = BoardMathHelper.fromCombinedLocation(location);
 
         var x = Math.abs(to[0] - loc[0]);
@@ -588,7 +588,7 @@ class QueenPiece extends ChessPiece {
     }
 
     canMoveTo(board, location){
-        if (!this.canMoveTo(location))
+        if (!super.canMoveTo(location))
             return true;
 
             var x = Math.abs(to[0] - loc[0]);
