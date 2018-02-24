@@ -183,7 +183,7 @@ class ChessGame extends _game2.default {
         switch (args[0]) {
 
             case 'disclaim':
-                source.send(`\`${user.Name}\`이 기권을 선언했습니다`);
+                source.send(`\`${user.Name}\`이(가) 기권을 선언했습니다`);
 
                 if (user == this.WhitePlayer) {
                     this.winner = this.BlackPlayer;

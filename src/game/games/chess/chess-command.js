@@ -11,6 +11,7 @@ export default class ChessCommand extends CommandListener {
 
         this.queueMap = new Map();
         this.queueUser = [];
+        this.queueTimerMap = new Map();
 
         this.main.CommandManager.on('체스', this.onCommand.bind(this));
         this.main.CommandManager.on('chess', this.onCommand.bind(this));
@@ -62,9 +63,11 @@ export default class ChessCommand extends CommandListener {
                 return;
             }
             
-            let queueCode = this.addQueue(source, user);
+            let queueCode = this.addQueue(source, user, () => {
+                source.send(`대기 큐 \`${queueCode}\`가 제거 되었습니다`);
+            }, 60000);
 
-            source.send(`대기 큐 \`${queueCode}\`이 생성되었습니다\n1 분내에 아무도 안 받을 경우 제거 됩니다\n참여 명령어: \`*chess ${queueCode}\``);
+            source.send(`대기 큐 \`${queueCode}\`가 생성되었습니다\n1 분내에 아무도 안 받을 경우 제거 됩니다\n참여 명령어: \`*chess ${queueCode}\``);
         }
     }
 
@@ -72,7 +75,7 @@ export default class ChessCommand extends CommandListener {
         return this.queueUser.includes(user);
     }
 
-    addQueue(channel,user){
+    addQueue(channel,user, onRemove, timeout){
         if (this.queueUser.includes(user))
             return;
 
@@ -83,12 +86,19 @@ export default class ChessCommand extends CommandListener {
 
         var queueCode = RandomGenerator.generate();
 
-        channelQueue[queueCode] = {
+        var queue = channelQueue[queueCode] = {
             'user': user,
             'timestamp': new Date()
         };
         
         this.queueUser.push(user);
+
+        this.queueTimerMap.set(queue, setTimeout(() => {
+            this.removeQueue(channel, queue);
+
+            if (typeof(onRemove) == 'function')
+                onRemove();
+        }, timeout || 60000));
 
         return queueCode;
     }
@@ -99,13 +109,16 @@ export default class ChessCommand extends CommandListener {
 
         var channelQueue = this.queueMap.get(channel);
 
+        var queue = null;
         for (let key in channelQueue){
             if (channelQueue[key]['user'] == user){
+                queue = channelQueue[key];
                 channelQueue[key] = null;
                 break;
             }
         }
 
         this.queueUser.splice(this.queueUser.indexOf(user));
+        this.queueTimerMap.delete(queue);
     }
 }
