@@ -141,7 +141,7 @@ class ChessGame extends _game2.default {
                 return;
             }
 
-            if (this.CurrentPlayer == this.BlackPlayer && this.gameboard.WhitePieces.includes(piece) || this.CurrentPlayer == this.WhitePlayer && this.gameboard.BlackPieces.includes(piece)) {
+            if (this.CurrentTurn == 0 && this.gameboard.WhitePieces.includes(piece) || this.CurrentTurn == 1 && this.gameboard.BlackPieces.includes(piece)) {
                 source.send('그거 님 말 아니지 않나요?');
                 return;
             }

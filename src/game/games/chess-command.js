@@ -36,10 +36,10 @@ export default class ChessCommand extends CommandListener {
             if (this.queueMap.has(source) && this.queueMap.get(source)[queueCode]){
                 var waitingUser = this.queueMap.get(source)[queueCode].user;
 
-                if (waitingUser == user){
+                /*if (waitingUser == user){
                     source.send(`왜 자기 큐에 자기가 들어가려고 해요`);
                     return;
-                }
+                }*/
 
                 //큐에서 제거
                 this.removeQueue(source, waitingUser);
