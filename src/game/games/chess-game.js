@@ -114,23 +114,23 @@ export default class ChessGame extends Game {
         }
 
         try{
-            var first = Number.parseInt('0x' + args[0]);
-            var sec = Number.parseInt('0x' + args[1]);
+            var firstX = Number.parseInt('0x' + args[0][0]);
+            var firstY = Number.parseInt('0x' + args[0][1]);
+            
+            var secX = Number.parseInt('0x' + args[1][0]);
+            var secY = Number.parseInt('0x' + args[1][0]);
 
-            var selectedPos = [first >> 4 - 1, first & 15 - 1];
-            var movePos = [sec >> 4 - 1, sec & 15 - 1];//0부터 카운팅 하므로 1을 빼줍시다
-
-            if (selectedPos[0] > 7 || selectedPos[1] > 7 || movePos[0] > 7 || movePos[1] > 7)
+            if (firstX > 7 || firstY > 7 || secX > 7 || secY > 7)
                 throw new Error('숫자의 범위가 잘못 되었습니다 허용 범위 (1 ~ 8)');
 
-            var piece = this.gameboard.getPieceAt(BoardMathHelper.getCombinedLocation(selectedPos[0], selectedPos[1]));
+            var piece = this.gameboard.getPieceAt(BoardMathHelper.getCombinedLocation(firstX, firstY));
 
             if (!piece){
                 source.send('거기 아무 말도 없어요');
                 return;
             }
 
-            var combinedMovePos = BoardMathHelper.getCombinedLocation(movePos[0], movePos[1]);
+            var combinedMovePos = BoardMathHelper.getCombinedLocation(secX, secY);
             if (piece.canMoveTo(this.board, combinedMovePos)){
                 this.board.movePieceTo(piece, combinedMovePos);
 
@@ -143,6 +143,7 @@ export default class ChessGame extends Game {
 
         } catch(e){
             source.send('올바른 형식으로 입력해 주세요\nEx) *move a1 a3');
+            console.log(e);
             return;
         }
     }
@@ -308,7 +309,7 @@ class ChessPiece {
 
         this.drawable = null;
 
-        this.locaton = 0;
+        this.locaton = location;
     }
 
     get Board(){
@@ -336,11 +337,11 @@ class ChessPiece {
     }
 }
 
-//http://www.clker.com/clipart-7190.html
+//https://commons.wikimedia.org/wiki/File:Chess_Pieces_Sprite.svg
 const PIECE_SOURCE_PATH = './resources/chess_pieces.png';
 
-const PIECE_SOURCE_SIZE = [75, 75];
-const PIECE_SOURCE_OFFSET = 25;
+const PIECE_SOURCE_SIZE = [45, 45];
+const PIECE_SOURCE_OFFSET = 0;
 
 const PIECE_SIZE = 37;
 
@@ -350,9 +351,9 @@ const PIECE_WHITE = 1;
 
 // X offset
 const PIECE_PAWN = 5;
-const PIECE_KNIGHT = 4;
-const PIECE_BISHOP = 3;
-const PIECE_ROOK = 2;
+const PIECE_ROOK = 4;
+const PIECE_KNIGHT = 3;
+const PIECE_BISHOP = 2;
 const PIECE_QUEEN = 1;
 const PIECE_KING = 0;
 
@@ -600,7 +601,7 @@ class QueenDrawable extends PieceDrawable {
     draw(ctx, pieceImage, color){
         var loc = BoardMathHelper.fromCombinedLocation(this.Piece.Location);
         ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_QUEEN, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], 
-        2 + loc[0] * PIECE_SIZE, 2 + loc[1] * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
+        loc[0] * PIECE_SIZE, loc[1] * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
     }
 }
 

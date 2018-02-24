@@ -152,6 +152,7 @@ class ChessGame extends _game2.default {
             }
         } catch (e) {
             source.send('올바른 형식으로 입력해 주세요\nEx) *move a1 a3');
+            console.log(e);
             return;
         }
     }
@@ -310,7 +311,7 @@ class ChessPiece {
 
         this.drawable = null;
 
-        this.locaton = 0;
+        this.locaton = location;
     }
 
     get Board() {
@@ -338,11 +339,11 @@ class ChessPiece {
     }
 }
 
-//http://www.clker.com/clipart-7190.html
+//https://commons.wikimedia.org/wiki/File:Chess_Pieces_Sprite.svg
 const PIECE_SOURCE_PATH = './resources/chess_pieces.png';
 
-const PIECE_SOURCE_SIZE = [75, 75];
-const PIECE_SOURCE_OFFSET = 25;
+const PIECE_SOURCE_SIZE = [45, 45];
+const PIECE_SOURCE_OFFSET = 0;
 
 const PIECE_SIZE = 37;
 
@@ -352,9 +353,9 @@ const PIECE_WHITE = 1;
 
 // X offset
 const PIECE_PAWN = 5;
-const PIECE_KNIGHT = 4;
-const PIECE_BISHOP = 3;
-const PIECE_ROOK = 2;
+const PIECE_ROOK = 4;
+const PIECE_KNIGHT = 3;
+const PIECE_BISHOP = 2;
 const PIECE_QUEEN = 1;
 const PIECE_KING = 0;
 
@@ -585,7 +586,7 @@ class QueenDrawable extends PieceDrawable {
 
     draw(ctx, pieceImage, color) {
         var loc = BoardMathHelper.fromCombinedLocation(this.Piece.Location);
-        ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_QUEEN, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], 2 + loc[0] * PIECE_SIZE, 2 + loc[1] * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
+        ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_QUEEN, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], loc[0] * PIECE_SIZE, loc[1] * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
     }
 }
 
