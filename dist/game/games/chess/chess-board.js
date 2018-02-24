@@ -74,42 +74,42 @@ class ChessBoard {
 
     createDefault() {
         //흑 피스 배치
-        this.addBlackPiece(new _chessPieces.RookPiece(this, 7));
-        this.addBlackPiece(new _chessPieces.KnightPiece(this, 15));
-        this.addBlackPiece(new _chessPieces.BishopPiece(this, 23));
-        this.addBlackPiece(new _chessPieces.QueenPiece(this, 31));
-        this.addBlackPiece(this.blackKing = new _chessPieces.KingPiece(this, 39));
-        this.addBlackPiece(new _chessPieces.BishopPiece(this, 47));
-        this.addBlackPiece(new _chessPieces.KnightPiece(this, 55));
-        this.addBlackPiece(new _chessPieces.RookPiece(this, 63));
+        this.addBlackPiece(new _chessPieces.RookPiece(this, 0));
+        this.addBlackPiece(new _chessPieces.KnightPiece(this, 8));
+        this.addBlackPiece(new _chessPieces.BishopPiece(this, 16));
+        this.addBlackPiece(new _chessPieces.QueenPiece(this, 24));
+        this.addBlackPiece(this.blackKing = new _chessPieces.KingPiece(this, 32));
+        this.addBlackPiece(new _chessPieces.BishopPiece(this, 40));
+        this.addBlackPiece(new _chessPieces.KnightPiece(this, 48));
+        this.addBlackPiece(new _chessPieces.RookPiece(this, 56));
         //폰 배치
-        this.addBlackPiece(new _chessPieces.PawnPiece(this, 6));
-        this.addBlackPiece(new _chessPieces.PawnPiece(this, 14));
-        this.addBlackPiece(new _chessPieces.PawnPiece(this, 22));
-        this.addBlackPiece(new _chessPieces.PawnPiece(this, 30));
-        this.addBlackPiece(new _chessPieces.PawnPiece(this, 38));
-        this.addBlackPiece(new _chessPieces.PawnPiece(this, 46));
-        this.addBlackPiece(new _chessPieces.PawnPiece(this, 54));
-        this.addBlackPiece(new _chessPieces.PawnPiece(this, 62));
+        this.addBlackPiece(new _chessPieces.PawnPiece(this, 1));
+        this.addBlackPiece(new _chessPieces.PawnPiece(this, 9));
+        this.addBlackPiece(new _chessPieces.PawnPiece(this, 17));
+        this.addBlackPiece(new _chessPieces.PawnPiece(this, 25));
+        this.addBlackPiece(new _chessPieces.PawnPiece(this, 33));
+        this.addBlackPiece(new _chessPieces.PawnPiece(this, 41));
+        this.addBlackPiece(new _chessPieces.PawnPiece(this, 49));
+        this.addBlackPiece(new _chessPieces.PawnPiece(this, 57));
 
         //백 피스 배치
-        this.addWhitePiece(new _chessPieces.RookPiece(this, 0));
-        this.addWhitePiece(new _chessPieces.KnightPiece(this, 8));
-        this.addWhitePiece(new _chessPieces.BishopPiece(this, 16));
-        this.addWhitePiece(new _chessPieces.QueenPiece(this, 24));
-        this.addWhitePiece(this.whiteKing = new _chessPieces.KingPiece(this, 32));
-        this.addWhitePiece(new _chessPieces.BishopPiece(this, 40));
-        this.addWhitePiece(new _chessPieces.KnightPiece(this, 48));
-        this.addWhitePiece(new _chessPieces.RookPiece(this, 56));
+        this.addWhitePiece(new _chessPieces.RookPiece(this, 7));
+        this.addWhitePiece(new _chessPieces.KnightPiece(this, 15));
+        this.addWhitePiece(new _chessPieces.BishopPiece(this, 23));
+        this.addWhitePiece(new _chessPieces.QueenPiece(this, 31));
+        this.addWhitePiece(this.whiteKing = new _chessPieces.KingPiece(this, 39));
+        this.addWhitePiece(new _chessPieces.BishopPiece(this, 47));
+        this.addWhitePiece(new _chessPieces.KnightPiece(this, 55));
+        this.addWhitePiece(new _chessPieces.RookPiece(this, 63));
         //폰 배치
-        this.addWhitePiece(new _chessPieces.PawnPiece(this, 1));
-        this.addWhitePiece(new _chessPieces.PawnPiece(this, 9));
-        this.addWhitePiece(new _chessPieces.PawnPiece(this, 17));
-        this.addWhitePiece(new _chessPieces.PawnPiece(this, 25));
-        this.addWhitePiece(new _chessPieces.PawnPiece(this, 33));
-        this.addWhitePiece(new _chessPieces.PawnPiece(this, 41));
-        this.addWhitePiece(new _chessPieces.PawnPiece(this, 49));
-        this.addWhitePiece(new _chessPieces.PawnPiece(this, 57));
+        this.addWhitePiece(new _chessPieces.PawnPiece(this, 6));
+        this.addWhitePiece(new _chessPieces.PawnPiece(this, 14));
+        this.addWhitePiece(new _chessPieces.PawnPiece(this, 22));
+        this.addWhitePiece(new _chessPieces.PawnPiece(this, 30));
+        this.addWhitePiece(new _chessPieces.PawnPiece(this, 38));
+        this.addWhitePiece(new _chessPieces.PawnPiece(this, 46));
+        this.addWhitePiece(new _chessPieces.PawnPiece(this, 54));
+        this.addWhitePiece(new _chessPieces.PawnPiece(this, 62));
     }
 
     addWhitePiece(piece) {

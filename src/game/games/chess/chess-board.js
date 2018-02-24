@@ -74,42 +74,42 @@ export default class ChessBoard {
 
     createDefault(){
         //흑 피스 배치
-        this.addBlackPiece(new RookPiece(this, 7));
-        this.addBlackPiece(new KnightPiece(this, 15));
-        this.addBlackPiece(new BishopPiece(this, 23));
-        this.addBlackPiece(new QueenPiece(this, 31));
-        this.addBlackPiece(this.blackKing = new KingPiece(this, 39));
-        this.addBlackPiece(new BishopPiece(this, 47));
-        this.addBlackPiece(new KnightPiece(this, 55));
-        this.addBlackPiece(new RookPiece(this, 63));
+        this.addBlackPiece(new RookPiece(this, 0));
+        this.addBlackPiece(new KnightPiece(this, 8));
+        this.addBlackPiece(new BishopPiece(this, 16));
+        this.addBlackPiece(new QueenPiece(this, 24));
+        this.addBlackPiece(this.blackKing = new KingPiece(this, 32));
+        this.addBlackPiece(new BishopPiece(this, 40));
+        this.addBlackPiece(new KnightPiece(this,48));
+        this.addBlackPiece(new RookPiece(this, 56));
         //폰 배치
-        this.addBlackPiece(new PawnPiece(this, 6));
-        this.addBlackPiece(new PawnPiece(this, 14));
-        this.addBlackPiece(new PawnPiece(this, 22));
-        this.addBlackPiece(new PawnPiece(this, 30));
-        this.addBlackPiece(new PawnPiece(this, 38));
-        this.addBlackPiece(new PawnPiece(this, 46));
-        this.addBlackPiece(new PawnPiece(this, 54));
-        this.addBlackPiece(new PawnPiece(this, 62));
+        this.addBlackPiece(new PawnPiece(this, 1));
+        this.addBlackPiece(new PawnPiece(this, 9));
+        this.addBlackPiece(new PawnPiece(this, 17));
+        this.addBlackPiece(new PawnPiece(this, 25));
+        this.addBlackPiece(new PawnPiece(this, 33));
+        this.addBlackPiece(new PawnPiece(this, 41));
+        this.addBlackPiece(new PawnPiece(this, 49));
+        this.addBlackPiece(new PawnPiece(this, 57));
 
         //백 피스 배치
-        this.addWhitePiece(new RookPiece(this, 0));
-        this.addWhitePiece(new KnightPiece(this, 8));
-        this.addWhitePiece(new BishopPiece(this, 16));
-        this.addWhitePiece(new QueenPiece(this, 24));
-        this.addWhitePiece(this.whiteKing = new KingPiece(this, 32));
-        this.addWhitePiece(new BishopPiece(this, 40));
-        this.addWhitePiece(new KnightPiece(this,48));
-        this.addWhitePiece(new RookPiece(this, 56));
+        this.addWhitePiece(new RookPiece(this, 7));
+        this.addWhitePiece(new KnightPiece(this, 15));
+        this.addWhitePiece(new BishopPiece(this, 23));
+        this.addWhitePiece(new QueenPiece(this, 31));
+        this.addWhitePiece(this.whiteKing = new KingPiece(this, 39));
+        this.addWhitePiece(new BishopPiece(this, 47));
+        this.addWhitePiece(new KnightPiece(this, 55));
+        this.addWhitePiece(new RookPiece(this, 63));
         //폰 배치
-        this.addWhitePiece(new PawnPiece(this, 1));
-        this.addWhitePiece(new PawnPiece(this, 9));
-        this.addWhitePiece(new PawnPiece(this, 17));
-        this.addWhitePiece(new PawnPiece(this, 25));
-        this.addWhitePiece(new PawnPiece(this, 33));
-        this.addWhitePiece(new PawnPiece(this, 41));
-        this.addWhitePiece(new PawnPiece(this, 49));
-        this.addWhitePiece(new PawnPiece(this, 57));
+        this.addWhitePiece(new PawnPiece(this, 6));
+        this.addWhitePiece(new PawnPiece(this, 14));
+        this.addWhitePiece(new PawnPiece(this, 22));
+        this.addWhitePiece(new PawnPiece(this, 30));
+        this.addWhitePiece(new PawnPiece(this, 38));
+        this.addWhitePiece(new PawnPiece(this, 46));
+        this.addWhitePiece(new PawnPiece(this, 54));
+        this.addWhitePiece(new PawnPiece(this, 62));
     }
 
     addWhitePiece(piece){

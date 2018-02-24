@@ -16,9 +16,12 @@ export default class ChessGame extends Game {
 
         this.currentTurn = 0;
 
+        this.winner = null;
+
         this.statusMessage = '';
 
-        this.commandBind = this.onMoveCommand.bind(this);
+        this.gameCommandBind = this.onGameCommand.bind(this);
+        this.moveCommandBind = this.onMoveCommand.bind(this);
     }
 
     get BlackPlayer(){
@@ -27,6 +30,10 @@ export default class ChessGame extends Game {
 
     get WhitePlayer(){
         return this.PlayerList[1];
+    }
+
+    get Winner(){
+        return this.winner;
     }
 
     set BlackPlayer(user){
@@ -98,7 +105,8 @@ export default class ChessGame extends Game {
 
         this.statusMessage = `\`${this.BlackPlayer.Name}\`와 \`${this.WhitePlayer.Name}\`의 체스가 시작 되었습니다`;
 
-        this.gameManager.Main.CommandManager.on('move', this.commandBind);
+        this.gameManager.Main.CommandManager.on('game', this.gameCommandBind);
+        this.gameManager.Main.CommandManager.on('move', this.moveCommandBind);
 
         this.sendInfoMessages();
     }
@@ -117,13 +125,13 @@ export default class ChessGame extends Game {
         }
 
         try{
-            var firstX = Math.abs(args[0][0].toLowerCase().charCodeAt(0) - 97/*소문자 a 키 코드*/);//입력된 문자에서 a 키 코드 값을 빼서 위치를 구함
+            var firstX = args[0][0].toLowerCase().charCodeAt(0) - 97/*소문자 a 키 코드 입력된 문자에서 a 키 코드 값을 빼서 위치를 구함*/
             var firstY = Number.parseInt(args[0][1]) - 1;//배열은 0부터 시작하니 1씩 빼줍시다
             
-            var secX = Math.abs(args[1][0].toLowerCase().charCodeAt(0) - 97);
+            var secX = args[1][0].toLowerCase().charCodeAt(0) - 97;
             var secY = Number.parseInt(args[1][1]) - 1;
 
-            if (firstX > 7 || firstY > 7 || secX > 7 || secY > 7)
+            if (firstX > 7 || firstY > 7 || secX > 7 || secY > 7 || firstX < 0 || firstY < 0 || secX < 0 || secY < 0)
                 throw new Error('숫자의 범위가 잘못 되었습니다 허용 범위 (1 ~ 8)');
 
             var piece = this.gameboard.getPieceAt(BoardMathHelper.getCombinedLocation(firstX, firstY));
@@ -133,11 +141,10 @@ export default class ChessGame extends Game {
                 return;
             }
 
-            if (this.CurrentTurn == 0 && this.gameboard.WhitePieces.includes(piece)
-                || this.CurrentTurn == 1 && this.gameboard.BlackPieces.includes(piece)){
-                    source.send('그거 님 체스 말 아니자나요 ㅡㅡ');
-                    return;
-                }
+            if (this.CurrentTurn == 0 && this.gameboard.WhitePieces.includes(piece) || this.CurrentTurn == 1 && this.gameboard.BlackPieces.includes(piece)){
+                source.send('그거 님 체스 말 아니자나요 ㅡㅡ');
+                return;
+            }
 
             var combinedMovePos = BoardMathHelper.getCombinedLocation(secX, secY);
             if (piece.canMoveTo(this.gameboard, combinedMovePos)){
@@ -149,12 +156,40 @@ export default class ChessGame extends Game {
                 this.sendInfoMessages();
             }
             else{
-                source.send('그 말은 거기로 못 움직임');
+                source.send('그 말은 거기로 움직일 수 없습니다');
             }
 
         } catch(e){
             source.send('올바른 형식으로 입력해 주세요\nEx) *move a1 a3');
             return;
+        }
+    }
+
+    onGameCommand(args, user, bot, source){
+        if (source != this.PlayChannel || !this.PlayerList.includes(user))
+            return;
+
+        if (args.length < 1)
+            args.push('');
+
+        switch(args[0]){
+
+            case 'disclaim':
+                source.send(`\`${user.Name}\`이 기권을 선언했습니다`);
+
+                if (user == this.WhitePlayer){
+                    winner = this.BlackPlayer;
+                }
+                else if (user == this.BlackPlayer){
+                    winner = this.WhitePlayer;
+                }
+                
+                this.stop();
+                break;
+
+            default:
+                source.send('사용 가능한 명령어 (플레이어만 사용 가능)\n disclaim: 기권 선언');
+                break;
         }
     }
 
@@ -173,18 +208,11 @@ export default class ChessGame extends Game {
     stop(){
         super.stop();
 
+        this.gameManager.Main.CommandManager.removeListener('game', this.gameCommandBind);
         this.gameManager.Main.CommandManager.removeListener('move', this.commandBind);
 
-        var winner = null;
-        if (this.gameboard.BlackKingDied && !this.gameboard.WhiteKingDead){
-            winner = this.WhitePlayer;
-        }
-        else if (this.gameboard.WhiteKingDead && !this.gameboard.BlackKingDied){
-            winner = this.BlackPlayer;
-        }
-
-        if (winner){
-            this.statusMessage = `게임이 종료 되었습니다 \`${winner.Name}\`이(가) 승리했습니다`;
+        if (this.winner){
+            this.statusMessage = `게임이 종료 되었습니다 \`${this.winner.Name}\`이(가) 승리했습니다`;
         }
         else{
             this.statusMessage = `게임이 중단 되었습니다 \`${this.BlackPlayer.Name}\`과 \`${this.WhitePlayer.Name}\`이 비겼습니다`;

@@ -7,15 +7,18 @@ import Canvas, { Image } from 'canvas-prebuilt';
 //https://commons.wikimedia.org/wiki/File:Chess_Pieces_Sprite.svg
 const PIECE_SOURCE_PATH = './resources/chess_pieces.png';
 
-const PIECE_BLACK = 0;
-const PIECE_WHITE = 1;
+const BOARD_SIZE = 300;
+
+// Y offset
+const PIECE_SOURCE_BLACK = 1;
+const PIECE_SOURCE_WHITE = 0;
 
 export default class BoardRenderer {
     constructor(board){
         this.board = board;
 
         //디스코드 pc 미리보기 최대 크기
-        this.canvas = new Canvas(300, 300);
+        this.canvas = new Canvas(BOARD_SIZE, BOARD_SIZE);
 
         this.pieceBuffer = null;
 
@@ -61,11 +64,11 @@ export default class BoardRenderer {
         this.ctx.translate(2, 2);
 
         for (var blackPiece of this.Board.BlackPieces){
-            this.drawPiece(blackPiece, PIECE_BLACK);
+            this.drawPiece(blackPiece, PIECE_SOURCE_BLACK);
         }
 
         for (var whitePiece of this.Board.WhitePieces){
-            this.drawPiece(whitePiece, PIECE_WHITE);
+            this.drawPiece(whitePiece, PIECE_SOURCE_WHITE);
         }
 
         this.ctx.translate(-2, -2);

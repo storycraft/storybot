@@ -50,10 +50,6 @@ const PIECE_SOURCE_OFFSET = 0;
 
 const PIECE_SIZE = 37;
 
-// Y offset
-const PIECE_BLACK = 0;
-const PIECE_WHITE = 1;
-
 // X offset
 const PIECE_PAWN = 5;
 const PIECE_ROOK = 4;
@@ -121,18 +117,6 @@ class PawnPiece extends ChessPiece {
 }
 
 exports.PawnPiece = PawnPiece;
-class PawnDrawable extends PieceDrawable {
-    constructor(piece) {
-        super(piece);
-    }
-
-    draw(ctx, pieceImage, color) {
-        var loc = _boardMathHelper2.default.fromCombinedLocation(this.Piece.Location);
-
-        ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_PAWN, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], loc[0] * PIECE_SIZE, loc[1] * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
-    }
-}
-
 class RookPiece extends ChessPiece {
     constructor(board, location) {
         super(board, location);
@@ -155,17 +139,6 @@ class RookPiece extends ChessPiece {
 }
 
 exports.RookPiece = RookPiece;
-class RookDrawable extends PieceDrawable {
-    constructor(piece) {
-        super(piece);
-    }
-
-    draw(ctx, pieceImage, color) {
-        var loc = _boardMathHelper2.default.fromCombinedLocation(this.Piece.Location);
-        ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_ROOK, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], loc[0] * PIECE_SIZE, loc[1] * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
-    }
-}
-
 class BishopPiece extends ChessPiece {
     constructor(board, location) {
         super(board, location);
@@ -188,17 +161,6 @@ class BishopPiece extends ChessPiece {
 }
 
 exports.BishopPiece = BishopPiece;
-class BishopDrawable extends PieceDrawable {
-    constructor(piece) {
-        super(piece);
-    }
-
-    draw(ctx, pieceImage, color) {
-        var loc = _boardMathHelper2.default.fromCombinedLocation(this.Piece.Location);
-        ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_BISHOP, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], loc[0] * PIECE_SIZE, loc[1] * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
-    }
-}
-
 class KnightPiece extends ChessPiece {
     constructor(board, location) {
         super(board, location);
@@ -228,17 +190,6 @@ class KnightPiece extends ChessPiece {
 }
 
 exports.KnightPiece = KnightPiece;
-class KnightDrawable extends PieceDrawable {
-    constructor(piece) {
-        super(piece);
-    }
-
-    draw(ctx, pieceImage, color) {
-        var loc = _boardMathHelper2.default.fromCombinedLocation(this.Piece.Location);
-        ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_KNIGHT, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], loc[0] * PIECE_SIZE, loc[1] * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
-    }
-}
-
 class KingPiece extends ChessPiece {
     constructor(board, location) {
         super(board, location);
@@ -260,17 +211,6 @@ class KingPiece extends ChessPiece {
 }
 
 exports.KingPiece = KingPiece;
-class KingDrawable extends PieceDrawable {
-    constructor(piece) {
-        super(piece);
-    }
-
-    draw(ctx, pieceImage, color) {
-        var loc = _boardMathHelper2.default.fromCombinedLocation(this.Piece.Location);
-        ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_KING, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], loc[0] * PIECE_SIZE, loc[1] * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
-    }
-}
-
 class QueenPiece extends ChessPiece {
     constructor(board, location) {
         super(board, location);
@@ -293,6 +233,62 @@ class QueenPiece extends ChessPiece {
 }
 
 exports.QueenPiece = QueenPiece;
+class PawnDrawable extends PieceDrawable {
+    constructor(piece) {
+        super(piece);
+    }
+
+    draw(ctx, pieceImage, color) {
+        var loc = _boardMathHelper2.default.fromCombinedLocation(this.Piece.Location);
+
+        ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_PAWN, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], loc[0] * PIECE_SIZE, /*위치가 반대이므로 뒤집어줌*/(7 - loc[1]) * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
+    }
+}
+
+class RookDrawable extends PieceDrawable {
+    constructor(piece) {
+        super(piece);
+    }
+
+    draw(ctx, pieceImage, color) {
+        var loc = _boardMathHelper2.default.fromCombinedLocation(this.Piece.Location);
+        ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_ROOK, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], loc[0] * PIECE_SIZE, (7 - loc[1]) * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
+    }
+}
+
+class BishopDrawable extends PieceDrawable {
+    constructor(piece) {
+        super(piece);
+    }
+
+    draw(ctx, pieceImage, color) {
+        var loc = _boardMathHelper2.default.fromCombinedLocation(this.Piece.Location);
+        ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_BISHOP, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], loc[0] * PIECE_SIZE, (7 - loc[1]) * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
+    }
+}
+
+class KnightDrawable extends PieceDrawable {
+    constructor(piece) {
+        super(piece);
+    }
+
+    draw(ctx, pieceImage, color) {
+        var loc = _boardMathHelper2.default.fromCombinedLocation(this.Piece.Location);
+        ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_KNIGHT, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], loc[0] * PIECE_SIZE, (7 - loc[1]) * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
+    }
+}
+
+class KingDrawable extends PieceDrawable {
+    constructor(piece) {
+        super(piece);
+    }
+
+    draw(ctx, pieceImage, color) {
+        var loc = _boardMathHelper2.default.fromCombinedLocation(this.Piece.Location);
+        ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_KING, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], loc[0] * PIECE_SIZE, (7 - loc[1]) * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
+    }
+}
+
 class QueenDrawable extends PieceDrawable {
     constructor(piece) {
         super(piece);
@@ -300,6 +296,6 @@ class QueenDrawable extends PieceDrawable {
 
     draw(ctx, pieceImage, color) {
         var loc = _boardMathHelper2.default.fromCombinedLocation(this.Piece.Location);
-        ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_QUEEN, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], loc[0] * PIECE_SIZE, loc[1] * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
+        ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_QUEEN, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], loc[0] * PIECE_SIZE, (7 - loc[1]) * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
     }
 }
