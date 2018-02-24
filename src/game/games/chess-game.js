@@ -126,15 +126,15 @@ export default class ChessGame extends Game {
             var piece = this.gameboard.getPieceAt(BoardMathHelper.getCombinedLocation(firstX, firstY));
 
             if (!piece){
-                source.send('거기 아무 말도 없어요');
+                source.send('거기 아무 말도 없는데요');
                 return;
             }
 
             var combinedMovePos = BoardMathHelper.getCombinedLocation(secX, secY);
-            if (piece.canMoveTo(this.board, combinedMovePos)){
-                this.board.movePieceTo(piece, combinedMovePos);
+            if (piece.canMoveTo(this.gameboard, combinedMovePos)){
+                this.gameboard.movePieceTo(piece, combinedMovePos);
 
-                this.statusMessage = `\`${user.Name}\의 차례입니다`;
+                this.statusMessage = `\`${user.Name}\`의 차례입니다`;
                 this.sendInfoMessages();
             }
             else{
@@ -143,7 +143,6 @@ export default class ChessGame extends Game {
 
         } catch(e){
             source.send('올바른 형식으로 입력해 주세요\nEx) *move a1 a3');
-            console.log(e);
             return;
         }
     }
@@ -250,6 +249,8 @@ class ChessBoard {
             enemyPieces.splice(enemyPieces.indexOf(arrPiece), 1);
             this.deadPieces.push(arrPiece);
         }
+
+        piece.Location = location;
     }
 
     createDefault(){
@@ -309,7 +310,7 @@ class ChessPiece {
 
         this.drawable = null;
 
-        this.locaton = location;
+        this.location = location;
     }
 
     get Board(){
@@ -317,7 +318,7 @@ class ChessPiece {
     }
 
     get Location(){
-        return this.locaton;
+        return this.location;
     }
 
     get Score(){
@@ -328,12 +329,12 @@ class ChessPiece {
         return this.drawable;
     }
 
-    set Location(location){
-        this.location = location;
+    set Location(loc){
+        this.location = loc;
     }
 
     canMoveTo(board, location){
-        return location != this.location;
+        return location != this.Location;
     }
 }
 
@@ -406,7 +407,7 @@ class PawnPiece extends ChessPiece {
     //폰의 경우 말 처 먹을 수 있는것 빼고 모두 계산함
     canMoveTo(board, location){
         if (!super.canMoveTo(location))
-            return true;
+            return false;
         
         let loc = BoardMathHelper.fromCombinedLocation(super.Location);
         let to = BoardMathHelper.fromCombinedLocation(location);
@@ -447,7 +448,7 @@ class RookPiece extends ChessPiece {
 
     canMoveTo(board, location){
         if (!super.canMoveTo(location))
-            return true;
+            return false;
 
         let loc = BoardMathHelper.fromCombinedLocation(this.Location);
         let to = BoardMathHelper.fromCombinedLocation(location);
@@ -481,7 +482,7 @@ class BishopPiece extends ChessPiece {
 
     canMoveTo(board, location){
         if (!super.canMoveTo(location))
-            return true;
+            return false;
 
         let loc = BoardMathHelper.fromCombinedLocation(super.Location);
         let to = BoardMathHelper.fromCombinedLocation(location);
@@ -519,7 +520,7 @@ class KnightPiece extends ChessPiece {
 
     canMoveTo(board, location){
         if (!super.canMoveTo(location))
-            return true;
+            return false;
 
         let loc = BoardMathHelper.fromCombinedLocation(super.Location);
         let to = BoardMathHelper.fromCombinedLocation(location);
@@ -552,7 +553,7 @@ class KingPiece extends ChessPiece {
 
     canMoveTo(board, location){
         if (!super.canMoveTo(location))
-            return true;
+            return false;
 
         let loc = BoardMathHelper.fromCombinedLocation(super.Location);
         let to = BoardMathHelper.fromCombinedLocation(location);
@@ -589,7 +590,7 @@ class QueenPiece extends ChessPiece {
 
     canMoveTo(board, location){
         if (!super.canMoveTo(location))
-            return true;
+            return false;
 
             var x = Math.abs(to[0] - loc[0]);
             var y = Math.abs(to[1] - loc[1]);
