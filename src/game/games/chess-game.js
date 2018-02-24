@@ -114,11 +114,11 @@ export default class ChessGame extends Game {
         }
 
         try{
-            var firstX = Number.parseInt('0x' + args[0][0]);
-            var firstY = Number.parseInt('0x' + args[0][1]);
+            var firstX = Number.parseInt('0x' + args[0][0]) - 11;//a부터 시작했고 배열은 0부터 시작하니 11씩 빼줍시다
+            var firstY = Number.parseInt('0x' + args[0][1]) - 1;//배열은 0부터 시작하니 1씩 빼줍시다
             
-            var secX = Number.parseInt('0x' + args[1][0]);
-            var secY = Number.parseInt('0x' + args[1][0]);
+            var secX = Number.parseInt('0x' + args[1][0]) - 11;
+            var secY = Number.parseInt('0x' + args[1][1]) - 1;
 
             if (firstX > 7 || firstY > 7 || secX > 7 || secY > 7)
                 throw new Error('숫자의 범위가 잘못 되었습니다 허용 범위 (1 ~ 8)');
@@ -379,7 +379,7 @@ class PawnPiece extends ChessPiece {
     constructor(board, location){
         super(board, location);
 
-        this.drawable = new PawnDrawable(this);
+        super.drawable = new PawnDrawable(this);
 
         this.default = true;
     }
@@ -392,11 +392,15 @@ class PawnPiece extends ChessPiece {
         return 1;
     }
 
+    get Location(){
+        return super.Location;
+    }
+
     set Location(location){
         if (this.default)
             this.default = false;
 
-        this.location = location;
+        super.Location = location;
     }
 
     //폰의 경우 말 처 먹을 수 있는것 빼고 모두 계산함
@@ -404,7 +408,7 @@ class PawnPiece extends ChessPiece {
         if (!this.canMoveTo(location))
             return true;
         
-        let loc = BoardMathHelper.fromCombinedLocation(this.Location);
+        let loc = BoardMathHelper.fromCombinedLocation(super.Location);
         let to = BoardMathHelper.fromCombinedLocation(location);
 
         if (this.default && (to[1] - loc[1]) == 2)
@@ -424,6 +428,7 @@ class PawnDrawable extends PieceDrawable {
 
     draw(ctx, pieceImage, color){
         var loc = BoardMathHelper.fromCombinedLocation(this.Piece.Location);
+
         ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_PAWN, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], 
         loc[0] * PIECE_SIZE, loc[1] * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
     }
@@ -433,7 +438,7 @@ class RookPiece extends ChessPiece {
     constructor(board, location){
         super(board, location);
 
-        this.drawable = new RookDrawable(this);
+        super.drawable = new RookDrawable(this);
     }
 
     get Score(){
@@ -467,7 +472,7 @@ class BishopPiece extends ChessPiece {
     constructor(board, location){
         super(board, location);
 
-        this.drawable = new BishopDrawable(this);
+        super.drawable = new BishopDrawable(this);
     }
 
     get Score(){
@@ -501,7 +506,7 @@ class KnightPiece extends ChessPiece {
     constructor(board, location){
         super(board, location);
 
-        this.drawable = new KnightDrawable(this);
+        super.drawable = new KnightDrawable(this);
     }
 
     get Score(){
@@ -542,7 +547,7 @@ class KingPiece extends ChessPiece {
     constructor(board, location){
         super(board, location);
 
-        this.drawable = new KingDrawable(this);
+        super.drawable = new KingDrawable(this);
     }
 
     canMoveTo(board, location){
@@ -575,7 +580,7 @@ class QueenPiece extends ChessPiece {
     constructor(board, location){
         super(board, location);
 
-        this.drawable = new QueenDrawable(this);
+        super.drawable = new QueenDrawable(this);
     }
 
     get Score(){

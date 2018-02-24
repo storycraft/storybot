@@ -126,22 +126,22 @@ class ChessGame extends _game2.default {
         }
 
         try {
-            var first = Number.parseInt('0x' + args[0]);
-            var sec = Number.parseInt('0x' + args[1]);
+            var firstX = Number.parseInt('0x' + args[0][0]) - 11; //a부터 시작했고 배열은 0부터 시작하니 11씩 빼줍시다
+            var firstY = Number.parseInt('0x' + args[0][1]) - 1; //배열은 0부터 시작하니 1씩 빼줍시다
 
-            var selectedPos = [first >> 4 - 1, first & 15 - 1];
-            var movePos = [sec >> 4 - 1, sec & 15 - 1]; //0부터 카운팅 하므로 1을 빼줍시다
+            var secX = Number.parseInt('0x' + args[1][0]) - 11;
+            var secY = Number.parseInt('0x' + args[1][1]) - 1;
 
-            if (selectedPos[0] > 7 || selectedPos[1] > 7 || movePos[0] > 7 || movePos[1] > 7) throw new Error('숫자의 범위가 잘못 되었습니다 허용 범위 (1 ~ 8)');
+            if (firstX > 7 || firstY > 7 || secX > 7 || secY > 7) throw new Error('숫자의 범위가 잘못 되었습니다 허용 범위 (1 ~ 8)');
 
-            var piece = this.gameboard.getPieceAt(BoardMathHelper.getCombinedLocation(selectedPos[0], selectedPos[1]));
+            var piece = this.gameboard.getPieceAt(BoardMathHelper.getCombinedLocation(firstX, firstY));
 
             if (!piece) {
                 source.send('거기 아무 말도 없어요');
                 return;
             }
 
-            var combinedMovePos = BoardMathHelper.getCombinedLocation(movePos[0], movePos[1]);
+            var combinedMovePos = BoardMathHelper.getCombinedLocation(secX, secY);
             if (piece.canMoveTo(this.board, combinedMovePos)) {
                 this.board.movePieceTo(piece, combinedMovePos);
 
@@ -392,10 +392,14 @@ class PawnPiece extends ChessPiece {
         return 1;
     }
 
+    get Location() {
+        return this.locaton;
+    }
+
     set Location(location) {
         if (this.default) this.default = false;
 
-        this.location = location;
+        super.Location = location;
     }
 
     //폰의 경우 말 처 먹을 수 있는것 빼고 모두 계산함
@@ -420,6 +424,7 @@ class PawnDrawable extends PieceDrawable {
 
     draw(ctx, pieceImage, color) {
         var loc = BoardMathHelper.fromCombinedLocation(this.Piece.Location);
+
         ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_PAWN, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], loc[0] * PIECE_SIZE, loc[1] * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
     }
 }
