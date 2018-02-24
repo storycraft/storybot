@@ -100,8 +100,8 @@ export default class ChessCommand extends CommandListener {
 
         var channelQueue = this.queueMap.get(channel);
 
-        for (let [key, value] of channelQueue){
-            if (value['user'] == user){
+        for (let key in channelQueue){
+            if (channelQueue[key]['user'] == user){
                 channelQueue[key] = null;
                 break;
             }
