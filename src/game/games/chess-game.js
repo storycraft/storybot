@@ -132,7 +132,7 @@ export default class ChessGame extends Game {
 
             if (this.CurrentTurn == 0 && this.gameboard.WhitePieces.includes(piece)
                 || this.CurrentTurn == 1 && this.gameboard.BlackPieces.includes(piece)){
-                    source.send('그거 님 말 아니지 않나요?');
+                    source.send('그거 님 체스 말 아니자나요 ㅡㅡ');
                     return;
                 }
 
@@ -146,7 +146,7 @@ export default class ChessGame extends Game {
                 this.sendInfoMessages();
             }
             else{
-                source.send('그 말은 거기로 못 움직입니다');
+                source.send('그 말은 거기로 못 움직임');
             }
 
         } catch(e){

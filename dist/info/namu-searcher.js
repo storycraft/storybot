@@ -52,9 +52,9 @@ class NamuSearcher extends _storybotCore.CommandListener {
         this.getKeywords(keyword).then(list => {
             //키워드가 있을 경우
             if (list.length > 0) {
-                source.send(`나무위키 \`${list[0]}\` 문서\n${DOCUMENT}/${list[0]}`);
+                source.send(`나무위키 \`${list[0]}\` 문서\n${DOCUMENT}/${encodeURI(list[0])}`);
             } else {
-                source.send(`적절한 문서를 못 찾겠으니 직접 들어가서 찾으세요\n${SEARCH_RESULT}/${keyword}`);
+                source.send(`적절한 문서를 못 찾겠으니 직접 들어가서 찾으세요\n${SEARCH_RESULT}/${encodeURI(keyword)}`);
             }
         }).catch(e => {
             source.send(`나무위키가 점검중이거나 서버 접속이 실패했습니다\n\`${e}\``);

@@ -142,7 +142,7 @@ class ChessGame extends _game2.default {
             }
 
             if (this.CurrentTurn == 0 && this.gameboard.WhitePieces.includes(piece) || this.CurrentTurn == 1 && this.gameboard.BlackPieces.includes(piece)) {
-                source.send('그거 님 말 아니지 않나요?');
+                source.send('그거 님 체스 말 아니자나요 ㅡㅡ');
                 return;
             }
 
@@ -150,10 +150,12 @@ class ChessGame extends _game2.default {
             if (piece.canMoveTo(this.gameboard, combinedMovePos)) {
                 this.gameboard.movePieceTo(piece, combinedMovePos);
 
+                this.setNextTurn();
+
                 this.statusMessage = `\`${user.Name}\`의 차례입니다`;
                 this.sendInfoMessages();
             } else {
-                source.send('그 말은 거기로 못 움직입니다');
+                source.send('그 말은 거기로 못 움직임');
             }
         } catch (e) {
             source.send('올바른 형식으로 입력해 주세요\nEx) *move a1 a3');
