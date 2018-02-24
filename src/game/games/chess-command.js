@@ -63,21 +63,48 @@ export default class ChessCommand extends CommandListener {
                 return;
             }
             
-            if (!this.queueMap.has(source))
-                this.queueMap.set(source, {});
-
-            var channelQueue = this.queueMap.get(source);
-
-            var queueCode = RandomGenerator.generate();
-
-            channelQueue[queueCode] = {
-                'user': user,
-                'timestamp': new Date()
-            };
-
-            this.queueUser.push(user);
+            this.addQueue(source, user);
 
             source.send(`대기 큐 \`${queueCode}\`이 생성되었습니다\n1 분내에 아무도 안 받을 경우 제거 됩니다\n참여 명령어: \`*chess ${queueCode}\``);
+
+            setTimeout(() => {
+                this.removeQueue(source, user);
+            }, 60000);
         }
+    }
+
+    addQueue(channel,user){
+        if (this.queueUser.includes(user))
+            return;
+
+        if (!this.queueMap.has(source))
+            this.queueMap.set(source, {});
+
+        var channelQueue = this.queueMap.get(source);
+
+        var queueCode = RandomGenerator.generate();
+
+        channelQueue[queueCode] = {
+            'user': user,
+            'timestamp': new Date()
+        };
+        
+        this.queueUser.push(user);
+    }
+
+    removeQueue(channel,user){
+        if (!this.queueUser.includes(user) || !this.queueMap.has(source))
+            return;
+
+        var channelQueue = this.queueMap.get(source);
+
+        for (let [key, value] of channelQueue){
+            if (value['user'] == user){
+                channelQueue[key] = null;
+                break;
+            }
+        }
+
+        this.queueUser.splice(this.queueUser.indexOf(user));
     }
 }
