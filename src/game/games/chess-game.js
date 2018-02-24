@@ -130,6 +130,12 @@ export default class ChessGame extends Game {
                 return;
             }
 
+            if (this.CurrentPlayer == this.BlackPlayer && this.gameboard.WhitePieces.includes(piece)
+                || this.CurrentPlayer == this.WhitePlayer && this.gameboard.BlackPieces.includes(piece)){
+                    source.send('그거 님 말 아니지 않나요?');
+                    return;
+                }
+
             var combinedMovePos = BoardMathHelper.getCombinedLocation(secX, secY);
             if (piece.canMoveTo(this.gameboard, combinedMovePos)){
                 this.gameboard.movePieceTo(piece, combinedMovePos);

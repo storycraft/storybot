@@ -141,11 +141,16 @@ class ChessGame extends _game2.default {
                 return;
             }
 
+            if (this.CurrentPlayer == this.BlackPlayer && this.gameboard.WhitePieces.includes(piece) || this.CurrentPlayer == this.WhitePlayer && this.gameboard.BlackPieces.includes(piece)) {
+                source.send('그거 님 말 아니지 않나요?');
+                return;
+            }
+
             var combinedMovePos = BoardMathHelper.getCombinedLocation(secX, secY);
             if (piece.canMoveTo(this.gameboard, combinedMovePos)) {
                 this.gameboard.movePieceTo(piece, combinedMovePos);
 
-                this.statusMessage = `\`${user.Name}\의 차례입니다`;
+                this.statusMessage = `\`${user.Name}\`의 차례입니다`;
                 this.sendInfoMessages();
             } else {
                 source.send('그 말은 거기로 못 움직입니다');
