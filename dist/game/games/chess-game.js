@@ -367,7 +367,7 @@ class PieceDrawable {
         return this.piece;
     }
 
-    draw(ctx, pieceBuffer, color) {}
+    draw(ctx, pieceImage, color) {}
 }
 
 /////
@@ -417,8 +417,9 @@ class PawnDrawable extends PieceDrawable {
         super(piece);
     }
 
-    draw(ctx, pieceBuffer, color) {
-        this.ctx.drawImage(pieceBuffer, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_PAWN, color * PIECE_SOURCE_SIZE[1], PIECE_SIZE, PIECE_SIZE);
+    draw(ctx, pieceImage, color) {
+        var loc = BoardMathHelper.fromCombinedLocation(this.Piece.Location);
+        ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_PAWN, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], loc[0] * PIECE_SIZE, loc[1] * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
     }
 }
 
@@ -448,8 +449,9 @@ class RookDrawable extends PieceDrawable {
         super(piece);
     }
 
-    draw(ctx, pieceBuffer, color) {
-        this.ctx.drawImage(pieceBuffer, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_ROOK, color * PIECE_SOURCE_SIZE[1], PIECE_SIZE, PIECE_SIZE);
+    draw(ctx, pieceImage, color) {
+        var loc = BoardMathHelper.fromCombinedLocation(this.Piece.Location);
+        ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_ROOK, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], loc[0] * PIECE_SIZE, loc[1] * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
     }
 }
 
@@ -479,8 +481,9 @@ class BishopDrawable extends PieceDrawable {
         super(piece);
     }
 
-    draw(ctx, pieceBuffer, color) {
-        this.ctx.drawImage(pieceBuffer, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_BISHOP, color * PIECE_SOURCE_SIZE[1], PIECE_SIZE, PIECE_SIZE);
+    draw(ctx, pieceImage, color) {
+        var loc = BoardMathHelper.fromCombinedLocation(this.Piece.Location);
+        ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_BISHOP, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], loc[0] * PIECE_SIZE, loc[1] * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
     }
 }
 
@@ -517,8 +520,9 @@ class KnightDrawable extends PieceDrawable {
         super(piece);
     }
 
-    draw(ctx, pieceBuffer, color) {
-        this.ctx.drawImage(pieceBuffer, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_KNIGHT, color * PIECE_SOURCE_SIZE[1], PIECE_SIZE, PIECE_SIZE);
+    draw(ctx, pieceImage, color) {
+        var loc = BoardMathHelper.fromCombinedLocation(this.Piece.Location);
+        ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_KNIGHT, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], loc[0] * PIECE_SIZE, loc[1] * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
     }
 }
 
@@ -547,8 +551,9 @@ class KingDrawable extends PieceDrawable {
         super(piece);
     }
 
-    draw(ctx, pieceBuffer, color) {
-        this.ctx.drawImage(pieceBuffer, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_KING, color * PIECE_SOURCE_SIZE[1], PIECE_SIZE, PIECE_SIZE);
+    draw(ctx, pieceImage, color) {
+        var loc = BoardMathHelper.fromCombinedLocation(this.Piece.Location);
+        ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_KING, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], loc[0] * PIECE_SIZE, loc[1] * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
     }
 }
 
@@ -578,8 +583,9 @@ class QueenDrawable extends PieceDrawable {
         super(piece);
     }
 
-    draw(ctx, pieceBuffer, color) {
-        this.ctx.drawImage(pieceBuffer, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_QUEEN, color * PIECE_SOURCE_SIZE[1], PIECE_SIZE, PIECE_SIZE);
+    draw(ctx, pieceImage, color) {
+        var loc = BoardMathHelper.fromCombinedLocation(this.Piece.Location);
+        ctx.drawImage(pieceImage, (PIECE_SOURCE_SIZE[0] + PIECE_SOURCE_OFFSET) * PIECE_QUEEN, color * PIECE_SOURCE_SIZE[1], PIECE_SOURCE_SIZE[0], PIECE_SOURCE_SIZE[1], 2 + loc[0] * PIECE_SIZE, 2 + loc[1] * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
     }
 }
 
@@ -628,20 +634,20 @@ class BoardRenderer {
         }));
 
         try {
-            this.pieceBuffer = await readQueue;
+            this.pieceImage = new _canvasPrebuilt.Image();
+            this.pieceImage.src = await readQueue;
         } catch (e) {
             console.log(`체스 피스 파일 로딩중 오류가 발생했습니다\n${e}`);
         }
     }
 
     drawBackground() {
-        this.ctx.fillStyle = 'rgb(33, 33, 33)';
+        this.ctx.fillStyle = 'rgb(118, 150, 86)';
 
         this.ctx.fillRect(0, 0, 300, 300);
 
-        this.ctx.fillStyle = 'rgb(255, 255, 255)';
+        this.ctx.fillStyle = 'rgb(238, 238, 210)';
 
-        let offsetSize = PIECE_SIZE * 2;
         for (let x = 0; x < 8; x++) {
             for (let y = 0; y < 8; y++) {
                 if ((x + y) % 2 == 1) this.ctx.fillRect(2 + x * PIECE_SIZE, 2 + y * PIECE_SIZE, PIECE_SIZE, PIECE_SIZE);
@@ -653,11 +659,11 @@ class BoardRenderer {
         this.drawBackground();
         this.ctx.translate(2, 2);
 
-        for (let blackPiece of this.Board.BlackPieces) {
+        for (var blackPiece of this.Board.BlackPieces) {
             this.drawPiece(blackPiece, PIECE_BLACK);
         }
 
-        for (let whitePiece of this.Board.WhitePieces) {
+        for (var whitePiece of this.Board.WhitePieces) {
             this.drawPiece(whitePiece, PIECE_WHITE);
         }
 
@@ -673,6 +679,6 @@ class BoardRenderer {
     }
 
     drawPiece(piece, color) {
-        this.piece.Drawable.draw(ctx, this.pieceBuffer, color);
+        piece.Drawable.draw(this.ctx, this.pieceImage, color);
     }
 }
