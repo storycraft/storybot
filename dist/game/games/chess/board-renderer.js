@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _fs = require('fs');
+
+var _fs2 = _interopRequireDefault(_fs);
+
 var _canvasPrebuilt = require('canvas-prebuilt');
 
 var _canvasPrebuilt2 = _interopRequireDefault(_canvasPrebuilt);
@@ -11,8 +15,10 @@ var _canvasPrebuilt2 = _interopRequireDefault(_canvasPrebuilt);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //https://commons.wikimedia.org/wiki/File:Chess_Pieces_Sprite.svg
-const PIECE_SOURCE_PATH = './resources/chess_pieces.png';
+
 //보드판 렌더러
+
+const PIECE_SOURCE_PATH = './resources/chess_pieces.png';
 
 const PIECE_BLACK = 0;
 const PIECE_WHITE = 1;
@@ -34,7 +40,7 @@ class BoardRenderer {
     }
 
     async init() {
-        let readQueue = new Promise((resolve, reject) => fs.readFile(PIECE_SOURCE_PATH, (err, data) => {
+        let readQueue = new Promise((resolve, reject) => _fs2.default.readFile(PIECE_SOURCE_PATH, (err, data) => {
             if (err) return reject(err);
 
             resolve(data);
@@ -78,7 +84,6 @@ class BoardRenderer {
 
         return new Promise((resolve, reject) => {
             this.canvas.toBuffer((err, buf) => {
-                console.log(err);
                 if (err) reject(err);
 
                 resolve(buf);

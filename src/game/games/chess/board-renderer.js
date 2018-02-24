@@ -1,6 +1,7 @@
 
 //보드판 렌더러
 
+import fs from 'fs';
 import Canvas, { Image } from 'canvas-prebuilt';
 
 //https://commons.wikimedia.org/wiki/File:Chess_Pieces_Sprite.svg
@@ -71,7 +72,6 @@ export default class BoardRenderer {
 
         return new Promise((resolve, reject) => {
             this.canvas.toBuffer((err, buf) => {
-                console.log(err);
                 if (err)
                     reject(err);
                 

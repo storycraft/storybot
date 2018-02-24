@@ -1,6 +1,5 @@
 import Game from '../../game';
 
-import fs from 'fs';
 import { MessageTemplate, MessageAttachment } from 'storybot-core';
 
 import ChessBoard from './chess-board';

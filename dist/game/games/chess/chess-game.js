@@ -8,10 +8,6 @@ var _game = require('../../game');
 
 var _game2 = _interopRequireDefault(_game);
 
-var _fs = require('fs');
-
-var _fs2 = _interopRequireDefault(_fs);
-
 var _storybotCore = require('storybot-core');
 
 var _chessBoard = require('./chess-board');
