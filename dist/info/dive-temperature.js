@@ -49,9 +49,9 @@ class DiveTemperature extends _storybotCore.CommandListener {
             source.send(timestamp.toLocaleString() + ' 기준 현재 한강 물 온도는 ' + temp + ' 도에요').then(() => {
                 //사용자 편의를 위해 권장 메세지도 띄워주면 좋겠네요!
                 if (temp < 13) {
-                    source.send('너무 추울듯 ㅇㅇ');
+                    source.send('추워');
                 } else if (temp > 20) {
-                    source.send('지금 점프하시면 2D로 가는 포탈을 탈수 있어요!');
+                    source.send('지금 점프하시면 적당해요!');
                 }
             });
         }).catch(e => {
