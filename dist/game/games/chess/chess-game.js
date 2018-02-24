@@ -206,9 +206,10 @@ class ChessGame extends _game2.default {
 
             var messageTemplate = new _storybotCore.MessageTemplate(this.statusMessage, [new _storybotCore.MessageAttachment('chess-board.png', (await this.boardRenderer.render()))]);
 
-            this.PlayChannel.send(messageTemplate);
+            await this.PlayChannel.send(messageTemplate);
+            await this.PlayChannel.send(`[B] ${this.BlackPlayer.Name} vs [W] ${this.WhitePlayer.Name}`);
         } catch (e) {
-            this.PlayChannel.send(`작업 진행중 오류가 발생했습니다\n${e}`);
+            await this.PlayChannel.send(`작업 진행중 오류가 발생했습니다\n${e}`);
         }
     }
 
@@ -223,6 +224,8 @@ class ChessGame extends _game2.default {
         } else {
             this.statusMessage = `게임이 중단 되었습니다 \`${this.BlackPlayer.Name}\`과 \`${this.WhitePlayer.Name}\`이 비겼습니다`;
         }
+
+        this.sendInfoMessages();
     }
 }
 exports.default = ChessGame;
