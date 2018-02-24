@@ -35,7 +35,8 @@ export default class ChessCommand extends CommandListener {
             var queueCode = args[0];
 
             if (this.queueMap.has(source) && this.queueMap.get(source)[queueCode]){
-                var waitingUser = this.queueMap.get(source)[queueCode].user;
+                var queue = this.queueMap.get(source)[queueCode];
+                var waitingUser = queue.user;
 
                 /*if (waitingUser == user){
                     source.send(`왜 자기 큐에 자기가 들어가려고 해요`);
@@ -43,7 +44,7 @@ export default class ChessCommand extends CommandListener {
                 }*/
 
                 //큐에서 제거
-                this.removeQueue(source, waitingUser);
+                this.removeQueue(source, queue);
 
                 let game = new ChessGame(source);
 
@@ -103,22 +104,21 @@ export default class ChessCommand extends CommandListener {
         return queueCode;
     }
 
-    removeQueue(channel,user){
-        if (!this.queueUser.includes(user) || !this.queueMap.has(channel))
+    removeQueue(channel, queue){
+        if (!this.queueMap.has(channel))
             return;
 
         var channelQueue = this.queueMap.get(channel);
 
         var queue = null;
         for (let key in channelQueue){
-            if (channelQueue[key]['user'] == user){
-                queue = channelQueue[key];
+            if (channelQueue[key] == queue){
                 channelQueue[key] = null;
                 break;
             }
         }
 
-        this.queueUser.splice(this.queueUser.indexOf(user), 1);
+        this.queueUser.splice(this.queueUser.indexOf(queue.user), 1);
 
         clearTimeout(this.queueTimerMap.get(queue));
         this.queueTimerMap.delete(queue);
