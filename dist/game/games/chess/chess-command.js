@@ -125,7 +125,7 @@ class ChessCommand extends _storybotCore.CommandListener {
             }
         }
 
-        this.queueUser.splice(this.queueUser.indexOf(user));
+        this.queueUser.splice(this.queueUser.indexOf(user), 1);
 
         clearTimeout(this.queueTimerMap.get(queue));
         this.queueTimerMap.delete(queue);

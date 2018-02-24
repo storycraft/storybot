@@ -31,5 +31,7 @@ export default class Game {
         if (!this.Started)
             throw new Error('game is not started');
         this.started = false;
+
+        this.gameManager.removeGame(this);
     }
 }

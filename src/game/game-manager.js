@@ -41,7 +41,7 @@ export default class GameManager {
 
     removeGame(game){
         if (!this.hasGame(game))
-        throw new Error('game is not added');
+            throw new Error('game is not added');
 
         this.gameList.splice(this.gameList.indexOf(game), 1);
     }
