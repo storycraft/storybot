@@ -68,6 +68,7 @@ export default class ChessCommand extends CommandListener {
 
             setTimeout(() => {
                 this.removeQueue(source, user);
+                source.send(`대기 큐 \`${queueCode}\`가 시간 초과로 제거되었습니다`);
             }, 60000);
         }
     }
