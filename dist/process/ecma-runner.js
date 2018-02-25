@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _process = require('./process');
+var _nodeProcess = require('./node-process');
 
-var _process2 = _interopRequireDefault(_process);
+var _nodeProcess2 = _interopRequireDefault(_nodeProcess);
 
 var _fs = require('fs');
 
@@ -26,6 +26,8 @@ class EcmaRunner extends _storybotCore.CommandListener {
         this.main.CommandManager.on('ecma', this.onCommand.bind(this));
 
         this.first = true;
+
+        this.hookMap = new Map();
     }
 
     get Description() {
@@ -39,10 +41,10 @@ class EcmaRunner extends _storybotCore.CommandListener {
     async run(source, channel) {
         var path = await this.writeTempFile(source);
 
-        var proc = new _process2.default(`node`);
+        var proc = new _nodeProcess2.default(path);
 
-        proc.start(path);
-        channel.send(`프로세스 ${proc.Pid} 가 실행되었습니다`);
+        proc.start();
+        channel.send(`프로세스 \`${proc.Pid}\`가 실행되었습니다`);
 
         var stdoutProcess = data => {
             channel.send(data + '');
@@ -51,7 +53,39 @@ class EcmaRunner extends _storybotCore.CommandListener {
         proc.StdOut.on('data', stdoutProcess);
         proc.StdErr.on('data', stdoutProcess);
 
+        proc.on('stop', () => this.removeHook(proc));
+
+        this.connectHook(proc, channel);
+
         this.main.ProcessManager.addProcess(proc);
+    }
+
+    connectHook(nodeProc, channel) {
+        if (this.hookMap.has(nodeProc)) throw new Error('Hook already connected');
+
+        var hook = msg => {
+            nodeProc.sendIPC({ //create simplified like Message object
+                'Text': msg.Text,
+                'Source': { //Channel
+                    'Id': msg.Source.Id,
+                    'Name': msg.Source.Name
+                },
+                'User': { //User
+                    'Id': msg.User.Id,
+                    'Name': msg.User.Name,
+                    'IdentityId': msg.User.IdentityId
+                }
+            });
+        };
+
+        this.hookMap.set(nodeProc, hook);
+        channel.on('message', hook);
+    }
+
+    removeHook(nodeProc) {
+        if (!this.hookMap.has(nodeProc)) throw new Error('Hook is not connected');
+
+        channel.off('message', this.hookMap.get(nodeProc));
     }
 
     async writeTempFile(code) {

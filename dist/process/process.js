@@ -61,17 +61,15 @@ class Process extends _events.EventEmitter {
         return this.proc.pid;
     }
 
-    async sendIPC(message, sendHandle, options) {
-        if (!this.Started) return;
-
-        await new Promise((resolve, reject) => this.proc.send(message, sendHandle, options, resolve));
+    createProcess(args) {
+        return _child_process2.default.spawn(this.StartCommand, args);
     }
 
     start(...args) {
         if (this.Started) throw new Error('Process already started');
         this.started = true;
 
-        this.proc = _child_process2.default.spawn(this.StartCommand, args);
+        this.proc = this.createProcess(args);
 
         this.proc.on('exit', this.onStop.bind(this));
         this.proc.on('message', (message, sendHandle) => this.emit(message, sendHandle));

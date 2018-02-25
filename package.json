@@ -20,7 +20,7 @@
   "homepage": "https://github.com/storycraft/storybot#readme",
   "dependencies": {
     "canvas-prebuilt": "^1.6.5-prerelease.1",
-    "storybot-core": "^1.2.7"
+    "storybot-core": "^1.2.9"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

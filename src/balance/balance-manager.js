@@ -6,8 +6,6 @@ export default class BalanceManager {
     }
 
     async init(){
-        await this.FirebaseDb.once('child_added', this.onBalanceAdded.bind(this));
-
         this.FirebaseDb.on('child_added', this.onBalanceAdded.bind(this));
         this.FirebaseDb.on('child_changed', this.onBalanceAdded.bind(this));
         this.FirebaseDb.on('child_removed', this.onBalanceRemoved.bind(this));

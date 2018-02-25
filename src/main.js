@@ -27,9 +27,9 @@ export default class Main {
 
         //테스트 명령어
         this.bot.on('message', (msg) => {
-            console.log('> ' + msg.Source.Name + ' ' + msg.User.Name + ' ' + msg.Message);
+            console.log('> ' + msg.Source.Name + ' ' + msg.User.Name + ' ' + msg.Text);
 
-            if (msg.Message == '스토링')
+            if (msg.Text == '스토링')
                 msg.reply('네, 스토리에요!');
         });
     }

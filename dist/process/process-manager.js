@@ -58,8 +58,13 @@ class ProcessManager extends _storybotCore.CommandListener {
 
                 break;
 
+            case 'list':
+                var pidList = Object.keys(this.processes);
+                source.send(`자식 프로세스 목록 ( ${pidList.length} )\n${pidList.join('\n')}`);
+                break;
+
             default:
-                source.send('사용 가능한 서브 명령어 목록\n`kill <pid> | 해당 pid의 프로세스를 죽입니다`');
+                source.send('사용 가능한 서브 명령어 목록\n`kill <pid> | 해당 pid의 프로세스를 죽입니다\nlist | 실행중인 프로세스 목록을 봅니다`');
                 break;
         }
     }
