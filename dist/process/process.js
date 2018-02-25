@@ -73,14 +73,20 @@ class Process extends _events.EventEmitter {
 
         this.proc = _child_process2.default.spawn(this.StartCommand, args);
 
-        this.proc.on('exit', this.stop.bind(this));
+        this.proc.on('exit', this.onStop.bind(this));
         this.proc.on('message', (message, sendHandle) => this.emit(message, sendHandle));
     }
 
     stop() {
         if (!this.Started) throw new Error('Process is not started');
-        this.started = false;
 
+        this.proc.kill();
+
+        this.onStop();
+    }
+
+    onStop() {
+        this.started = false;
         this.proc = null;
 
         this.emit('stop');
