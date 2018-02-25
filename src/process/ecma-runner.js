@@ -40,7 +40,7 @@ export default class EcmaRunner extends CommandListener {
         proc.StdOut.on('data', stdoutProcess);
         proc.StdErr.on('data', stdoutProcess);
 
-        proc.on('stop', () => this.removeHook(proc));
+        proc.on('stop', () => this.removeHook(proc, channel));
 
         this.connectHook(proc, channel);
 
@@ -70,7 +70,7 @@ export default class EcmaRunner extends CommandListener {
         channel.on('message', hook);
     }
 
-    removeHook(nodeProc){
+    removeHook(nodeProc, channel){
         if (!this.hookMap.has(nodeProc))
             throw new Error('Hook is not connected');
 
