@@ -77,6 +77,8 @@ export default class EcmaRunner extends CommandListener {
             return;
         }
 
+        source = source.substring(6, source.length - 3);
+
         if (this.first){
             this.first = false;
             channel.send('해당 소스 실행으로 인한 채널 메세지 피해는 Storybot에서 책임 지지 않습니다');
