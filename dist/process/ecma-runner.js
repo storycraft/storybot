@@ -85,7 +85,7 @@ class EcmaRunner extends _storybotCore.CommandListener {
     removeHook(nodeProc, channel) {
         if (!this.hookMap.has(nodeProc)) throw new Error('Hook is not connected');
 
-        channel.off('message', this.hookMap.get(nodeProc));
+        channel.removeListener('message', this.hookMap.get(nodeProc));
     }
 
     async writeTempFile(code) {

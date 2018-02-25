@@ -74,7 +74,7 @@ export default class EcmaRunner extends CommandListener {
         if (!this.hookMap.has(nodeProc))
             throw new Error('Hook is not connected');
 
-        channel.off('message',this.hookMap.get(nodeProc));
+        channel.removeListener('message',this.hookMap.get(nodeProc));
     }
 
     async writeTempFile(code) {
