@@ -29,7 +29,7 @@ class EcmaRunner extends _storybotCore.CommandListener {
     }
 
     get Description() {
-        return 'js 하실 | 사용법 : *ecma \`<소스>\`';
+        return 'js 하실 | 사용법: *ecma \\\`\\\`\\\`js\n<소스>\n\\\`\\\`\\\`';
     }
 
     get Aliases() {
@@ -79,17 +79,15 @@ class EcmaRunner extends _storybotCore.CommandListener {
 
     onCommand(args, user, bot, channel) {
         if (args.length < 1) {
-            channel.send('기본 사용법: *ecma \`<소스>\`');
+            channel.send('기본 사용법: *ecma \\\`\\\`\\\`js\n<소스>\n\\\`\\\`\\\`');
             return;
         }
-        var sourceSplited = args.join(' ').split('`');
+        var source = args.join(' ');
 
-        if (sourceSplited.length != 3) {
-            channel.send('사용법: *ecma \`<소스>\`');
+        if (!source.startsWith('```js\n') || !source.endsWith('```')) {
+            channel.send('기본 사용법: *ecma \\\`\\\`\\\`js\n<소스>\n\\\`\\\`\\\`');
             return;
         }
-
-        var source = sourceSplited[1];
 
         if (this.first) {
             this.first = false;
