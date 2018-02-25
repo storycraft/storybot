@@ -12,12 +12,18 @@ import botSettings from './resources/bot-settings';
 import StoryReact from './react/story-react';
 import ChessCommand from './game/games/chess/chess-command';
 import SearchHelper from './info/search-helper';
+import BalanceManager from './balance/balance-manager';
+import EcmaRunner from './process/ecma-runner';
+import ProcessManager from './process/process-manager';
 
 export default class Main {
     constructor(){
         this.bot = new StoryBot();
 
         this.gameManager = new GameManager(this);
+        this.balanceManager = new BalanceManager(this);
+
+        this.processManager = new ProcessManager(this);
 
         //테스트 명령어
         this.bot.on('message', (msg) => {
@@ -44,11 +50,20 @@ export default class Main {
         return this.gameManager;
     }
 
+    get BalanceManager(){
+        return this.balanceManager;
+    }
+
+    get ProcessManager(){
+        return this.processManager;
+    }
+
     async start(){
         this.initCommand();
         this.initReact();
 
         await this.Bot.initialize(botSettings);
+        await this.balanceManager.init();
 
         console.log('Storybot이 시작 되었습니다');
     }
@@ -65,6 +80,9 @@ export default class Main {
         commandManager.addCommandInfo(new SearchHelper(this));
 
         commandManager.addCommandInfo(new ChessCommand(this));
+
+        commandManager.addCommandInfo(this.ProcessManager);
+        commandManager.addCommandInfo(new EcmaRunner(this));
     }
 
     initReact(){

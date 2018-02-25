@@ -35,7 +35,7 @@ exports.default = {
     "command-prefix": "*",
 
     //데이터 저장을 위한 firebase 설정
-    "enable-firebase": true,
+    "firebase-enabled": true,
     "firebase": {
         "apiKey": "AIzaSyBFd9oKdm5nFjygPc8YyUX6N3XrFPlj1tc",
         "authDomain": "storybot-59085.firebaseapp.com",

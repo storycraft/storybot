@@ -42,6 +42,18 @@ var _searchHelper = require("./info/search-helper");
 
 var _searchHelper2 = _interopRequireDefault(_searchHelper);
 
+var _balanceManager = require("./balance/balance-manager");
+
+var _balanceManager2 = _interopRequireDefault(_balanceManager);
+
+var _ecmaRunner = require("./process/ecma-runner");
+
+var _ecmaRunner2 = _interopRequireDefault(_ecmaRunner);
+
+var _processManager = require("./process/process-manager");
+
+var _processManager2 = _interopRequireDefault(_processManager);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class Main {
@@ -49,6 +61,9 @@ class Main {
         this.bot = new _storybotCore.StoryBot();
 
         this.gameManager = new _gameManager2.default(this);
+        this.balanceManager = new _balanceManager2.default(this);
+
+        this.processManager = new _processManager2.default(this);
 
         //테스트 명령어
         this.bot.on('message', msg => {
@@ -74,11 +89,20 @@ class Main {
         return this.gameManager;
     }
 
+    get BalanceManager() {
+        return this.balanceManager;
+    }
+
+    get ProcessManager() {
+        return this.processManager;
+    }
+
     async start() {
         this.initCommand();
         this.initReact();
 
         await this.Bot.initialize(_botSettings2.default);
+        await this.balanceManager.init();
 
         console.log('Storybot이 시작 되었습니다');
     }
@@ -95,6 +119,9 @@ class Main {
         commandManager.addCommandInfo(new _searchHelper2.default(this));
 
         commandManager.addCommandInfo(new _chessCommand2.default(this));
+
+        commandManager.addCommandInfo(this.ProcessManager);
+        commandManager.addCommandInfo(new _ecmaRunner2.default(this));
     }
 
     initReact() {

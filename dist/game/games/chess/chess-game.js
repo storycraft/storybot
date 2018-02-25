@@ -65,10 +65,6 @@ class ChessGame extends _game2.default {
         return this.currentTurn;
     }
 
-    setNextTurn() {
-        return this.currentTurn = this.currentTurn ? 0 /*Black*/ : 1 /*White*/;
-    }
-
     get CurrentPlayer() {
         return this.PlayerList[this.CurrentTurn];
     }
@@ -126,6 +122,10 @@ class ChessGame extends _game2.default {
         this.sendInfoMessages();
     }
 
+    setNextTurn() {
+        return this.currentTurn = this.currentTurn == 1 ? 0 /*Black*/ : 1 /*White*/;
+    }
+
     onMoveCommand(args, user, bot, source) {
         if (source != this.PlayChannel || !this.PlayerList.includes(user)) return;
 
@@ -164,7 +164,7 @@ class ChessGame extends _game2.default {
 
                 this.setNextTurn();
 
-                this.statusMessage = `\`${user.Name}\`의 차례입니다`;
+                this.statusMessage = `\`${this.CurrentPlayer.Name}\`의 차례입니다`;
                 this.sendInfoMessages();
             } else {
                 source.send('그 말은 거기로 움직일 수 없습니다');

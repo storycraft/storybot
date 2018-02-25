@@ -48,10 +48,6 @@ export default class ChessGame extends Game {
         return this.currentTurn;
     }
 
-    setNextTurn(){
-        return this.currentTurn = (this.currentTurn ? 0/*Black*/ : 1/*White*/);
-    }
-
     get CurrentPlayer(){
         return this.PlayerList[this.CurrentTurn];
     }
@@ -111,6 +107,10 @@ export default class ChessGame extends Game {
         this.sendInfoMessages();
     }
 
+    setNextTurn(){
+        return this.currentTurn = (this.currentTurn == 1 ? 0/*Black*/ : 1/*White*/);
+    }
+
     onMoveCommand(args, user, bot, source){
         if (source != this.PlayChannel || !this.PlayerList.includes(user))
             return;
@@ -152,7 +152,7 @@ export default class ChessGame extends Game {
 
                 this.setNextTurn();
 
-                this.statusMessage = `\`${user.Name}\`의 차례입니다`;
+                this.statusMessage = `\`${this.CurrentPlayer.Name}\`의 차례입니다`;
                 this.sendInfoMessages();
             }
             else{
