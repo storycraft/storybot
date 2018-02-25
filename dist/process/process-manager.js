@@ -54,7 +54,7 @@ class ProcessManager extends _storybotCore.CommandListener {
                 }
 
                 this.processes[pid].stop();
-                source.send(`프로세스 ${pid} 이(가) 중단되었습니다`);
+                source.send(`프로세스 \`${pid}\`이(가) 중단되었습니다`);
 
                 break;
 
