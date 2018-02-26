@@ -54,6 +54,10 @@ var _processManager = require("./process/process-manager");
 
 var _processManager2 = _interopRequireDefault(_processManager);
 
+var _javaRunner = require("./process/java-runner");
+
+var _javaRunner2 = _interopRequireDefault(_javaRunner);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class Main {
@@ -122,6 +126,7 @@ class Main {
 
         commandManager.addCommandInfo(this.ProcessManager);
         commandManager.addCommandInfo(new _ecmaRunner2.default(this));
+        commandManager.addCommandInfo(new _javaRunner2.default(this));
     }
 
     initReact() {

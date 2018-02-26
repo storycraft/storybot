@@ -12,7 +12,7 @@ class ProcessManager extends _storybotCore.CommandListener {
 
         this.main = main;
 
-        this.processes = {};
+        this.processes = new Map();
 
         this.main.CommandManager.on('proc', this.onCommand.bind(this));
     }
@@ -29,10 +29,10 @@ class ProcessManager extends _storybotCore.CommandListener {
         if (!proc.Started) throw new Error('This process is not started');
 
         var pid = proc.Pid;
-        this.processes[pid] = proc;
+        this.processes.set(pid, proc);
 
         proc.on('stop', () => {
-            this.processes[pid] = null;
+            this.processes.delete(pid);
         });
     }
 
@@ -48,19 +48,19 @@ class ProcessManager extends _storybotCore.CommandListener {
 
                 var pid = args[1];
 
-                if (!this.processes[pid]) {
+                if (!this.processes.has(pid)) {
                     source.send('해당 pid를 가진 자식 프로세스를 찾을 수 없습니다');
                     return;
                 }
 
-                this.processes[pid].stop();
+                this.processes.get(pid).stop();
                 source.send(`프로세스 \`${pid}\`이(가) 중단되었습니다`);
 
                 break;
 
             case 'list':
-                var pidList = Object.keys(this.processes);
-                source.send(`자식 프로세스 목록 ( ${pidList.length} )\n${pidList.join('\n')}`);
+                var pidList = Array.from(this.processes.values());
+                source.send(`자식 프로세스 목록 ( ${this.processes.size} )\n${pidList.join('\n')}`);
                 break;
 
             default:

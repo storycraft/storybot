@@ -8,24 +8,18 @@ var _nodeProcess = require('./node-process');
 
 var _nodeProcess2 = _interopRequireDefault(_nodeProcess);
 
-var _fs = require('fs');
+var _programRunner = require('./program-runner');
 
-var _fs2 = _interopRequireDefault(_fs);
-
-var _storybotCore = require('storybot-core');
+var _programRunner2 = _interopRequireDefault(_programRunner);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-class EcmaRunner extends _storybotCore.CommandListener {
+class EcmaRunner extends _programRunner2.default {
     constructor(main) {
-        super();
-
-        this.main = main;
+        super(main);
 
         this.main.CommandManager.on('js', this.onCommand.bind(this));
         this.main.CommandManager.on('ecma', this.onCommand.bind(this));
-
-        this.first = true;
 
         this.hookMap = new Map();
     }
@@ -36,6 +30,14 @@ class EcmaRunner extends _storybotCore.CommandListener {
 
     get Aliases() {
         return ['js', 'ecma'];
+    }
+
+    get Language() {
+        return 'node js';
+    }
+
+    get SourceExt() {
+        return 'js';
     }
 
     async run(source, channel) {
@@ -86,29 +88,6 @@ class EcmaRunner extends _storybotCore.CommandListener {
         if (!this.hookMap.has(nodeProc)) throw new Error('Hook is not connected');
 
         channel.removeListener('message', this.hookMap.get(nodeProc));
-    }
-
-    async writeTempFile(code) {
-        if (!_fs2.default.existsSync('./code')) {
-            _fs2.default.mkdirSync('./code', 484 /*0744*/);
-        }
-
-        if (!_fs2.default.existsSync('./code/node')) {
-            _fs2.default.mkdirSync('./code/node', 484);
-        }
-
-        var fileName = 'Source-' + Math.floor(Math.random() * 100000) + '-' + new Date().getTime();
-        var path = './code/node/' + fileName + '.js';
-
-        await new Promise((resolve, reject) => _fs2.default.writeFile(path, code, err => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve();
-            }
-        }));
-
-        return path;
     }
 
     onCommand(args, user, bot, channel) {

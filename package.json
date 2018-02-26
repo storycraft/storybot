@@ -20,6 +20,9 @@
   "homepage": "https://github.com/storycraft/storybot#readme",
   "dependencies": {
     "canvas-prebuilt": "^1.6.5-prerelease.1",
+    "gulp": "^3.9.1",
+    "gulp-javac": "^2.0.1",
+    "node-jre": "^0.2.3",
     "storybot-core": "^1.2.9"
   },
   "devDependencies": {

@@ -15,6 +15,7 @@ import SearchHelper from './info/search-helper';
 import BalanceManager from './balance/balance-manager';
 import EcmaRunner from './process/ecma-runner';
 import ProcessManager from './process/process-manager';
+import JavaRunner from './process/java-runner';
 
 export default class Main {
     constructor(){
@@ -83,6 +84,7 @@ export default class Main {
 
         commandManager.addCommandInfo(this.ProcessManager);
         commandManager.addCommandInfo(new EcmaRunner(this));
+        commandManager.addCommandInfo(new JavaRunner(this));
     }
 
     initReact(){
