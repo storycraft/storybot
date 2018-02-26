@@ -42,16 +42,20 @@ export default class ProcessManager extends CommandListener {
                     return;
                 }
 
-                var pid = Number.parseInt(args[1]);
+                try {
+                    var pid = Number.parseInt(args[1]);
 
-                if (!this.processes.has(pid)){
-                    source.send('해당 pid를 가진 자식 프로세스를 찾을 수 없습니다');
-                    return;
+                    if (!this.processes.has(pid)){
+                        source.send('해당 pid를 가진 자식 프로세스를 찾을 수 없습니다');
+                        return;
+                    }
+    
+                    this.processes.get(pid).stop();
+                    source.send(`프로세스 \`${pid}\`이(가) 중단되었습니다`);
+                } catch(e){
+                    source.send('사용법: *proc kill <pid>');
                 }
-
-                this.processes.get(pid).stop();
-                source.send(`프로세스 \`${pid}\`이(가) 중단되었습니다`);
-
+                
                 break;
             
             case 'list':
