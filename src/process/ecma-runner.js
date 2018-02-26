@@ -1,5 +1,7 @@
 import NodeProcess from './node-process';
 
+import fs from 'fs';
+
 import ProgramRunner from './program-runner';
 
 export default class EcmaRunner extends ProgramRunner { 
@@ -18,14 +20,6 @@ export default class EcmaRunner extends ProgramRunner {
 
     get Aliases(){
         return ['js', 'ecma'];
-    }
-
-    get Language(){
-        return 'node js';
-    }
-
-    get SourceExt(){
-        return 'js';
     }
 
     async run(source, channel){
@@ -78,6 +72,31 @@ export default class EcmaRunner extends ProgramRunner {
             throw new Error('Hook is not connected');
 
         channel.removeListener('message',this.hookMap.get(nodeProc));
+    }
+    
+
+    async writeTempFile(code) {
+        if (!fs.existsSync(`./code/`)) {
+            fs.mkdirSync(`./code/`, 484);
+        }
+
+        if (!fs.existsSync(`./code/node/`)) {
+            fs.mkdirSync(`./code/node/`, 484);
+        }
+
+        var fileName = 'Source-' + Math.floor(Math.random() * 100000) + '-' + new Date().getTime();
+        var path = `./code/node/` + fileName + '.js';
+
+        await new Promise((resolve, reject) => fs.writeFile(path, code, (err) => {
+            if (err){
+                reject(err);
+            }
+            else{
+                resolve();
+            }
+        }));
+
+        return path;
     }
 
     onCommand(args, user, bot, channel){

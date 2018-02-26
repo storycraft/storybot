@@ -81,4 +81,12 @@ export default class Process extends EventEmitter {
 
         this.emit('stop');
     }
+
+    static fromProcess(proc){
+        var process = new Process();
+        process.proc = proc;
+        process.started = true;
+
+        return process;
+    }
 }

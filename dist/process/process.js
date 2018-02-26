@@ -89,5 +89,13 @@ class Process extends _events.EventEmitter {
 
         this.emit('stop');
     }
+
+    static fromProcess(proc) {
+        var process = new Process();
+        process.proc = proc;
+        process.started = true;
+
+        return process;
+    }
 }
 exports.default = Process;

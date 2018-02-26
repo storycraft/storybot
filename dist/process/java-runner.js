@@ -49,21 +49,17 @@ class JavaRunner extends _programRunner2.default {
         return ['java'];
     }
 
-    get Language() {
-        return 'java';
-    }
-
-    get SourceExt() {
-        return 'java';
+    get CodePath() {
+        return './code/java';
     }
 
     async run(source, mainClass, channel) {
-        var projectPath = this.getNewProjectPath();
-        var path = await this.writeTempFile(projectPath, mainClass, source);
+        var projectName = this.NewProjectName;
+        var path = await this.writeTempFile(projectName, mainClass, source);
 
-        await this.compileJava(projectPath + '/' + path);
+        console.log(this.compileJava(this.CodePath + '/' + projectName + '/' + path));
 
-        var proc = _nodeJre2.default.spawn([projectPath + '/out/executable.jar'], mainClass);
+        var proc = _process2.default.fromProcess(_nodeJre2.default.spawn([this.CodePath + '/' + projectName + '/out/executable.jar'], mainClass));
         channel.send(`프로세스 \`${proc.Pid}\`가 실행되었습니다`);
 
         var stdoutProcess = data => {
@@ -80,20 +76,24 @@ class JavaRunner extends _programRunner2.default {
         return _gulp2.default.src(path).pipe((0, _gulpJavac2.default)('executable.jar').pipe(_gulp2.default.dest('out')));
     }
 
-    getNewProjectPath() {
-        return `./code/${this.Language}/Source-${Math.floor(Math.random() * 100000)}-${new Date().getTime()}`;
+    get NewProjectName() {
+        return `project-${Math.floor(Math.random() * 100000)}-${new Date().getTime()}`;
     }
 
     async writeTempFile(projectPath, className, code) {
-        if (!_fs2.default.existsSync('./code')) {
-            _fs2.default.mkdirSync('./code', 484 /*0744*/);
+        if (!_fs2.default.existsSync(`./code/`)) {
+            _fs2.default.mkdirSync(`./code/`, 484);
         }
 
-        if (!_fs2.default.existsSync(`./code/${this.Language}`)) {
-            _fs2.default.mkdirSync(`./code/${this.Language}`, 484);
+        if (!_fs2.default.existsSync(this.CodePath)) {
+            _fs2.default.mkdirSync(this.CodePath, 484);
         }
 
-        var path = projectPath + '/' + className + '.' + this.SourceExt;
+        if (!_fs2.default.existsSync(this.CodePath + '/' + projectPath)) {
+            _fs2.default.mkdirSync(this.CodePath + '/' + projectPath, 484);
+        }
+
+        var path = this.CodePath + '/' + projectPath + '/' + className + '.java';
 
         await new Promise((resolve, reject) => _fs2.default.writeFile(path, code, err => {
             if (err) {

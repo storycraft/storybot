@@ -25,21 +25,17 @@ export default class JavaRunner extends ProgramRunner {
         return ['java'];
     }
 
-    get Language(){
-        return 'java';
-    }
-
-    get SourceExt(){
-        return 'java';
+    get CodePath(){
+        return './code/java';
     }
 
     async run(source, mainClass, channel){
-        var projectPath = this.getNewProjectPath();
-        var path = await this.writeTempFile(projectPath, mainClass, source);
+        var projectName = this.NewProjectName;
+        var path = await this.writeTempFile(projectName, mainClass, source);
 
-        await this.compileJava(projectPath + '/' + path);
+        console.log(this.compileJava(this.CodePath + '/' + projectName + '/' + path));
 
-        var proc = jre.spawn([ projectPath + '/out/executable.jar' ], mainClass);
+        var proc = Process.fromProcess(jre.spawn([ this.CodePath + '/' + projectName + '/out/executable.jar' ], mainClass));
         channel.send(`프로세스 \`${proc.Pid}\`가 실행되었습니다`);
 
         var stdoutProcess = (data) => {
@@ -56,20 +52,24 @@ export default class JavaRunner extends ProgramRunner {
         return gulp.src(path).pipe(javac('executable.jar').pipe(gulp.dest('out')));
     }
 
-    getNewProjectPath(){
-        return `./code/${this.Language}/Source-${Math.floor(Math.random() * 100000)}-${new Date().getTime()}`;
+    get NewProjectName(){
+        return `project-${Math.floor(Math.random() * 100000)}-${new Date().getTime()}`;
     }
 
     async writeTempFile(projectPath, className,code) {
-        if (!fs.existsSync('./code')) {
-            fs.mkdirSync('./code', 484/*0744*/);
+        if (!fs.existsSync(`./code/`)) {
+            fs.mkdirSync(`./code/`, 484);
+        }
+        
+        if (!fs.existsSync(this.CodePath)) {
+            fs.mkdirSync(this.CodePath, 484);
         }
 
-        if (!fs.existsSync(`./code/${this.Language}`)) {
-            fs.mkdirSync(`./code/${this.Language}`, 484);
+        if (!fs.existsSync(this.CodePath + '/' + projectPath)) {
+            fs.mkdirSync(this.CodePath + '/' + projectPath, 484);
         }
 
-        var path = projectPath + '/' + className + '.' + this.SourceExt;
+        var path = this.CodePath + '/' + projectPath + '/' + className + '.java';
 
         await new Promise((resolve, reject) => fs.writeFile(path, code, (err) => {
             if (err){
