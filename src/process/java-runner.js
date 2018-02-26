@@ -33,9 +33,9 @@ export default class JavaRunner extends ProgramRunner {
         var projectName = this.NewProjectName;
         var path = await this.writeTempFile(projectName, mainClass, source);
 
-        console.log(this.compileJava(this.CodePath + '/' + projectName + '/' + path));
+        console.log(this.compileJava(path));
 
-        var proc = Process.fromProcess(jre.spawn([ this.CodePath + '/' + projectName + '/out/executable.jar' ], mainClass));
+        var proc = Process.fromProcess(jre.spawn([ this.CodePath + '/' + projectName + '/executable.jar' ], mainClass));
         channel.send(`프로세스 \`${proc.Pid}\`가 실행되었습니다`);
 
         var stdoutProcess = (data) => {
@@ -49,7 +49,7 @@ export default class JavaRunner extends ProgramRunner {
     }
 
     async compileJava(path){
-        return gulp.src(path).pipe(javac('executable.jar').pipe(gulp.dest('out')));
+        return gulp.src(path).pipe(javac.javac()).pipe(javac.jar('executable.jar')).pipe(gulp.dest('executable.jar'));
     }
 
     get NewProjectName(){

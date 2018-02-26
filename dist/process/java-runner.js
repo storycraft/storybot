@@ -57,9 +57,9 @@ class JavaRunner extends _programRunner2.default {
         var projectName = this.NewProjectName;
         var path = await this.writeTempFile(projectName, mainClass, source);
 
-        console.log(this.compileJava(this.CodePath + '/' + projectName + '/' + path));
+        console.log(this.compileJava(path));
 
-        var proc = _process2.default.fromProcess(_nodeJre2.default.spawn([this.CodePath + '/' + projectName + '/out/executable.jar'], mainClass));
+        var proc = _process2.default.fromProcess(_nodeJre2.default.spawn([this.CodePath + '/' + projectName + '/executable.jar'], mainClass));
         channel.send(`프로세스 \`${proc.Pid}\`가 실행되었습니다`);
 
         var stdoutProcess = data => {
@@ -73,7 +73,7 @@ class JavaRunner extends _programRunner2.default {
     }
 
     async compileJava(path) {
-        return _gulp2.default.src(path).pipe((0, _gulpJavac2.default)('executable.jar').pipe(_gulp2.default.dest('out')));
+        return _gulp2.default.src(path).pipe(_gulpJavac2.default.javac()).pipe(_gulpJavac2.default.jar('executable.jar')).pipe(_gulp2.default.dest('executable.jar'));
     }
 
     get NewProjectName() {

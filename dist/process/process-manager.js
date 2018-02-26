@@ -46,7 +46,7 @@ class ProcessManager extends _storybotCore.CommandListener {
                     return;
                 }
 
-                var pid = args[1];
+                var pid = Number.parseInt(args[1]);
 
                 if (!this.processes.has(pid)) {
                     source.send('해당 pid를 가진 자식 프로세스를 찾을 수 없습니다');
