@@ -55,7 +55,7 @@ export default class ProcessManager extends CommandListener {
                 break;
             
             case 'list':
-                var pidList = Array.from(this.processes.values());
+                var pidList = Array.from(this.processes.keys());
                 source.send(`자식 프로세스 목록 ( ${this.processes.size} )\n${pidList.join('\n')}`);
                 break;
 
