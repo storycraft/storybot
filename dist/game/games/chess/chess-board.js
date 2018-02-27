@@ -44,11 +44,11 @@ class ChessBoard {
     }
 
     get BlackKingDied() {
-        return !this.DeadPieces.includes(this.blackKing);
+        return this.DeadPieces.includes(this.blackKing);
     }
 
     get WhiteKingDead() {
-        return !this.DeadPieces.includes(this.whiteKing);
+        return this.DeadPieces.includes(this.whiteKing);
     }
 
     get IsGameOver() {

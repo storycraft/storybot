@@ -93,7 +93,6 @@ export class PawnPiece extends ChessPiece {
         super.Location = location;
     }
 
-    //폰의 경우 말 처 먹을 수 있는것 빼고 모두 계산함
     canMoveTo(location){
         if (!super.canMoveTo(location))
             return false;
@@ -106,11 +105,13 @@ export class PawnPiece extends ChessPiece {
 
         let direction = this.Board.WhitePieces.includes(this) ? -1 : 1;
 
-        if (this.default && offY == direction * 2)
-            return true;
+        if (offX == 0){
+            if (this.default && offY == direction * 2)
+                return true;
         
-        if (offY == direction && offX == 0)
-            return true;
+            if (offY == direction)
+                return true;
+        }
 
         if (offY == direction && Math.abs(offX) == 1 && super.Board.getPieceAt(location))
             return true;

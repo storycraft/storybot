@@ -22,6 +22,9 @@ export default class ChessGame extends Game {
 
         this.gameCommandBind = this.onGameCommand.bind(this);
         this.moveCommandBind = this.onMoveCommand.bind(this);
+
+        this.lastBoardMessage = null;
+        this.lastStatMessage = null;
     }
 
     get BlackPlayer(){
@@ -155,6 +158,7 @@ export default class ChessGame extends Game {
 
                     this.statusMessage = `\`${this.CurrentPlayer.Name}\`의 차례입니다`;
 
+                    this.removeLastMessages();
                     this.sendInfoMessages();
                 }
                 else{
@@ -210,11 +214,23 @@ export default class ChessGame extends Game {
         
             var messageTemplate = new MessageTemplate(this.statusMessage, [ new MessageAttachment('chess-board.png', await this.boardRenderer.render()) ]);
 
-            await this.PlayChannel.send(messageTemplate);
+            var messageList = await this.PlayChannel.send(messageTemplate);
+
+            this.lastBoardMessage = messageList[0];
+            this.lastStatMessage = messageList[1];
+
             await this.PlayChannel.send(`[B] ${this.BlackPlayer.Name} vs [W] ${this.WhitePlayer.Name}`);
         } catch (e){
             await this.PlayChannel.send(`작업 진행중 오류가 발생했습니다\n${e}`);
         }
+    }
+
+    async removeLastMessages(){
+        if (this.lastBoardMessage && this.lastBoardMessage.Deleteable)
+            await this.lastBoardMessage.delete();
+
+        if (this.lastStatMessage && this.lastStatMessage.Deleteable)
+            await this.lastStatMessage.delete();
     }
 
     stop(){
