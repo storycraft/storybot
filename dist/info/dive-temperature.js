@@ -6,12 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _storybotCore = require('storybot-core');
 
-var _requestHelper = require('../network/request-helper');
-
-var _requestHelper2 = _interopRequireDefault(_requestHelper);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 const REQUEST_URL = 'http://hangang.dkserver.wo.tc/';
 /* 
  * Sample Text 
@@ -34,7 +28,7 @@ class DiveTemperature extends _storybotCore.CommandListener {
     }
 
     static async getTemperatureJSON() {
-        let data = await _requestHelper2.default.get(REQUEST_URL);
+        let data = await _storybotCore.RequestHelper.get(REQUEST_URL);
 
         let json = JSON.parse(data);
 

@@ -58,6 +58,10 @@ var _javaRunner = require("./process/java-runner");
 
 var _javaRunner2 = _interopRequireDefault(_javaRunner);
 
+var _lyricsCommand = require("./lyrics/lyrics-command");
+
+var _lyricsCommand2 = _interopRequireDefault(_lyricsCommand);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class Main {
@@ -123,6 +127,8 @@ class Main {
         commandManager.addCommandInfo(new _searchHelper2.default(this));
 
         commandManager.addCommandInfo(new _chessCommand2.default(this));
+
+        commandManager.addCommandInfo(new _lyricsCommand2.default(this));
 
         commandManager.addCommandInfo(this.ProcessManager);
         commandManager.addCommandInfo(new _ecmaRunner2.default(this));

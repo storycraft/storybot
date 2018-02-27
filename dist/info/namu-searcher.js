@@ -6,12 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _storybotCore = require('storybot-core');
 
-var _requestHelper = require('../network/request-helper');
-
-var _requestHelper2 = _interopRequireDefault(_requestHelper);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 const KEYWORD_SEARCHER = 'https://namu.wiki/complete';
 
 const SEARCH_RESULT = 'https://namu.wiki/search';
@@ -36,7 +30,7 @@ class NamuSearcher extends _storybotCore.CommandListener {
     }
 
     async getKeywords(str) {
-        let data = await _requestHelper2.default.get(`${KEYWORD_SEARCHER}/${encodeURI(str)}`);
+        let data = await _storybotCore.RequestHelper.get(`${KEYWORD_SEARCHER}/${encodeURI(str)}`);
 
         return JSON.parse(data);
     }

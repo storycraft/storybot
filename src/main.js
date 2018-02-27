@@ -16,6 +16,7 @@ import BalanceManager from './balance/balance-manager';
 import EcmaRunner from './process/ecma-runner';
 import ProcessManager from './process/process-manager';
 import JavaRunner from './process/java-runner';
+import LyricsCommand from './lyrics/lyrics-command';
 
 export default class Main {
     constructor(){
@@ -81,6 +82,8 @@ export default class Main {
         commandManager.addCommandInfo(new SearchHelper(this));
 
         commandManager.addCommandInfo(new ChessCommand(this));
+
+        commandManager.addCommandInfo(new LyricsCommand(this));
 
         commandManager.addCommandInfo(this.ProcessManager);
         commandManager.addCommandInfo(new EcmaRunner(this));

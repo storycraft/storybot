@@ -6,12 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _storybotCore = require('storybot-core');
 
-var _requestHelper = require('../network/request-helper');
-
-var _requestHelper2 = _interopRequireDefault(_requestHelper);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 const GOOGLE_MAP_KEY = 'AIzaSyAmti-O_lwOk6bmECOfKCbYItc4g21PAYk';
 const DARKSKY_API_KEY = 'defffc5f4a37378fb204b634ca7ef8d9';
 
@@ -54,12 +48,12 @@ class WeatherForecast extends _storybotCore.CommandListener {
 
     async getGeometryInfo(address) {
         //인코딩 설정
-        let data = await _requestHelper2.default.get(`https://maps.googleapis.com/maps/api/geocode/json?key=${GOOGLE_MAP_KEY}&language=ko&address=${encodeURI(address)}`);
+        let data = await _storybotCore.RequestHelper.get(`https://maps.googleapis.com/maps/api/geocode/json?key=${GOOGLE_MAP_KEY}&language=ko&address=${encodeURI(address)}`);
         return JSON.parse(data);
     }
 
     async getWeatherInfo(lat, lng) {
-        let data = await _requestHelper2.default.get(`https://api.darksky.net/forecast/${DARKSKY_API_KEY}/${lat},${lng}?exclude=minutely,hourly,daily,alerts,flags&units=si`);
+        let data = await _storybotCore.RequestHelper.get(`https://api.darksky.net/forecast/${DARKSKY_API_KEY}/${lat},${lng}?exclude=minutely,hourly,daily,alerts,flags&units=si`);
 
         return JSON.parse(data);
     }

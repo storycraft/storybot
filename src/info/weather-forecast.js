@@ -1,5 +1,4 @@
-import { CommandListener } from 'storybot-core';
-import RequestHelper from '../network/request-helper';
+import { CommandListener, RequestHelper } from 'storybot-core';
 
 const GOOGLE_MAP_KEY = 'AIzaSyAmti-O_lwOk6bmECOfKCbYItc4g21PAYk';
 const DARKSKY_API_KEY = 'defffc5f4a37378fb204b634ca7ef8d9';

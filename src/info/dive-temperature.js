@@ -1,5 +1,4 @@
-import { CommandListener } from 'storybot-core';
-import RequestHelper from '../network/request-helper';
+import { CommandListener, RequestHelper } from 'storybot-core';
 
 const REQUEST_URL = 'http://hangang.dkserver.wo.tc/';
 /* 
