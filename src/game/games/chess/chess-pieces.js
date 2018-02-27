@@ -94,17 +94,25 @@ export class PawnPiece extends ChessPiece {
     }
 
     //폰의 경우 말 처 먹을 수 있는것 빼고 모두 계산함
-    canMoveTo(board, location){
+    canMoveTo(location){
         if (!super.canMoveTo(location))
             return false;
         
         let loc = BoardMathHelper.fromCombinedLocation(super.Location);
         let to = BoardMathHelper.fromCombinedLocation(location);
 
-        if (this.default && (to[1] - loc[1]) == 2)
+        let offX = to[0] - location[0];
+        let offY = to[1] - location[1];
+
+        let direction = this.Board.WhitePieces.includes(this) ? -1 : 1;
+
+        if (this.default && offY == direction * 2)
             return true;
         
-        if ((to[1] - loc[1]) == 1)
+        if (offY == direction && offX == 0)
+            return true;
+
+        if (offY == direction && Math.abs(offX) == 1 && super.Board.getPieceAt(location))
             return true;
 
         return false;
@@ -122,14 +130,39 @@ export class RookPiece extends ChessPiece {
         return 5;
     }
 
-    canMoveTo(board, location){
+    canMoveTo(location){
         if (!super.canMoveTo(location))
             return false;
 
         let loc = BoardMathHelper.fromCombinedLocation(this.Location);
         let to = BoardMathHelper.fromCombinedLocation(location);
 
-        return loc[0] == to[0] || loc[1] == to[1];
+        let xOff = to[0] - loc[0];
+        let yOff = to[1] - loc[1];
+
+        if (xOff && yOff)
+            return false;
+
+        //위 아래로만 움직일 경우
+
+        if (!xOff){
+            var dirY = yOff / Math.abs(yOff);
+            
+            for (let i = 0; i < dirY; i++){
+                if (super.Board.getPieceAt(BoardMathHelper.getCombinedLocation(loc[1], loc[1] + dirY * i)))
+                return false;
+            }
+        }//왼쪽 오른쪽으로만 움직일 경우
+        else if(!yOff){
+            var dirX = xOff / Math.abs(xOff);
+
+            for (let i = 0; i < dirX; i++){
+                if (super.Board.getPieceAt(BoardMathHelper.getCombinedLocation(loc[0] + dirX * i, loc[1])))
+                    return false;
+            }
+        }
+
+        return true;
     }
 }
 
@@ -144,14 +177,28 @@ export class BishopPiece extends ChessPiece {
         return 3;
     }
 
-    canMoveTo(board, location){
+    canMoveTo(location){
         if (!super.canMoveTo(location))
             return false;
 
         let loc = BoardMathHelper.fromCombinedLocation(super.Location);
         let to = BoardMathHelper.fromCombinedLocation(location);
 
-        return (loc[0] - to[0]) == (loc[1] - to[1]);
+        let offX = to[0] - loc[0];
+        let offY = to[1] - loc[1];
+
+        if (Math.abs(offX) != Math.abs(offY))
+            return false;
+
+        var distance = Math.abs(offX);
+
+        var direX = offX / distance;
+        var direY = offY / distance;
+
+        for (let i = 1; i < distance; i++){
+            if (super.Board.getPieceAt(BoardMathHelper.getCombinedLocation(loc[0] + direX * i,loc[1] + direY * i)))
+                return false;
+        }
     }
 }
 
@@ -170,7 +217,7 @@ export class KnightPiece extends ChessPiece {
         return false;
     }
 
-    canMoveTo(board, location){
+    canMoveTo(location){
         if (!super.canMoveTo(location))
             return false;
 
@@ -191,8 +238,8 @@ export class KingPiece extends ChessPiece {
         super.drawable = new KingDrawable(this);
     }
 
-    canMoveTo(board, location){
-        if (!super.canMoveTo(location))
+    canMoveTo(location){
+        if (!super.canMoveTo(location) || board.getPieceAt(location))
             return false;
 
         let loc = BoardMathHelper.fromCombinedLocation(super.Location);
@@ -216,14 +263,11 @@ export class QueenPiece extends ChessPiece {
         return 9;
     }
 
-    canMoveTo(board, location){
+    canMoveTo(location){
         if (!super.canMoveTo(location))
             return false;
 
-            var x = Math.abs(to[0] - loc[0]);
-            var y = Math.abs(to[1] - loc[1]);
-
-        return (x == y) || (x == 0) || (y == 0);
+        return new RookPiece(super.Board, this.Location).canMoveTo(location) || new BishopPiece(super.Board, this.Location).canMoveTo(location);
     }
 }
 

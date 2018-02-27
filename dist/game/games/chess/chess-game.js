@@ -159,13 +159,20 @@ class ChessGame extends _game2.default {
             }
 
             var combinedMovePos = _boardMathHelper2.default.getCombinedLocation(secX, secY);
-            if (piece.canMoveTo(this.gameboard, combinedMovePos)) {
+            if (piece.canMoveTo(combinedMovePos)) {
                 this.gameboard.movePieceTo(piece, combinedMovePos);
 
-                this.setNextTurn();
+                if (!this.gameboard.IsGameOver) {
+                    this.setNextTurn();
 
-                this.statusMessage = `\`${this.CurrentPlayer.Name}\`의 차례입니다`;
-                this.sendInfoMessages();
+                    this.statusMessage = `\`${this.CurrentPlayer.Name}\`의 차례입니다`;
+
+                    this.sendInfoMessages();
+                } else {
+                    if (this.gameboard.WhiteKingDead) this.winner = this.BlackPlayer;else if (this.gameboard.BlackKingDied) this.winner = this.WhitePlayer;
+
+                    this.stop();
+                }
             } else {
                 source.send('그 말은 거기로 움직일 수 없습니다');
             }
