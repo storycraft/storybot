@@ -49,11 +49,12 @@ class JavaRunner extends _programRunner2.default {
             await this.compileJava(path);
         } catch (err) {
             channel.send(`컴파일 중 오류가 발생했습니다\n${err}`);
+            return;
         }
 
         var proc = new _process2.default('java');
 
-        proc.start(this.CodePath + '/' + projectName + '/' + mainClass + '.class');
+        proc.start('-classpath', this.CodePath + '/' + projectName, mainClass);
         channel.send(`프로세스 \`${proc.Pid}\`가 실행되었습니다`);
 
         var stdoutProcess = data => {
@@ -67,15 +68,26 @@ class JavaRunner extends _programRunner2.default {
     }
 
     async compileJava(path) {
-        var compileProcess = _child_process2.default.exec('javac ' + path);
+        var compileProcess = _child_process2.default.spawn(`javac`, [path], { encoding: 'utf8' });
 
-        await new Promise((resolve, reject) => compileProcess.on('exit', (err, stdout, stderr) => {
-            if (err || stderr) {
-                reject('Program ended with ' + err + '\n' + stderr.toString());
+        var outData = '';
+        compileProcess.stdout.on('data', data => {
+            data += outData;
+        });
+
+        var errData = '';
+
+        compileProcess.stderr.on('data', data => {
+            errData += data;
+        });
+
+        await new Promise((resolve, reject) => compileProcess.on('exit', code => {
+            if (code) {
+                reject('Program ended with code ' + code + '\n' + errData);
                 return;
             }
 
-            resolve(stdout);
+            resolve(outData);
         }));
     }
 
@@ -123,7 +135,7 @@ class JavaRunner extends _programRunner2.default {
             return;
         }
 
-        source = source.substring(6, source.length - 3);
+        source = source.substring(7, source.length - 3);
 
         if (this.first) {
             this.first = false;

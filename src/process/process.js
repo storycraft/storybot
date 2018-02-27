@@ -52,7 +52,7 @@ export default class Process extends EventEmitter {
     }
 
     createProcess(args){
-        return childProcess.spawn(this.StartCommand, args);
+        return childProcess.spawn(this.StartCommand, args, {encoding: 'utf8'});
     }
 
     start(...args){

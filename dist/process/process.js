@@ -62,7 +62,7 @@ class Process extends _events.EventEmitter {
     }
 
     createProcess(args) {
-        return _child_process2.default.spawn(this.StartCommand, args);
+        return _child_process2.default.spawn(this.StartCommand, args, { encoding: 'utf8' });
     }
 
     start(...args) {
