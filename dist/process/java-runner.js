@@ -20,18 +20,6 @@ var _programRunner = require('./program-runner');
 
 var _programRunner2 = _interopRequireDefault(_programRunner);
 
-var _gulp = require('gulp');
-
-var _gulp2 = _interopRequireDefault(_gulp);
-
-var _gulpJavac = require('gulp-javac');
-
-var _gulpJavac2 = _interopRequireDefault(_gulpJavac);
-
-var _nodeJre = require('node-jre');
-
-var _nodeJre2 = _interopRequireDefault(_nodeJre);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class JavaRunner extends _programRunner2.default {
@@ -57,9 +45,15 @@ class JavaRunner extends _programRunner2.default {
         var projectName = this.NewProjectName;
         var path = await this.writeTempFile(projectName, mainClass, source);
 
-        console.log(this.compileJava(path));
+        try {
+            await this.compileJava(path);
+        } catch (err) {
+            channel.send(`컴파일 중 오류가 발생했습니다\n${err}`);
+        }
 
-        var proc = _process2.default.fromProcess(_nodeJre2.default.spawn([this.CodePath + '/' + projectName + '/executable.jar'], mainClass));
+        var proc = new _process2.default('java');
+
+        proc.start(this.CodePath + '/' + projectName + '/' + mainClass + '.class');
         channel.send(`프로세스 \`${proc.Pid}\`가 실행되었습니다`);
 
         var stdoutProcess = data => {
@@ -73,7 +67,16 @@ class JavaRunner extends _programRunner2.default {
     }
 
     async compileJava(path) {
-        return _gulp2.default.src(path).pipe(_gulpJavac2.default.javac()).pipe(_gulpJavac2.default.jar('executable.jar')).pipe(_gulp2.default.dest('executable.jar'));
+        var compileProcess = _child_process2.default.exec('javac ' + path);
+
+        await new Promise((resolve, reject) => compileProcess.on('exit', (err, stdout, stderr) => {
+            if (err || stderr) {
+                reject('Program ended with ' + err + '\n' + stderr.toString());
+                return;
+            }
+
+            resolve(stdout);
+        }));
     }
 
     get NewProjectName() {

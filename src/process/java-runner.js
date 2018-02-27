@@ -5,11 +5,6 @@ import childProcess from 'child_process';
 
 import ProgramRunner from './program-runner';
 
-import gulp from 'gulp';
-import javac from 'gulp-javac';
-
-import jre from 'node-jre';
-
 export default class JavaRunner extends ProgramRunner { 
     constructor(main){
         super(main);
@@ -32,10 +27,16 @@ export default class JavaRunner extends ProgramRunner {
     async run(source, mainClass, channel){
         var projectName = this.NewProjectName;
         var path = await this.writeTempFile(projectName, mainClass, source);
+    
+        try{
+            await this.compileJava(path);
+        } catch(err){
+            channel.send(`컴파일 중 오류가 발생했습니다\n${err}`);
+        }
 
-        console.log(this.compileJava(path));
+        var proc = new Process('java');
 
-        var proc = Process.fromProcess(jre.spawn([ this.CodePath + '/' + projectName + '/executable.jar' ], mainClass));
+        proc.start(this.CodePath + '/' + projectName + '/' + mainClass + '.class');
         channel.send(`프로세스 \`${proc.Pid}\`가 실행되었습니다`);
 
         var stdoutProcess = (data) => {
@@ -49,7 +50,16 @@ export default class JavaRunner extends ProgramRunner {
     }
 
     async compileJava(path){
-        return gulp.src(path).pipe(javac.javac()).pipe(javac.jar('executable.jar')).pipe(gulp.dest('executable.jar'));
+        var compileProcess = childProcess.exec('javac ' + path);
+
+        await new Promise((resolve, reject) => compileProcess.on('exit', (err, stdout, stderr) => {
+            if (err || stderr){
+                reject('Program ended with ' + err + '\n' + stderr.toString());
+                return;
+            }
+
+            resolve(stdout);
+        }));
     }
 
     get NewProjectName(){

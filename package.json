@@ -20,13 +20,31 @@
   "homepage": "https://github.com/storycraft/storybot#readme",
   "dependencies": {
     "canvas-prebuilt": "^1.6.5-prerelease.1",
-    "gulp": "^3.9.1",
-    "gulp-javac": "^2.0.1",
-    "node-jre": "^0.2.3",
-    "storybot-core": "^1.2.9"
+    "storybot-core": "^1.2.9",
+    "webdev-setup-tools": "^4.2.1",
+    "webdev-setup-tools-java": "^4.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1"
+  },
+  "web-dev-setup-tools": {
+    "node": {
+      "install": ">=7.0.0",
+      "globals": {
+        
+      }
+    },
+    "ruby": {
+      "install": "^2.0.0",
+      "gems": {
+
+      }
+    },
+    "maven": "3.5.0",
+    "aem": {
+      
+    },
+    "java": ">1.7.0"
   }
 }
