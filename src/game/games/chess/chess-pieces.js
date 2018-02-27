@@ -30,7 +30,8 @@ class ChessPiece {
     }
 
     canMoveTo(board, location){
-        return location != this.Location;
+        let piece = this.Board.getPieceAt(location);
+        return !piece || (this.Board.WhitePieces.includes(this) ? !this.Board.WhitePieces.includes(piece) : !this.Board.BlackPieces.includes(piece));
     }
 }
 
@@ -147,17 +148,19 @@ export class RookPiece extends ChessPiece {
         //위 아래로만 움직일 경우
 
         if (!xOff){
-            var dirY = yOff / Math.abs(yOff);
+            var distance = Math.abs(yOff);
+            var dirY = yOff / distance;
             
-            for (let i = 0; i < dirY; i++){
+            for (let i = 0; i < distance; i++){
                 if (super.Board.getPieceAt(BoardMathHelper.getCombinedLocation(loc[1], loc[1] + dirY * i)))
-                return false;
+                    return false;
             }
         }//왼쪽 오른쪽으로만 움직일 경우
         else if(!yOff){
-            var dirX = xOff / Math.abs(xOff);
+            var distance = Math.abs(xOff);
+            var dirX = xOff / distance;
 
-            for (let i = 0; i < dirX; i++){
+            for (let i = 0; i < distance; i++){
                 if (super.Board.getPieceAt(BoardMathHelper.getCombinedLocation(loc[0] + dirX * i, loc[1])))
                     return false;
             }

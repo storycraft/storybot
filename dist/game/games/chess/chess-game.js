@@ -170,8 +170,7 @@ class ChessGame extends _game2.default {
 
                     this.statusMessage = `\`${this.CurrentPlayer.Name}\`의 차례입니다`;
 
-                    this.removeLastMessages();
-                    this.sendInfoMessages();
+                    this.removeLastMessages().then(() => this.sendInfoMessages());
                 } else {
                     if (this.gameboard.WhiteKingDead) this.winner = this.BlackPlayer;else if (this.gameboard.BlackKingDied) this.winner = this.WhitePlayer;
 

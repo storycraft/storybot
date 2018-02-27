@@ -158,8 +158,7 @@ export default class ChessGame extends Game {
 
                     this.statusMessage = `\`${this.CurrentPlayer.Name}\`의 차례입니다`;
 
-                    this.removeLastMessages();
-                    this.sendInfoMessages();
+                    this.removeLastMessages().then(() => this.sendInfoMessages());
                 }
                 else{
                     if (this.gameboard.WhiteKingDead)
