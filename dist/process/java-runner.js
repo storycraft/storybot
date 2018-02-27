@@ -55,7 +55,7 @@ class JavaRunner extends _programRunner2.default {
         var proc = new _process2.default('java');
 
         proc.start('-classpath', this.CodePath + '/' + projectName, mainClass);
-        channel.send(`프로세스 \`${proc.Pid}\`가 실행되었습니다`);
+        channel.send(`프로세스 \`${proc.Pid}\`이(가) 실행되었습니다`);
 
         var stdoutProcess = data => {
             channel.send(data + '');
@@ -76,6 +76,10 @@ class JavaRunner extends _programRunner2.default {
         });
 
         var errData = '';
+
+        compileProcess.on('error', err => {
+            errData += err;
+        });
 
         compileProcess.stderr.on('data', data => {
             errData += data;

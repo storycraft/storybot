@@ -42,7 +42,7 @@ class EcmaRunner extends _programRunner2.default {
         var proc = new _nodeProcess2.default(path);
 
         proc.start();
-        channel.send(`프로세스 \`${proc.Pid}\`가 실행되었습니다`);
+        channel.send(`프로세스 \`${proc.Pid}\`이(가) 실행되었습니다`);
 
         var stdoutProcess = data => {
             channel.send(data + '');

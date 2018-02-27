@@ -59,6 +59,10 @@ export default class JavaRunner extends ProgramRunner {
         });
 
         var errData = '';
+
+        compileProcess.on('error', (err) => {
+            errData += err;
+        });
           
         compileProcess.stderr.on('data', (data) => {
             errData += data;
