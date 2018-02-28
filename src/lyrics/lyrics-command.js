@@ -70,12 +70,13 @@ export default class LyricsCommand extends CommandListener {
     }
 
     async sendLyric(source, rawLyric){
-        var length = Math.ceil(rawLyric.length / 2000);
-
         var lyric = rawLyric.replace(/<br>/gi, '\n');
 
+        var length = Math.ceil(lyric.length / 2000);
+
         for (let i = 0; i <= length; i++){
-            await source.send(lyric.slice(i * 2000, 2000));
+            var start = i * 2000;
+            source.send(lyric.slice(start,start + 2000));
         }
     }
 }
