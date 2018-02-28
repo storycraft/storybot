@@ -51,8 +51,6 @@ class LyricsCommand extends _storybotCore.CommandListener {
                 if (i >= 10) break;
             }
 
-            console.log(listText);
-
             source.send(listText).then(listMsg => {
                 user.once('message', msg => {
                     if (msg.Source != source) {
@@ -82,8 +80,6 @@ class LyricsCommand extends _storybotCore.CommandListener {
         var length = Math.ceil(rawLyric.length / 2000);
 
         var lyric = rawLyric.replace(/<br>/gi, '\n');
-
-        console.log(lyric);
 
         for (let i = 0; i <= length; i++) {
             await source.send(lyric.slice(i * 2000, 2000));

@@ -41,8 +41,6 @@ export default class LyricsCommand extends CommandListener {
                     break;
             }
 
-            console.log(listText);
-
             source.send(listText).then((listMsg) => {
                 user.once('message', (msg) => {
                     if (msg.Source != source){
