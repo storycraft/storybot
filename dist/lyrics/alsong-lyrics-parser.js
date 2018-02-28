@@ -10,6 +10,10 @@ var _xml2js = require('xml2js');
 
 var _xml2js2 = _interopRequireDefault(_xml2js);
 
+var _util = require('util');
+
+var _util2 = _interopRequireDefault(_util);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const REQUEST_OPTION = {
@@ -32,12 +36,14 @@ const DEFAULT_REQUEST_DATA = `<?xml version="1.0" encoding="UTF-8"?>
 </ns1:stQuery></ns1:GetResembleLyric2></SOAP-ENV:Body></SOAP-ENV:Envelope>`;
 
 class AlsongLyricsParser {
-    static async getFromTitleArtist(title, artist) {
-        var response = await _storybotCore.RequestHelper.request(REQUEST_OPTION, DEFAULT_REQUEST_DATA.replace('{title}', title).replace('{artistName}', artist));
+    static async getFromTitleArtist(title, artist = '') {
+        var requestData = DEFAULT_REQUEST_DATA.replace('{title}', title).replace('{artistName}', artist);
+        var response = await _storybotCore.RequestHelper.request(REQUEST_OPTION, requestData);
 
         return await new Promise((resolve, reject) => _xml2js2.default.parseString(response, (err, result) => {
             if (err) reject(err);
-            resolve(JSON.parse(result));
+
+            resolve(result['soap:Envelope']['soap:Body'][0 /*idk why it need*/]['GetResembleLyric2Response'][0]['GetResembleLyric2Result'][0]['ST_GET_RESEMBLELYRIC2_RETURN']);
         }));
     }
 }
