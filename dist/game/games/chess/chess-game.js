@@ -31,7 +31,7 @@ class ChessGame extends _game2.default {
         this.gameboard = new _chessBoard2.default(this);
         this.boardRenderer = new _boardRenderer2.default(this.gameboard);
 
-        this.currentTurn = 0;
+        this.currentTurn = 1;
 
         this.winner = null;
 

@@ -14,7 +14,7 @@ export default class ChessGame extends Game {
         this.gameboard = new ChessBoard(this);
         this.boardRenderer = new BoardRenderer(this.gameboard);
 
-        this.currentTurn = 0;
+        this.currentTurn = 1;
 
         this.winner = null;
 
