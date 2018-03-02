@@ -224,9 +224,9 @@ class ChessGame extends _game2.default {
     }
 
     async removeLastMessages() {
-        if (this.lastBoardMessage && this.lastBoardMessage.Deleteable) await this.lastBoardMessage.delete();
+        if (this.lastBoardMessage && this.lastBoardMessage.Deletable) await this.lastBoardMessage.delete();
 
-        if (this.lastStatMessage && this.lastStatMessage.Deleteable) await this.lastStatMessage.delete();
+        if (this.lastStatMessage && this.lastStatMessage.Deletable) await this.lastStatMessage.delete();
     }
 
     stop() {
