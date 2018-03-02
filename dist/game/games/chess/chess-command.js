@@ -64,6 +64,8 @@ class ChessCommand extends _storybotCore.CommandListener {
                 game.WhitePlayer = waitingUser;
                 game.BlackPlayer = user;
 
+                source.send('사용 가능한 커맨드\n*move <위치> <위치2> : 해당 위치의 피스를 위치2로 이동합시다\n*game <args> : 게임 관련 커맨드');
+
                 this.main.GameManager.addGame(game);
             } else {
                 source.send(`대기 큐 ${queueCode} 를 찾을 수 없습니다`);

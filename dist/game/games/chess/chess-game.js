@@ -167,7 +167,8 @@ class ChessGame extends _game2.default {
 
                     this.statusMessage = `\`${this.CurrentPlayer.Name}\`의 차례입니다`;
 
-                    this.removeLastMessages().then(() => this.sendInfoMessages());
+                    this.removeLastMessages();
+                    this.sendInfoMessages();
                 } else {
                     if (this.gameboard.WhiteKingDead) this.winner = this.BlackPlayer;else if (this.gameboard.BlackKingDied) this.winner = this.WhitePlayer;
 
@@ -224,9 +225,13 @@ class ChessGame extends _game2.default {
     }
 
     async removeLastMessages() {
-        if (this.lastBoardMessage && this.lastBoardMessage.Deletable) await this.lastBoardMessage.delete();
+        var tasks = [];
 
-        if (this.lastStatMessage && this.lastStatMessage.Deletable) await this.lastStatMessage.delete();
+        if (this.lastBoardMessage && this.lastBoardMessage.Deletable) tasks.push(this.lastBoardMessage.delete());
+
+        if (this.lastStatMessage && this.lastStatMessage.Deletable) tasks.push(this.lastStatMessage.delete());
+
+        await Promise.all(tasks);
     }
 
     stop() {
