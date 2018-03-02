@@ -158,7 +158,7 @@ class RookPiece extends ChessPiece {
             var dirY = yOff / distance;
 
             for (let i = 1; i < distance; i++) {
-                if (super.Board.getPieceAt(_boardMathHelper2.default.getCombinedLocation(loc[1], loc[1] + dirY * i))) return false;
+                if (super.Board.getPieceAt(_boardMathHelper2.default.getCombinedLocation(loc[0], loc[1] + dirY * i))) return false;
             }
         } //왼쪽 오른쪽으로만 움직일 경우
         else {
