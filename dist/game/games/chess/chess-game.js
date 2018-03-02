@@ -76,42 +76,6 @@ class ChessGame extends _game2.default {
         return this.statusMessage;
     }
 
-    get FirebaseDbRef() {
-        if (this.gameManager) return this.gameManager.FirebaseGameDb.child('chess');
-
-        return null;
-    }
-
-    async getPlayerStat(player) {
-        var firebaseDbRef = this.FirebaseDbRef;
-
-        var data = {
-            'win': 0,
-            'lose': 0,
-            'draw': 0
-        };
-
-        if (firebaseDbRef) {
-            var snapshotData = await FirebaseDbRef.child(player.Id).once('value');
-
-            if (snapshotData.exists()) {
-                data['win'] = snapshotData.child('win').val();
-                data['lose'] = snapshotData.child('lose').val();
-                data['draw'] = snapshotData.child('draw').val();
-            }
-        }
-
-        return data;
-    }
-
-    async updatePlayerStat(player, win, lose, draw) {
-        FirebaseDbRef.child(player.Id).set({
-            'win': win,
-            'lose': lose,
-            'draw': draw
-        });
-    }
-
     start(gameManager) {
         if (this.PlayerList.length != 2) throw new Error('플레이어 수는 2명이어야 합니다');
 
