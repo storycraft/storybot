@@ -27,7 +27,7 @@ export default class ChessCommand extends CommandListener {
 
     onCommand(args, user, bot, source){
         if(this.main.GameManager.isPlayingGame(user)){
-            source.send('하고 있는 게임 끝내고 다시 입력해 주세요');
+            source.send('이미 다른 게임을 플레이 중입니다');
             return;
         }
 
@@ -60,7 +60,7 @@ export default class ChessCommand extends CommandListener {
         }
         else{
             if (this.isInQueue(user)){
-                source.send(`이미 큐 하나 만들어 놓고 뭘 더 만들어요`);
+                source.send(`이미 생성 된 큐가 존재합니다 큐가 제거된 후 다시 입력해주세요`);
                 return;
             }
             

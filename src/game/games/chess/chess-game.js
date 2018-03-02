@@ -119,7 +119,6 @@ export default class ChessGame extends Game {
             return;
 
         if (this.CurrentPlayer != user){
-            source.send('님 차례 아닌데요?');
             return;
         }
         else if (args.length != 2){
@@ -134,18 +133,15 @@ export default class ChessGame extends Game {
             var secX = args[1][0].toLowerCase().charCodeAt(0) - 97;
             var secY = Number.parseInt(args[1][1]) - 1;
 
-            if (firstX > 7 || firstY > 7 || secX > 7 || secY > 7 || firstX < 0 || firstY < 0 || secX < 0 || secY < 0)
-                throw new Error('숫자의 범위가 잘못 되었습니다 허용 범위 (1 ~ 8)');
-
-            var piece = this.gameboard.getPieceAt(BoardMathHelper.getCombinedLocation(firstX, firstY));
-
-            if (!piece){
-                source.send('거기 아무 말도 없는데요');
+            if (firstX > 7 || firstY > 7 || secX > 7 || secY > 7 || firstX < 0 || firstY < 0 || secX < 0 || secY < 0){
+                source.send('숫자의 범위가 잘못 되었습니다 허용 범위 (a ~ h)(1 ~ 8)');
                 return;
             }
 
-            if (this.CurrentTurn == 0 && this.gameboard.WhitePieces.includes(piece) || this.CurrentTurn == 1 && this.gameboard.BlackPieces.includes(piece)){
-                source.send('그거 님 체스 말 아니자나요 ㅡㅡ');
+            var piece = this.gameboard.getPieceAt(BoardMathHelper.getCombinedLocation(firstX, firstY));
+
+            if (!piece || this.CurrentTurn == 0 && this.gameboard.WhitePieces.includes(piece) || this.CurrentTurn == 1 && this.gameboard.BlackPieces.includes(piece)){
+                source.send(`해당 위치\`${args[0]}\`에 움직일 수 있는 말이 없습니다`);
                 return;
             }
 
@@ -170,12 +166,11 @@ export default class ChessGame extends Game {
                 }
             }
             else{
-                source.send('그 말은 거기로 움직일 수 없습니다');
+                source.send('해당 피스는 거기로 움직일 수 없습니다');
             }
 
         } catch(e){
-            source.send('올바른 형식으로 입력해 주세요\nEx) *move a1 a3');
-            return;
+            source.send(`올바른 형식으로 입력해 주세요\nEx) *move a1 a3\n${e}`);
         }
     }
 
@@ -225,10 +220,10 @@ export default class ChessGame extends Game {
     }
 
     async removeLastMessages(){
-        if (this.lastBoardMessage && this.lastBoardMessage.Deleteable)
+        if (this.lastBoardMessage && this.lastBoardMessage.Deletable)
             await this.lastBoardMessage.delete();
 
-        if (this.lastStatMessage && this.lastStatMessage.Deleteable)
+        if (this.lastStatMessage && this.lastStatMessage.Deletable)
             await this.lastStatMessage.delete();
     }
 
