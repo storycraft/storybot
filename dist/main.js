@@ -30,9 +30,9 @@ var _botSettings = require("./resources/bot-settings");
 
 var _botSettings2 = _interopRequireDefault(_botSettings);
 
-var _storyReact = require("./react/story-react");
+var _randomReact = require("./react/random-react");
 
-var _storyReact2 = _interopRequireDefault(_storyReact);
+var _randomReact2 = _interopRequireDefault(_randomReact);
 
 var _chessCommand = require("./game/games/chess/chess-command");
 
@@ -107,7 +107,6 @@ class Main {
 
     async start() {
         this.initCommand();
-        this.initReact();
 
         await this.Bot.initialize(_botSettings2.default);
         await this.balanceManager.init();
@@ -133,10 +132,6 @@ class Main {
         commandManager.addCommandInfo(this.ProcessManager);
         commandManager.addCommandInfo(new _ecmaRunner2.default(this));
         commandManager.addCommandInfo(new _javaRunner2.default(this));
-    }
-
-    initReact() {
-        new _storyReact2.default(this);
     }
 }
 

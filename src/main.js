@@ -9,7 +9,8 @@ import GameManager from './game/game-manager';
 
 import botSettings from './resources/bot-settings';
 
-import StoryReact from './react/story-react';
+import RandomReact from './react/random-react';
+
 import ChessCommand from './game/games/chess/chess-command';
 import SearchHelper from './info/search-helper';
 import BalanceManager from './balance/balance-manager';
@@ -26,14 +27,6 @@ export default class Main {
         this.balanceManager = new BalanceManager(this);
 
         this.processManager = new ProcessManager(this);
-
-        //테스트 명령어
-        this.bot.on('message', (msg) => {
-            console.log('> ' + msg.Source.Name + ' ' + msg.User.Name + ' ' + msg.Text);
-
-            if (msg.Text == '스토링')
-                msg.reply('네, 스토리에요!');
-        });
     }
 
     get Bot(){
@@ -62,7 +55,6 @@ export default class Main {
 
     async start(){
         this.initCommand();
-        this.initReact();
 
         await this.Bot.initialize(botSettings);
         await this.balanceManager.init();
@@ -88,10 +80,6 @@ export default class Main {
         commandManager.addCommandInfo(this.ProcessManager);
         commandManager.addCommandInfo(new EcmaRunner(this));
         commandManager.addCommandInfo(new JavaRunner(this));
-    }
-
-    initReact(){
-        new StoryReact(this);
     }
 }
 
