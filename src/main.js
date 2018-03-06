@@ -9,8 +9,6 @@ import GameManager from './game/game-manager';
 
 import botSettings from './resources/bot-settings';
 
-import RandomReact from './react/random-react';
-
 import ChessCommand from './game/games/chess/chess-command';
 import SearchHelper from './info/search-helper';
 import BalanceManager from './balance/balance-manager';
@@ -18,6 +16,7 @@ import EcmaRunner from './process/ecma-runner';
 import ProcessManager from './process/process-manager';
 import JavaRunner from './process/java-runner';
 import LyricsCommand from './lyrics/lyrics-command';
+import BalanceCommand from './balance/balance-command';
 
 export default class Main {
     constructor(){
@@ -57,7 +56,6 @@ export default class Main {
         this.initCommand();
 
         await this.Bot.initialize(botSettings);
-        await this.balanceManager.init();
 
         console.log('Storybot이 시작 되었습니다');
     }
@@ -66,6 +64,8 @@ export default class Main {
         var commandManager = this.CommandManager;
 
         commandManager.addCommandInfo(new HelpMessage(this));
+
+        commandManager.addCommandInfo(new BalanceCommand(this));
 
         commandManager.addCommandInfo(new DiveTemperature(this));
         commandManager.addCommandInfo(new WeatherForecast(this));

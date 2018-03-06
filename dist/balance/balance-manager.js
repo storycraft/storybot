@@ -3,17 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+const DEFAULT_MONEY_AMOUNT = 100;
+
 class BalanceManager {
     constructor(main) {
         this.main = main;
-
-        this.cachedDb = {};
-    }
-
-    async init() {
-        this.FirebaseDb.on('child_added', this.onBalanceAdded.bind(this));
-        this.FirebaseDb.on('child_changed', this.onBalanceAdded.bind(this));
-        this.FirebaseDb.on('child_removed', this.onBalanceRemoved.bind(this));
     }
 
     get FirebaseDb() {
@@ -21,23 +15,23 @@ class BalanceManager {
     }
 
     getUserDbRef(user) {
-        return this.FirebaseDb.child(user.IdentityId);;
+        return this.FirebaseDb.child(user.IdentityId);
     }
 
-    getBalance(user) {
-        return this.cachedDb[user.IdentityId] || 0;
+    async getBalance(user) {
+        var snapshot = await this.getUserDbRef(user).once('value');
+
+        if (!snapshot.exists()) {
+            //초기금 설정
+            await this.setBalance(user, DEFAULT_MONEY_AMOUNT);
+            return DEFAULT_MONEY_AMOUNT;
+        }
+
+        return snapshot.val();
     }
 
     async setBalance(user, amount) {
-        await this.getUserDbRef(user).update(amount);
-    }
-
-    onBalanceAdded(dataSnapshot) {
-        this.cachedDb[dataSnapshot.key] = dataSnapshot.val();
-    }
-
-    onBalanceRemoved(dataSnapshot) {
-        this.cachedDb[dataSnapshot.key] = 0;
+        await this.getUserDbRef(user).set(amount);
     }
 }
 exports.default = BalanceManager;
