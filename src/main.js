@@ -9,7 +9,6 @@ import GameManager from './game/game-manager';
 
 import botSettings from './resources/bot-settings';
 
-import StoryReact from './react/story-react';
 import ChessCommand from './game/games/chess/chess-command';
 import SearchHelper from './info/search-helper';
 import BalanceManager from './balance/balance-manager';
@@ -17,6 +16,7 @@ import EcmaRunner from './process/ecma-runner';
 import ProcessManager from './process/process-manager';
 import JavaRunner from './process/java-runner';
 import LyricsCommand from './lyrics/lyrics-command';
+import BalanceCommand from './balance/balance-command';
 
 export default class Main {
     constructor(){
@@ -26,14 +26,6 @@ export default class Main {
         this.balanceManager = new BalanceManager(this);
 
         this.processManager = new ProcessManager(this);
-
-        //테스트 명령어
-        this.bot.on('message', (msg) => {
-            console.log('> ' + msg.Source.Name + ' ' + msg.User.Name + ' ' + msg.Text);
-
-            if (msg.Text == '스토링')
-                msg.reply('네, 스토리에요!');
-        });
     }
 
     get Bot(){
@@ -62,10 +54,8 @@ export default class Main {
 
     async start(){
         this.initCommand();
-        this.initReact();
 
         await this.Bot.initialize(botSettings);
-        await this.balanceManager.init();
 
         console.log('Storybot이 시작 되었습니다');
     }
@@ -74,6 +64,8 @@ export default class Main {
         var commandManager = this.CommandManager;
 
         commandManager.addCommandInfo(new HelpMessage(this));
+
+        commandManager.addCommandInfo(new BalanceCommand(this));
 
         commandManager.addCommandInfo(new DiveTemperature(this));
         commandManager.addCommandInfo(new WeatherForecast(this));
@@ -88,10 +80,6 @@ export default class Main {
         commandManager.addCommandInfo(this.ProcessManager);
         commandManager.addCommandInfo(new EcmaRunner(this));
         commandManager.addCommandInfo(new JavaRunner(this));
-    }
-
-    initReact(){
-        new StoryReact(this);
     }
 }
 
