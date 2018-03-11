@@ -98,12 +98,16 @@ ${ICON_DESCRIPTION[currentWeather['icon']]}
 ${currentWeather['summary']}
 
 현재 온도: ${currentWeather['temperature']} °C, 체감 온도: ${currentWeather['apparentTemperature']} °C
-습도: ${currentWeather['humidity'] * 100} %, 자외선 지수: ${currentWeather['uvIndex']}
+습도: ${(currentWeather['humidity'] * 100).toFixed(2)} %, 자외선 지수: ${currentWeather['uvIndex']}
 풍속: ${currentWeather['windSpeed']} m/s`;
 
                             if (currentWeather['visibility']) infoText += `, 가시 거리: ${currentWeather['visibility']} km`;
 
-                            if (currentWeather['precipType']) infoText += `\n${PRECIP_DESCRIPTION[currentWeather['precipType']]} 이(가) 내릴 확률 ${currentWeather['precipProbability'] * 100} %`;
+                            if (currentWeather['precipType']) infoText += `\n${PRECIP_DESCRIPTION[currentWeather['precipType']]} 이(가) 내릴 확률 ${(currentWeather['precipProbability'] * 100).toFixed(2)} %`;
+
+                            if (currentWeather['pressure']) infoText += `\n기압 : ${currentWeather['pressure']} hPa`;
+
+                            if (currentWeather['ozone']) infoText += `\n오존 : ${currentWeather['ozone']} DU`;
 
                             //Powered by text
                             infoText += '\n`Powered by Dark Sky https://darksky.net/poweredby/`';
