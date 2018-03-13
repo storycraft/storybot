@@ -4,40 +4,58 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _events = require('events');
+var _storing = require('./storing');
 
-var _events2 = _interopRequireDefault(_events);
+var _storing2 = _interopRequireDefault(_storing);
+
+var _diveHelper = require('./dive-helper');
+
+var _diveHelper2 = _interopRequireDefault(_diveHelper);
+
+var _storybotCore = require('storybot-core');
+
+var _chatDecoder = require('./chat-decoder');
+
+var _chatDecoder2 = _interopRequireDefault(_chatDecoder);
+
+var _reactionXd = require('./reaction-xd');
+
+var _reactionXd2 = _interopRequireDefault(_reactionXd);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-class ReactManager extends _events2.default {
+class ReactManager {
     constructor(main) {
         this.main = main;
 
-        this.main.Bot.on('message', this.onMessage.bind(this));
+        this.reacts = [];
+
+        this.init();
+
+        this.Main.Bot.on('message', this.onMessage.bind(this));
     }
 
-    decodeSentence(text) {
-        var sentences = text.split(/(\.|\?|!)/); //문장 기호로 분리
-
-        return sentences;
+    get Main() {
+        return this.main;
     }
 
-    decodeWord(sentence) {
-        var words = sentence.split(' ');
+    get Reacts() {
+        return this.reacts;
+    }
 
-        return words;
+    addReact(reactionPlugin) {
+        this.reacts.push(reactionPlugin);
+    }
+
+    init() {
+        this.addReact(new _diveHelper2.default(this));
+        this.addReact(new _reactionXd2.default(this));
     }
 
     onMessage(msg) {
-        var wordMap = {};
-        var sentences = this.decodeSentence(msg.Text);
+        if (msg.User instanceof _storybotCore.ClientUser) return;
 
-        for (let sentence of sentences) {
-            wordMap[sentence] = this.decodeWord(sentence);
-        }
-
-        super.emit('message', msg.User, msg.Client, wordMap);
+        this.reacts.forEach(reactionPlugin => reactionPlugin.onMessage(msg, _chatDecoder2.default.decode(msg.Text)));
     }
 }
 exports.default = ReactManager;

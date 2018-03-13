@@ -23,7 +23,7 @@ class LyricsCommand extends _storybotCore.CommandListener {
     }
 
     get Description() {
-        return '머라고 말하는거야 | 사용법: *lrc "<제목>" "<아티스트>"';
+        return '머라고 말하는거야 | *lrc "<제목>" "<아티스트>"';
     }
 
     get Aliases() {

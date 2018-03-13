@@ -30,7 +30,7 @@ class JavaRunner extends _programRunner2.default {
     }
 
     get Description() {
-        return 'God drinks Java | 사용법: *java <메인 클래스 이름> \\\`\\\`\\\`java\n<소스>\n\\\`\\\`\\\`';
+        return 'God drinks Java | *java <메인 클래스 이름> \\\`\\\`\\\`java\n<소스>\n\\\`\\\`\\\`';
     }
 
     get Aliases() {

@@ -1,32 +1,41 @@
-import EventEmitter from 'events';
+import Storing from "./storing";
+import DiveHelper from './dive-helper';
+import { ClientUser } from 'storybot-core';
+import ChatDecoder from "./chat-decoder";
+import ReactionXd from "./reaction-xd";
 
-export default class ReactManager extends EventEmitter {
+export default class ReactManager {
     constructor(main){
         this.main = main;
 
-        this.main.Bot.on('message', this.onMessage.bind(this));
+        this.reacts = [];
+
+        this.init();
+
+        this.Main.Bot.on('message', this.onMessage.bind(this));
     }
 
-    decodeSentence(text){
-        var sentences = text.split(/(\.|\?|!)/);//문장 기호로 분리
-        
-        return sentences;
+    get Main(){
+        return this.main;
     }
 
-    decodeWord(sentence){
-        var words = sentence.split(' ');
-        
-        return words;
+    get Reacts(){
+        return this.reacts;
+    }
+
+    addReact(reactionPlugin){
+        this.reacts.push(reactionPlugin);
+    }
+
+    init(){
+        this.addReact(new DiveHelper(this));
+        this.addReact(new ReactionXd(this));
     }
 
     onMessage(msg){
-        var wordMap = {};
-        var sentences = this.decodeSentence(msg.Text);
+        if (msg.User instanceof ClientUser)
+            return;
 
-        for (let sentence of sentences){
-            wordMap[sentence] = this.decodeWord(sentence);
-        }
-
-        super.emit('message', msg.User, msg.Client, wordMap);
+        this.reacts.forEach((reactionPlugin) => reactionPlugin.onMessage(msg, ChatDecoder.decode(msg.Text)));
     }
 }

@@ -31,7 +31,7 @@ class ChessCommand extends _storybotCore.CommandListener {
     }
 
     get Description() {
-        return '체스 두실 | 사용법 : *chess';
+        return '체스 두실 | *chess';
     }
 
     get Aliases() {

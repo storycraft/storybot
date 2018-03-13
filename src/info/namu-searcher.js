@@ -16,7 +16,7 @@ export default class NamuSearcher extends CommandListener {
     }
 
     get Description(){
-        return '나무위키 꺼라 | 사용법 : *namu <키워드>';
+        return '나무위키 꺼라 | *namu <키워드>';
     }
 
     get Aliases(){

@@ -25,7 +25,7 @@ class SearchHelper extends _storybotCore.CommandListener {
     }
 
     get Description() {
-        return '제발 검색좀 먼저 하세요 | 사용법 : *search <키워드>';
+        return '제발 검색좀 먼저 하세요 | *search <키워드>';
     }
 
     get Aliases() {

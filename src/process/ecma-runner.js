@@ -15,7 +15,7 @@ export default class EcmaRunner extends ProgramRunner {
     }
 
     get Description(){
-        return 'js 하실 | 사용법: *ecma \\\`\\\`\\\`js\n<소스>\n\\\`\\\`\\\`';
+        return 'js 하실 | *ecma \\\`\\\`\\\`js\n<소스>\n\\\`\\\`\\\`';
     }
 
     get Aliases(){
