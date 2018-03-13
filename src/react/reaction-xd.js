@@ -12,8 +12,11 @@ export default class ReactionXd extends ReactionPlugin {
         else if (msg.Text == '헷'){
             msg.reply('헷');
         }
+        else if (msg.Text == 'ㅁㄴ'){
+            msg.reply('ㅇㄹ');
+        }
         else{
-            
+
         }
     }
 }
