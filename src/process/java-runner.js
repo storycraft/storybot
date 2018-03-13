@@ -13,7 +13,7 @@ export default class JavaRunner extends ProgramRunner {
     }
 
     get Description(){
-        return 'God drinks Java | 사용법: *java <메인 클래스 이름> \\\`\\\`\\\`java\n<소스>\n\\\`\\\`\\\`';
+        return 'God drinks Java | *java <메인 클래스 이름> \\\`\\\`\\\`java\n<소스>\n\\\`\\\`\\\`';
     }
 
     get Aliases(){

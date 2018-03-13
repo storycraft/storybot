@@ -33,7 +33,7 @@ export default class WeatherForecast extends CommandListener {
     }
 
     get Description(){
-        return '이불 밖은 위험해요. ㄷㄷ | 사용법: *날씨 <위치>';
+        return '이불 밖은 위험해요. ㄷㄷ | *날씨 <위치>';
     }
 
     get Aliases(){

@@ -62,6 +62,14 @@ var _balanceCommand = require("./balance/balance-command");
 
 var _balanceCommand2 = _interopRequireDefault(_balanceCommand);
 
+var _reactManager = require("./react/react-manager");
+
+var _reactManager2 = _interopRequireDefault(_reactManager);
+
+var _urlShortener = require("./url_shortener/url-shortener");
+
+var _urlShortener2 = _interopRequireDefault(_urlShortener);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class Main {
@@ -72,6 +80,8 @@ class Main {
         this.balanceManager = new _balanceManager2.default(this);
 
         this.processManager = new _processManager2.default(this);
+
+        this.reactManager = new _reactManager2.default(this);
     }
 
     get Bot() {
@@ -96,6 +106,10 @@ class Main {
 
     get ProcessManager() {
         return this.processManager;
+    }
+
+    get ReactManager() {
+        return this.reactManager;
     }
 
     async start() {
@@ -126,6 +140,8 @@ class Main {
         commandManager.addCommandInfo(this.ProcessManager);
         commandManager.addCommandInfo(new _ecmaRunner2.default(this));
         commandManager.addCommandInfo(new _javaRunner2.default(this));
+
+        commandManager.addCommandInfo(new _urlShortener2.default(this));
     }
 }
 

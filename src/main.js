@@ -17,6 +17,8 @@ import ProcessManager from './process/process-manager';
 import JavaRunner from './process/java-runner';
 import LyricsCommand from './lyrics/lyrics-command';
 import BalanceCommand from './balance/balance-command';
+import ReactManager from './react/react-manager';
+import UrlShortener from './url_shortener/url-shortener';
 
 export default class Main {
     constructor(){
@@ -26,6 +28,8 @@ export default class Main {
         this.balanceManager = new BalanceManager(this);
 
         this.processManager = new ProcessManager(this);
+
+        this.reactManager = new ReactManager(this);
     }
 
     get Bot(){
@@ -50,6 +54,10 @@ export default class Main {
 
     get ProcessManager(){
         return this.processManager;
+    }
+
+    get ReactManager(){
+        return this.reactManager;
     }
 
     async start(){
@@ -80,6 +88,8 @@ export default class Main {
         commandManager.addCommandInfo(this.ProcessManager);
         commandManager.addCommandInfo(new EcmaRunner(this));
         commandManager.addCommandInfo(new JavaRunner(this));
+
+        commandManager.addCommandInfo(new UrlShortener(this));
     }
 }
 
