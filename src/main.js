@@ -19,6 +19,7 @@ import LyricsCommand from './lyrics/lyrics-command';
 import BalanceCommand from './balance/balance-command';
 import ReactManager from './react/react-manager';
 import UrlShortener from './url_shortener/url-shortener';
+import CalculatorCommand from './math/calculator-command';
 
 export default class Main {
     constructor(){
@@ -90,6 +91,7 @@ export default class Main {
         commandManager.addCommandInfo(new JavaRunner(this));
 
         commandManager.addCommandInfo(new UrlShortener(this));
+        commandManager.addCommandInfo(new CalculatorCommand(this));
     }
 }
 

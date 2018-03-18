@@ -22,6 +22,7 @@ export default class UrlShortener extends CommandListener {
     onCommand(args, user, bot, source){
         if (args.length < 1){
             source.send('사용법: *sturl <줄이려는 주소>');
+            return;
         }
         
         var url = args.join('%20');
