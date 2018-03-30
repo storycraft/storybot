@@ -21,5 +21,9 @@ class CalculatorCommand extends _storybotCore.CommandListener {
     get Aliases() {
         return ['calc'];
     }
+
+    onCommand(args, user, bot, source) {
+        source.send('미완성 기능이라고 했을텐데 말이죠');
+    }
 }
 exports.default = CalculatorCommand;
