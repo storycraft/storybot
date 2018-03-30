@@ -26,7 +26,7 @@ export default class PingCommand extends CommandListener {
         let Discordresponse = await RequestHelper.get(DISCORD_SERVER);
         let discordEnd = new Date();
 
-        return discordStart - discordEnd;
+        return discordEnd - discordStart;
     }
 
     async getLinePing(){
@@ -34,7 +34,7 @@ export default class PingCommand extends CommandListener {
         let lineResponse = await RequestHelper.get(LINE_SERVER);
         let lineEnd = new Date();
 
-        return lineStart - lineEnd;
+        return lineEnd - lineStart;
     }
 
     async getKakaoPing(){
@@ -42,7 +42,7 @@ export default class PingCommand extends CommandListener {
         let kakaoResponse = await RequestHelper.get(KAKAO_SERVER);
         let kakaoEnd = new Date();
 
-        return kakaoStart - kakaoEnd;
+        return kakaoEnd - kakaoStart;
     }
 
     async onCommand(args, user, bot, source){
