@@ -32,7 +32,7 @@ class PingCommand extends _storybotCore.CommandListener {
         let Discordresponse = await _storybotCore.RequestHelper.get(DISCORD_SERVER);
         let discordEnd = new Date();
 
-        return discordStart - discordEnd;
+        return discordEnd - discordStart;
     }
 
     async getLinePing() {
@@ -40,7 +40,7 @@ class PingCommand extends _storybotCore.CommandListener {
         let lineResponse = await _storybotCore.RequestHelper.get(LINE_SERVER);
         let lineEnd = new Date();
 
-        return lineStart - lineEnd;
+        return lineEnd - lineStart;
     }
 
     async getKakaoPing() {
@@ -48,7 +48,7 @@ class PingCommand extends _storybotCore.CommandListener {
         let kakaoResponse = await _storybotCore.RequestHelper.get(KAKAO_SERVER);
         let kakaoEnd = new Date();
 
-        return kakaoStart - kakaoEnd;
+        return kakaoEnd - kakaoStart;
     }
 
     async onCommand(args, user, bot, source) {
