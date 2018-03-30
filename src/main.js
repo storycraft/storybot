@@ -20,6 +20,7 @@ import BalanceCommand from './balance/balance-command';
 import ReactManager from './react/react-manager';
 import UrlShortener from './url_shortener/url-shortener';
 import CalculatorCommand from './math/calculator-command';
+import PingCommand from './info/ping-command';
 
 export default class Main {
     constructor(){
@@ -75,6 +76,8 @@ export default class Main {
         commandManager.addCommandInfo(new HelpMessage(this));
 
         commandManager.addCommandInfo(new BalanceCommand(this));
+
+        commandManager.addCommandInfo(new PingCommand(this));
 
         commandManager.addCommandInfo(new DiveTemperature(this));
         commandManager.addCommandInfo(new WeatherForecast(this));
