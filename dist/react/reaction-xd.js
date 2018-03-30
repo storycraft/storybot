@@ -20,6 +20,8 @@ class ReactionXd extends _reactionPlugin2.default {
             msg.reply('네, 스토리 에요!');
         } else if (msg.Text == '헷') {
             msg.reply('헷');
+        } else if (msg.Text == 'ㅁㄴ') {
+            msg.reply('ㅇㄹ');
         } else {}
     }
 }

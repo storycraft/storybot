@@ -18,7 +18,7 @@ class ProcessManager extends _storybotCore.CommandListener {
     }
 
     get Description() {
-        return '장비를 정지합니다 | 사용법 : *proc';
+        return '장비를 정지합니다 | *proc';
     }
 
     get Aliases() {

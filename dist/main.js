@@ -70,6 +70,14 @@ var _urlShortener = require("./url_shortener/url-shortener");
 
 var _urlShortener2 = _interopRequireDefault(_urlShortener);
 
+var _calculatorCommand = require("./math/calculator-command");
+
+var _calculatorCommand2 = _interopRequireDefault(_calculatorCommand);
+
+var _pingCommand = require("./info/ping-command");
+
+var _pingCommand2 = _interopRequireDefault(_pingCommand);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class Main {
@@ -127,6 +135,8 @@ class Main {
 
         commandManager.addCommandInfo(new _balanceCommand2.default(this));
 
+        commandManager.addCommandInfo(new _pingCommand2.default(this));
+
         commandManager.addCommandInfo(new _diveTemperature2.default(this));
         commandManager.addCommandInfo(new _weatherForecast2.default(this));
 
@@ -142,6 +152,7 @@ class Main {
         commandManager.addCommandInfo(new _javaRunner2.default(this));
 
         commandManager.addCommandInfo(new _urlShortener2.default(this));
+        commandManager.addCommandInfo(new _calculatorCommand2.default(this));
     }
 }
 
