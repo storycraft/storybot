@@ -67,6 +67,9 @@ export default class Main {
 
         await this.Bot.initialize(botSettings);
 
+        this.bot.DiscordClient.setUserName('Dotorybot');
+        this.bot.DiscordClient.setAvatar('./resources/fool.png');
+
         console.log('Storybot이 시작 되었습니다');
     }
 

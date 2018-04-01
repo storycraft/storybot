@@ -74,7 +74,7 @@ export default class WeatherForecast extends CommandListener {
             this.getGeometryInfo(text).then((json) => {
                 switch (json['status']){
                     case 'ZERO_RESULTS':
-                        this.editStatus(msg, '`' + text + '` 위치를 찾을수가 없어요 ㅜㅜ');
+                        this.editStatus(msg, '`' + text + '` 위치를 찾을수가 없어요 ㅜㅜ;');
                         break;
                     
                     case 'OK':

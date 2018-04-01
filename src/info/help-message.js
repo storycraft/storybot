@@ -33,7 +33,7 @@ export default class HelpMessage extends CommandListener {
 
         infoMessage += '}\n```';
 
-        source.send('Storybot이 가능한 짓 거리 목록\n 커맨드 접두사: ' + this.main.CommandManager.CommandPrefix).then(() => {
+        source.send('Dotorybot이 가능한 짓 거리 목록\n 커맨드 접두사: ' + this.main.CommandManager.CommandPrefix).then(() => {
             source.send(infoMessage);
         });
     }

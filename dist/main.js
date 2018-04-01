@@ -125,6 +125,14 @@ class Main {
 
         await this.Bot.initialize(_botSettings2.default);
 
+        this.Bot.DiscordClient.DiscordClient.user.setPresence({
+            'status': 'online',
+            'game': {
+                'name': 'Anime',
+                'type': 'WATCHING'
+            }
+        });
+
         console.log('Storybot이 시작 되었습니다');
     }
 
