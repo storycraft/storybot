@@ -143,7 +143,7 @@ class JavaRunner extends _programRunner2.default {
 
         if (this.first) {
             this.first = false;
-            channel.send('해당 소스 실행으로 인한 채널 메세지 피해는 Storybot에서 책임 지지 않습니다');
+            channel.send('해당 소스 실행으로 인한 채널 메세지 피해는 Dotorybot에서 책임 지지 않습니다');
         }
 
         this.run(source, mainClass, channel);
