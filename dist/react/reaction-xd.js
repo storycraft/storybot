@@ -16,8 +16,8 @@ class ReactionXd extends _reactionPlugin2.default {
     }
 
     onMessage(msg, chatDecoded) {
-        if (msg.Text == '도토링') {
-            msg.reply('네, 도토리 에요!');
+        if (msg.Text == '스토링') {
+            msg.reply('네, 스토리 에요!');
         } else if (msg.Text == '헷') {
             msg.reply('헷');
         } else if (msg.Text == 'ㅁㄴ') {
