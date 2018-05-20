@@ -1,4 +1,5 @@
 import { CommandListener } from "storybot-core";
+import ExpressionParser from "./expression-parser";
 
 export default class CalculatorCommand extends CommandListener {
     constructor(main){
@@ -17,6 +18,20 @@ export default class CalculatorCommand extends CommandListener {
     }
 
     onCommand(args, user, bot, source){
-        source.send('미완성 기능이라고 했을텐데 말이죠');
+        let expression = args.join("");
+
+        if (expression == ""){
+            source.send('사용법: *calc <계산식>');
+            return;
+        }
+
+        let parser = new ExpressionParser();
+        try {
+            parser.parse(expression);
+            source.send("파싱 된 raw 식: " + parser.Lexer.toString());
+            source.send(" = " + parser.Answer);
+        } catch(e){
+            source.send('식 파싱중 오류가 발생했습니다.\n' + e);
+        }
     }
 }

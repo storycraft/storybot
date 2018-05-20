@@ -67,6 +67,8 @@ export default class Main {
 
         await this.Bot.initialize(botSettings);
 
+        this.Bot.DiscordClient.setUserName('Storybot');
+
         console.log('Storybot이 시작 되었습니다');
     }
 
