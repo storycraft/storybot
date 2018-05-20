@@ -125,6 +125,8 @@ class Main {
 
         await this.Bot.initialize(_botSettings2.default);
 
+        this.Bot.DiscordClient.setUserName('Storybot');
+
         console.log('Storybot이 시작 되었습니다');
     }
 
