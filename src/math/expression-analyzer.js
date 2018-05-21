@@ -10,8 +10,6 @@ export default class ExpressionAnalyzer {
                 bracketCount++;
             else if (token.Type.Name == 'RIGHT_BRACKET')
                 bracketCount--;
-            else if (token.Type.Name == 'MATH_FUNCTION' && !Math[token.Value])
-                throw new Error(`Function ${token.Value} is not fonud at javascript Math Object`);
             else if (token.Type.Name == 'IDENTIFIER' && isNaN(Number.parseFloat(token.Value)))
                 throw new Error(`${token.Value} is not a number`);
         

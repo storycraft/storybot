@@ -1,5 +1,4 @@
 import Storing from "./storing";
-import DiveHelper from './dive-helper';
 import { ClientUser } from 'storybot-core';
 import ChatDecoder from "./chat-decoder";
 import ReactionXd from "./reaction-xd";
@@ -28,7 +27,6 @@ export default class ReactManager {
     }
 
     init(){
-        this.addReact(new DiveHelper(this));
         this.addReact(new ReactionXd(this));
     }
 

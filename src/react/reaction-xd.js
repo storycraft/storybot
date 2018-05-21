@@ -6,7 +6,7 @@ export default class ReactionXd extends ReactionPlugin {
     }
 
     onMessage(msg, chatDecoded){
-        if (msg.Text == '스토링'){
+        if (msg.isMentioned(this.manager.Main.Bot)){
             msg.reply('네, 스토리 에요!');
         }
         else if (msg.Text == '헷'){
