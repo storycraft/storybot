@@ -19,11 +19,11 @@ class Variable extends _expressionPiece2.default {
         return true;
     }
 
-    contains(chr, next) {
-        if (next && this.contains(next)) return false;
+    contains(chr, next, last) {
+        if (next && this.contains(next) || last && this.contains(last)) return false;
 
         let code = chr.charCodeAt(0);
-        return code > 64 && code < 123;
+        return code > 64 && code < 91 || code > 96 && code < 123;
     }
 }
 exports.default = Variable;

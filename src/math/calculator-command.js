@@ -27,9 +27,9 @@ export default class CalculatorCommand extends CommandListener {
 
         let parser = new ExpressionParser();
         try {
-            let answer = parser.parse(expression);
-            source.send("파싱 된 raw 식: " + parser.Lexer.toString());
-            source.send(" = " + answer);
+            parser.parse(expression);
+            source.send('필요한 변수 값: ' + parser.Analyzer.VariableList.join(', '));
+            source.send(" = " + parser.calculate());
         } catch(e){
             source.send('식 파싱중 오류가 발생했습니다.\n' + e);
         }

@@ -2,11 +2,15 @@ import ExpressionLexer from './expression-lexer';
 import ExpressionAnalyzer from './expression-analyzer';
 import TokenNode from './token-node';
 import MathExpression from './math-expression';
+import RPNConverter from './rpn-converter';
 
 export default class ExpressionParser {
     constructor(){
         this.lexer = new ExpressionLexer();
         this.analyzer = new ExpressionAnalyzer();
+        this.converter = new RPNConverter(this);
+
+        this.variableMap = new Map();
 
         this.rootNode;
     }
@@ -19,24 +23,34 @@ export default class ExpressionParser {
         return this.analyzer;
     }
 
-    parse(str){
-        this.Lexer.parse(str);
-        this.analyzer.analysis(this.Lexer);
-
-        return this.parseInternal();
-        
+    get Converter(){
+        return this.converter;
     }
 
-    parseInternal(){
-        let rpnStack = this.convertToRPNInternal();
+    get VariableMap(){
+        return this.variableMap;
+    }
 
-        var copy = rpnStack.slice(0);
+    parse(str, variableMap = new Map()){
+        this.variableMap = variableMap;
+
+        this.Lexer.parse(str);
+        this.Analyzer.analysis(this.Lexer);
+        this.Converter.convert(this.Lexer);
+    }
+
+    calculate(){
+        let rpnStack = this.Converter.OperandStack;
+
         var expressionList = [];
         var stack = [];
 
-        for (var token of copy){
+        for (var token of rpnStack){
             if (token.Type.Name == 'IDENTIFIER'){
                 stack.push(Number.parseFloat(token.Value));
+            }
+            else if (token.Type.Name == 'VARIABLE'){
+                stack.push(this.getVariableValue(token));
             }
             else if (token.Type.Name == 'OPERATOR'){
                 var rightValue = stack.pop();
@@ -65,109 +79,38 @@ export default class ExpressionParser {
                 }
             }
             else if (token.Type.Name == 'MATH_FUNCTION'){
-                if (!Math[token.Value])
+
+                var func = Math[token.Value];
+
+                if (!func)
                     throw new Error(`${token.Value} is not found at javascript Math Object`);
-                stack.push(Math[token.Value](stack.pop()));
+
+                let valueList = [];
+
+                let index = copy.indexOf(token);
+                let count = 0;
+                while(copy[--index].Type.Name == 'FUNCTION_COMMA'){
+                    count++;
+                }
+
+                for (let i = 0; i <= count; i++){
+                    valueList.push(stack.pop());
+                }
+
+                if (func.length != valueList.length)
+                    throw new Error(`Required arguments: ${func.length} but provided ${valueList.length}`);
+
+                stack.push(func.apply(null, valueList.reverse()));
             }
         }
 
         return stack[0];
     }
 
-    convertToRPNInternal(){
-        var operandStack = [];
-        var operatorStack = [];
+    getVariableValue(token){
+        if (token.Type.Name == 'VARIABLE' && this.VariableMap.has(token.Value))
+            return Number.parseFloat(this.VariableMap.get(token.Value));
 
-        this.Lexer.forEach((token) => {
-            if (token.Type.Name == 'IDENTIFIER'){
-                operandStack.push(token);
-            }
-            else if (token.Type.Name == 'MATH_FUNCTION' || token.Type.Name == 'LEFT_BRACKET'){
-                operatorStack.push(token);
-            }
-            else if (token.Type.Name == 'OPERATOR'){
-                var priority = this.getOperatorPriority(token);
-                var sideFlag = this.isOperatorLeftSide(token);
-
-                while (operatorStack.length) {
-                    var operatorToken = operatorStack[operatorStack.length - 1];                    
-                    
-                    if ((operatorToken.Type.Name == 'OPERATOR' && (priority <= this.getOperatorPriority(operatorToken) && sideFlag || !sideFlag && priority < this.getOperatorPriority(operatorToken))) && operatorToken.Type.Name != 'LEFT_BRACKET'){
-                        operandStack.push(operatorStack.pop());
-                    }
-                    else{
-                        break;
-                    }
-                }
-
-                operatorStack.push(token);
-            }
-            else if (token.Type.Name == 'RIGHT_BRACKET'){
-                while (operatorStack.length) {
-                    let operatorToken = operatorStack.pop();
-                    if (operatorToken.Type.Name == 'LEFT_BRACKET') {
-                        break;
-                    }
-                    else{
-                        operandStack.push(operatorToken);
-                    }
-                  }
-            }
-        });
-
-        for (let leftOperator of operatorStack){
-            operandStack.push(leftOperator);
-        }
-
-        return operandStack;
+        throw new Error(`Variable ${token.Value} is not set`);
     }
-
-    addToTreeInternal(token){
-        var node = new TokenNode(null, token);
-
-        if (this.getPriority(node) > this.getPriority(this.rootNode)){
-            node.LeftNode = this.rootNode;
-            this.rootNode = node;
-        }
-        else {
-            node.LeftNode = this.rootNode.RightNode;
-            this.rootNode.RightNode = node;
-        }
-    }
-
-    getOperatorPriority(token){
-        switch (token.Value){
-                case '-':
-                case '+':
-                    return 2;
-
-                case '*':
-                case '/':
-                    return 3;
-
-                case '^':
-                    return 4;
-
-            default:
-                throw new Error('Unknown token type');
-        }
-    }
-
-    isOperatorLeftSide(token){
-        switch (token.Value){
-                case '-':
-                case '+':
-                case '*':
-                case '/':
-                    return true;
-
-                case '^':
-                    return false;
-
-            default:
-                throw new Error('Unknown token type');
-        }
-    }
-
-    //(2+(2-1)) -> 2/-\1 -> 2/+\2/-\1
 }

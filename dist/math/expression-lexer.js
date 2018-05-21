@@ -126,4 +126,4 @@ class ExpressionLexer {
 }
 
 exports.default = ExpressionLexer;
-ExpressionLexer.pieces = [new _identifier2.default(), new _mathFunction2.default(), new _functionComma2.default(), new _operator2.default(), new _variable2.default(), new _leftBracket2.default(), new _rightBracket2.default()];
+ExpressionLexer.pieces = [new _identifier2.default(), new _variable2.default(), new _mathFunction2.default(), new _functionComma2.default(), new _operator2.default(), new _leftBracket2.default(), new _rightBracket2.default()];
