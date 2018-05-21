@@ -38,9 +38,10 @@ class CalculatorCommand extends _storybotCore.CommandListener {
 
         let parser = new _expressionParser2.default();
         try {
-            let answer = parser.parse(expression);
-            source.send("파싱 된 raw 식: " + parser.Lexer.toString());
-            source.send(" = " + answer);
+            parser.parse(expression);
+            source.send("파싱 된 식: " + parser.Converter.toString());
+            source.send('필요한 변수 값: ' + parser.Analyzer.VariableList.join(', '));
+            source.send(" = " + parser.calculate());
         } catch (e) {
             source.send('식 파싱중 오류가 발생했습니다.\n' + e);
         }

@@ -19,7 +19,7 @@ class MathFunction extends _expressionPiece2.default {
         if (next && !this.contains(next) && last && !this.contains(last)) return false;
 
         let code = chr.charCodeAt(0);
-        return code > 64 && code < 123;
+        return code > 64 && code < 91 || code > 96 && code < 123;
     }
 }
 exports.default = MathFunction;

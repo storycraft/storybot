@@ -4,12 +4,20 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 class ExpressionAnalyzer {
-    constructor() {}
+    constructor() {
+        this.variableList = [];
+    }
+
+    get VariableList() {
+        return this.variableList;
+    }
 
     analysis(lexer) {
         var bracketCount = 0;
         lexer.forEach(token => {
-            if (token.Type.Name == 'LEFT_BRACKET') bracketCount++;else if (token.Type.Name == 'RIGHT_BRACKET') bracketCount--;else if (token.Type.Name == 'IDENTIFIER' && isNaN(Number.parseFloat(token.Value))) throw new Error(`${token.Value} is not a number`);
+            if (token.Type.Name == 'LEFT_BRACKET') bracketCount++;else if (token.Type.Name == 'RIGHT_BRACKET') bracketCount--;else if (token.Type.Name == 'IDENTIFIER' && isNaN(Number.parseFloat(token.Value))) throw new Error(`${token.Value} is not a number`);else if (token.Type.Name == 'LEFT_BRACKET' && token.NextToken.Type.Name != 'RIGHT_BRACKET') throw new Error('brackets cannot be used without operator');else if (token.Type.Name == 'VARIABLE') {
+                this.variableList.push(token.Value);
+            }
 
             if (token.PreviousToken) {
                 if (token.Type.Name == 'OPERATOR' && token.PreviousToken.Type.Name == 'OPERATOR') throw new Error(`Operators cannot be used multiple times at one time`);

@@ -1,6 +1,10 @@
 export default class ExpressionAnalyzer {
     constructor(){
+        this.variableList = [];
+    }
 
+    get VariableList(){
+        return this.variableList;
     }
 
     analysis(lexer){
@@ -12,6 +16,11 @@ export default class ExpressionAnalyzer {
                 bracketCount--;
             else if (token.Type.Name == 'IDENTIFIER' && isNaN(Number.parseFloat(token.Value)))
                 throw new Error(`${token.Value} is not a number`);
+            else if (token.Type.Name == 'LEFT_BRACKET' && token.NextToken.Type.Name != 'RIGHT_BRACKET')
+                throw new Error('brackets cannot be used without operator');
+            else if (token.Type.Name == 'VARIABLE'){
+                this.variableList.push(token.Value);
+            }
         
             if (token.PreviousToken){
                 if (token.Type.Name == 'OPERATOR' && token.PreviousToken.Type.Name == 'OPERATOR')

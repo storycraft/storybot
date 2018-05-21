@@ -102,10 +102,10 @@ export default class ExpressionLexer {
 
 ExpressionLexer.pieces = [
     new Identifier(),
+    new Variable(),
     new MathFunction(),
     new FunctionComma(),
     new Operator(),
-    new Variable(),
     new LeftBracket(),
     new RightBracket()
 ];

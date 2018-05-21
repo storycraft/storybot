@@ -10,6 +10,6 @@ export default class MathFunction extends ExpressionPiece {
             return false;
 
         let code = chr.charCodeAt(0);
-        return code > 64 && code < 123;
+        return code > 64 && code < 91 || code > 96 && code < 123;
     }
 }
