@@ -105,9 +105,9 @@ class ExpressionParser {
 
                 let valueList = [];
 
-                let index = copy.indexOf(token);
+                let index = rpnStack.indexOf(token);
                 let count = 0;
-                while (copy[--index].Type.Name == 'FUNCTION_COMMA') {
+                while (rpnStack[--index].Type.Name == 'FUNCTION_COMMA') {
                     count++;
                 }
 
