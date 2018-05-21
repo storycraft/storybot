@@ -10,8 +10,6 @@ export default class ExpressionAnalyzer {
                 bracketCount++;
             else if (token.Type.Name == 'RIGHT_BRACKET')
                 bracketCount--;
-            else if (token.Type.Name == 'MATH_FUNCTION' && !Math[token.Value])
-                throw new Error(`Function ${token.Value} is not fonud at javascript Math Object`);
             else if (token.Type.Name == 'IDENTIFIER' && isNaN(Number.parseFloat(token.Value)))
                 throw new Error(`${token.Value} is not a number`);
         
@@ -22,6 +20,8 @@ export default class ExpressionAnalyzer {
             else if (token.NextToken){
                 if (token.Type.Name == 'MATH_FUNCTION' && token.NextToken.Type.Name != 'LEFT_BRACKET')
                     throw new Error(`Functions cannot be used without bracket`);
+                else if ((token.Type.Name == 'LEFT_BRACKET' && token.NextToken.Type.Name != 'IDENTIFIER') || (token.Type.Name == 'RIGHT_BRACKET' && token.NextToken.Type.Name != 'OPERATOR'))
+                    throw new Error(`Number should come after left bracket and operator should come after right bracket`);
             }
         });
 

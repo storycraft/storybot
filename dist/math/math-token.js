@@ -7,9 +7,6 @@ class MathToken {
     constructor(type, value = "") {
         this.type = type;
         this.value = value;
-
-        this.previousToken = null;
-        this.nextToken = null;
     }
 
     get Type() {
@@ -18,22 +15,6 @@ class MathToken {
 
     get Value() {
         return this.value;
-    }
-
-    get NextToken() {
-        return this.nextToken;
-    }
-
-    get PreviousToken() {
-        return this.previousToken;
-    }
-
-    set NextToken(nextToken) {
-        this.nextToken = nextToken;
-    }
-
-    set PreviousToken(previousToken) {
-        this.previousToken = previousToken;
     }
 
     set Value(value) {
