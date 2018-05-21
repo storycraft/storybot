@@ -1,5 +1,10 @@
-export default class TokenNode {
-    constructor(rootNode = null, token = null, leftNode = null, rightNode = null){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+class TokenNode {
+    constructor(rootNode = null, token = null, leftNode = null, rightNode = null) {
         this.rootNode = rootNode;
 
         this.token = token;
@@ -8,37 +13,38 @@ export default class TokenNode {
         this.rightNode = rightNode;
     }
 
-    get RootNode(){
+    get RootNode() {
         return this.rootNode;
     }
 
-    get Token(){
+    get Token() {
         return this.token;
     }
-    
-    get LeftNode(){
+
+    get LeftNode() {
         return this.leftNode;
     }
 
-    get RightNode(){
+    get RightNode() {
         return this.rightNode;
     }
 
-    set RootNode(rootNode){
+    set RootNode(rootNode) {
         this.rootNode = rootNode;
 
         this.LeftNode.RootNode = this.RightNode.RootNode = rootNode;
     }
 
-    set Token(token){
+    set Token(token) {
         this.token = token;
     }
 
-    set LeftNode(leftNode){
+    set LeftNode(leftNode) {
         this.leftNode = leftNode;
     }
 
-    set RightNode(rightNode){
+    set RightNode(rightNode) {
         this.rightNode = rightNode;
     }
 }
+exports.default = TokenNode;

@@ -28,6 +28,10 @@ var _mathFunction = require("./type/math-function");
 
 var _mathFunction2 = _interopRequireDefault(_mathFunction);
 
+var _functionComma = require("./type/function-comma");
+
+var _functionComma2 = _interopRequireDefault(_functionComma);
+
 var _mathToken = require("./math-token");
 
 var _mathToken2 = _interopRequireDefault(_mathToken);
@@ -47,12 +51,6 @@ class ExpressionLexer {
         var nextToken = this.tokenList[position];
         var lastToken = this.tokenList[position - 1];
 
-        if (lastToken) lastToken.NextToken = token;
-
-        token.PreviousToken = lastToken.NextToken;
-        token.NextToken = nextToken;
-        nextToken.PreviousToken = token;
-
         this.tokenList.splice(position, 0, token);
     }
 
@@ -63,23 +61,19 @@ class ExpressionLexer {
 
         var nextToken = this.tokenList[position];
         var lastToken = this.tokenList[position - 1];
-
-        lastToken.NextToken = nextToken;
-        nextToken.PreviousToken = lastToken;
     }
 
     push(token) {
-        if (this.currentToken) {
-            this.currentToken.NextToken = token;
-            token.PreviousToken = this.currentToken;
-        }
-
         this.currentToken = token;
         this.tokenList.push(token);
     }
 
     get Size() {
         return this.tokenList.length;
+    }
+
+    get LastToken() {
+        return this.currentToken;
     }
 
     parse(strExpression) {
@@ -132,4 +126,4 @@ class ExpressionLexer {
 }
 
 exports.default = ExpressionLexer;
-ExpressionLexer.pieces = [new _identifier2.default(), new _mathFunction2.default(), new _variable2.default(), new _operator2.default(), new _leftBracket2.default(), new _rightBracket2.default()];
+ExpressionLexer.pieces = [new _identifier2.default(), new _mathFunction2.default(), new _functionComma2.default(), new _operator2.default(), new _variable2.default(), new _leftBracket2.default(), new _rightBracket2.default()];

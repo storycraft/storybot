@@ -1,24 +1,20 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _storing = require('./storing');
+var _storing = require("./storing");
 
 var _storing2 = _interopRequireDefault(_storing);
 
-var _diveHelper = require('./dive-helper');
+var _storybotCore = require("storybot-core");
 
-var _diveHelper2 = _interopRequireDefault(_diveHelper);
-
-var _storybotCore = require('storybot-core');
-
-var _chatDecoder = require('./chat-decoder');
+var _chatDecoder = require("./chat-decoder");
 
 var _chatDecoder2 = _interopRequireDefault(_chatDecoder);
 
-var _reactionXd = require('./reaction-xd');
+var _reactionXd = require("./reaction-xd");
 
 var _reactionXd2 = _interopRequireDefault(_reactionXd);
 
@@ -48,7 +44,6 @@ class ReactManager {
     }
 
     init() {
-        this.addReact(new _diveHelper2.default(this));
         this.addReact(new _reactionXd2.default(this));
     }
 
