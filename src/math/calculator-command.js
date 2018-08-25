@@ -10,7 +10,7 @@ export default class CalculatorCommand extends CommandListener {
     }
 
     get Description(){
-        return '계산기 쓰실 **미완성 기능** | *calc <계산식>';
+        return '계산기 쓰실 | *calc <계산식>';
     }
 
     get Aliases(){
