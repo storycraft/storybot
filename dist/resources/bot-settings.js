@@ -3,6 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _process = require("process");
+
+var _process2 = _interopRequireDefault(_process);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 exports.default = {
     //디스코드 봇 설정
     "discord": {
@@ -35,7 +42,7 @@ exports.default = {
     //Web 설정
     "web": {
         "enabled": true,
-        "port": 7000
+        "port": _process2.default.env.PORT
     },
 
     "command-prefix": "*",
