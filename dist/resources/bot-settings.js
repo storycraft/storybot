@@ -34,7 +34,7 @@ exports.default = {
 
     //Web 설정
     "web": {
-        "enabled": false,
+        "enabled": true,
         "port": 7000
     },
 
