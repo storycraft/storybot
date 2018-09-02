@@ -1,3 +1,5 @@
+import process from 'process';
+
 export default {
     //디스코드 봇 설정
     "discord": {
@@ -30,7 +32,7 @@ export default {
     //Web 설정
     "web": {
         "enabled": true,
-        "port": 7000,
+        "port": process.env.PORT,
     },
 
     "command-prefix": "*",
