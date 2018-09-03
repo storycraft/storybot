@@ -39,9 +39,10 @@ exports.default = {
         "password": ""
     },
 
-    //Web 설정
-    "web": {
+    //Socket 설정
+    "socket": {
         "enabled": true,
+        "path": "/storybot-socket",
         "port": _process2.default.env.PORT
     },
 

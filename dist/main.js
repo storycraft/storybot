@@ -125,7 +125,11 @@ class Main {
 
         await this.Bot.initialize(_botSettings2.default);
 
+        this.Bot.SocketClient.registerClientId('4c3fa3fe-d5cb-41ba-be81-2919f9001d3c', 'test');
+        this.Bot.SocketClient.registerClientId('89db505b-c064-4595-aea4-d24a72426cfc', 'kakao');
+
         this.Bot.DiscordClient.setUserName('Storybot');
+        this.Bot.DiscordClient.setActivity('some Anime', { type: 'WATCHING' });
 
         console.log('Storybot이 시작 되었습니다');
     }
