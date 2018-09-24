@@ -19,8 +19,9 @@
   },
   "homepage": "https://github.com/storycraft/storybot#readme",
   "dependencies": {
-    "canvas-prebuilt": "^1.6.5-prerelease.1",
-    "school-info-parser": "^2.0.0",
+    "canvas-prebuilt": "^1.6.11",
+    "pixiv-api-client": "^0.17.1",
+    "school-info-parser": "^2.0.2",
     "storybot-core": "^1.5.1",
     "unzip": "^0.1.11",
     "waaai": "^0.4.11",

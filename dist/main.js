@@ -78,6 +78,14 @@ var _pingCommand = require("./info/ping-command");
 
 var _pingCommand2 = _interopRequireDefault(_pingCommand);
 
+var _schoolLunch = require("./info/school/school-lunch");
+
+var _schoolLunch2 = _interopRequireDefault(_schoolLunch);
+
+var _randomPixiv = require("./info/random-pixiv");
+
+var _randomPixiv2 = _interopRequireDefault(_randomPixiv);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class Main {
@@ -152,6 +160,9 @@ class Main {
         commandManager.addCommandInfo(new _chessCommand2.default(this));
 
         commandManager.addCommandInfo(new _lyricsCommand2.default(this));
+
+        //commandManager.addCommandInfo(new SchoolLunch(this));
+        commandManager.addCommandInfo(new _randomPixiv2.default(this));
 
         commandManager.addCommandInfo(this.ProcessManager);
         commandManager.addCommandInfo(new _ecmaRunner2.default(this));
