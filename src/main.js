@@ -23,6 +23,7 @@ import CalculatorCommand from './math/calculator-command';
 import PingCommand from './info/ping-command';
 import SchoolLunch from './info/school/school-lunch';
 import RandomPixiv from './info/random-pixiv';
+import StoryChooser from './ai/trick/story-chooser';
 
 export default class Main {
     constructor(){
@@ -103,6 +104,7 @@ export default class Main {
         commandManager.addCommandInfo(this.ProcessManager);
         commandManager.addCommandInfo(new EcmaRunner(this));
         commandManager.addCommandInfo(new JavaRunner(this));
+        commandManager.addCommandInfo(new StoryChooser(this));
 
         commandManager.addCommandInfo(new UrlShortener(this));
         commandManager.addCommandInfo(new CalculatorCommand(this));

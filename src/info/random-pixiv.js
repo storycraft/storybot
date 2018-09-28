@@ -1,5 +1,5 @@
 import { CommandListener } from 'storybot-core';
-import PixivApi from 'pixiv-api-client';
+import PixivAppApi from 'pixiv-app-api';
 import apiAuth from '../resources/api-auth';
 
 export default class RandomPixiv extends CommandListener {
@@ -7,7 +7,7 @@ export default class RandomPixiv extends CommandListener {
         super();
         this.main = main;
         
-        this.api = new PixivApi();
+        this.api = null;
         this.loaded = false;
 
         //적절한 커맨드
@@ -37,19 +37,25 @@ export default class RandomPixiv extends CommandListener {
             return;
         }
 
-        this.api.searchIllustPopularPreview(args.join(' '), {'search_target': 'exact_match_for_tags'}).then((json) => {
+        this.api.searchIllust(args.join(' '), {'search_target': 'exact_match_for_tags'}).then((json) => {
             let illusts = json.illusts;
+
+            if (illusts.length < 1) {
+                source.send('적당한 일러스트가 없네요');
+                return;
+            }
+
             let illust = illusts[Math.floor(Math.random() * (illusts.length - 1))];
 
             source.send(`${illust.title} by \`${illust.user.name} (${illust.user.account})\`\nhttps://www.pixiv.net/member_illust.php?mode=medium&illust_id=${illust.id}`);
         });
     }
 
-    async init(){
+    init(){
         if (this.Loaded)
             return;
 
-        await this.api.login(apiAuth.pixiv['username'], apiAuth.pixiv['password'], true);
+        this.api = new PixivAppApi(apiAuth.pixiv['username'], apiAuth.pixiv['password'], true);
         this.loaded = true;
     }
 }
