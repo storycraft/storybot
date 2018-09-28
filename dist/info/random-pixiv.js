@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _storybotCore = require('storybot-core');
 
-var _pixivApiClient = require('pixiv-api-client');
+var _pixivAppApi = require('pixiv-app-api');
 
-var _pixivApiClient2 = _interopRequireDefault(_pixivApiClient);
+var _pixivAppApi2 = _interopRequireDefault(_pixivAppApi);
 
 var _apiAuth = require('../resources/api-auth');
 
@@ -21,7 +21,7 @@ class RandomPixiv extends _storybotCore.CommandListener {
         super();
         this.main = main;
 
-        this.api = new _pixivApiClient2.default();
+        this.api = null;
         this.loaded = false;
 
         //적절한 커맨드
@@ -50,18 +50,24 @@ class RandomPixiv extends _storybotCore.CommandListener {
             return;
         }
 
-        this.api.searchIllustPopularPreview(args.join(' '), { 'search_target': 'exact_match_for_tags' }).then(json => {
+        this.api.searchIllust(args.join(' '), { 'search_target': 'exact_match_for_tags' }).then(json => {
             let illusts = json.illusts;
+
+            if (illusts.length < 1) {
+                source.send('적당한 일러스트가 없네요');
+                return;
+            }
+
             let illust = illusts[Math.floor(Math.random() * (illusts.length - 1))];
 
             source.send(`${illust.title} by \`${illust.user.name} (${illust.user.account})\`\nhttps://www.pixiv.net/member_illust.php?mode=medium&illust_id=${illust.id}`);
         });
     }
 
-    async init() {
+    init() {
         if (this.Loaded) return;
 
-        await this.api.login(_apiAuth2.default.pixiv['username'], _apiAuth2.default.pixiv['password'], true);
+        this.api = new _pixivAppApi2.default(_apiAuth2.default.pixiv['username'], _apiAuth2.default.pixiv['password'], true);
         this.loaded = true;
     }
 }

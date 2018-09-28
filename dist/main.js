@@ -86,6 +86,10 @@ var _randomPixiv = require("./info/random-pixiv");
 
 var _randomPixiv2 = _interopRequireDefault(_randomPixiv);
 
+var _storyChooser = require("./ai/trick/story-chooser");
+
+var _storyChooser2 = _interopRequireDefault(_storyChooser);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class Main {
@@ -167,6 +171,7 @@ class Main {
         commandManager.addCommandInfo(this.ProcessManager);
         commandManager.addCommandInfo(new _ecmaRunner2.default(this));
         commandManager.addCommandInfo(new _javaRunner2.default(this));
+        commandManager.addCommandInfo(new _storyChooser2.default(this));
 
         commandManager.addCommandInfo(new _urlShortener2.default(this));
         commandManager.addCommandInfo(new _calculatorCommand2.default(this));
