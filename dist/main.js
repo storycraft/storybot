@@ -86,6 +86,10 @@ var _storyChooser = require("./ai/trick/story-chooser");
 
 var _storyChooser2 = _interopRequireDefault(_storyChooser);
 
+var _chatlogCommand = require("./chat/chatlog-command");
+
+var _chatlogCommand2 = _interopRequireDefault(_chatlogCommand);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class Main {
@@ -160,6 +164,7 @@ class Main {
         commandManager.addCommandInfo(new _chessCommand2.default(this));
 
         commandManager.addCommandInfo(new _lyricsCommand2.default(this));
+        commandManager.addCommandInfo(new _chatlogCommand2.default(this));
 
         //commandManager.addCommandInfo(new SchoolLunch(this));
 

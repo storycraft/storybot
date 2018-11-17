@@ -23,6 +23,7 @@ import CalculatorCommand from './math/calculator-command';
 import PingCommand from './info/ping-command';
 import SchoolLunch from './info/school/school-lunch';
 import StoryChooser from './ai/trick/story-chooser';
+import ChatlogCommand from './chat/chatlog-command';
 
 export default class Main {
     constructor(){
@@ -96,6 +97,7 @@ export default class Main {
         commandManager.addCommandInfo(new ChessCommand(this));
 
         commandManager.addCommandInfo(new LyricsCommand(this));
+        commandManager.addCommandInfo(new ChatlogCommand(this));
 
         //commandManager.addCommandInfo(new SchoolLunch(this));
 
