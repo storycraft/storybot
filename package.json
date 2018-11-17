@@ -8,7 +8,7 @@
     "start": "node dist/main.js",
     "build": "babel src -d dist"
   },
-  "engine": {
+  "engines": {
     "node": "< 10.0.0"
   },
   "repository": {
