@@ -82,10 +82,6 @@ var _schoolLunch = require("./info/school/school-lunch");
 
 var _schoolLunch2 = _interopRequireDefault(_schoolLunch);
 
-var _randomPixiv = require("./info/random-pixiv");
-
-var _randomPixiv2 = _interopRequireDefault(_randomPixiv);
-
 var _storyChooser = require("./ai/trick/story-chooser");
 
 var _storyChooser2 = _interopRequireDefault(_storyChooser);
@@ -166,7 +162,6 @@ class Main {
         commandManager.addCommandInfo(new _lyricsCommand2.default(this));
 
         //commandManager.addCommandInfo(new SchoolLunch(this));
-        commandManager.addCommandInfo(new _randomPixiv2.default(this));
 
         commandManager.addCommandInfo(this.ProcessManager);
         commandManager.addCommandInfo(new _ecmaRunner2.default(this));
