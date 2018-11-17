@@ -8,6 +8,9 @@
     "start": "node dist/main.js",
     "build": "babel src -d dist"
   },
+  "engine": {
+    "node": < 10.0.0
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/storycraft/storybot.git"
