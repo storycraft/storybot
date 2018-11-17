@@ -57,7 +57,7 @@ export default class WeatherForecast extends CommandListener {
             return await msg.edit(text);
         }
         else{
-            return (await msg.Source.send(text))[0];
+            return (await msg.reply(text))[0];
         }
     }
 
@@ -86,8 +86,7 @@ export default class WeatherForecast extends CommandListener {
                             let currentWeather = weatherJson['currently'];
 
                             //텍스트공백 제거
-                            let infoText = `
-${result['formatted_address']} 의 현재 날씨
+                            let infoText = `${result['formatted_address']} 의 현재 날씨
 
 ${ICON_DESCRIPTION[currentWeather['icon']]}
 ${currentWeather['summary']}

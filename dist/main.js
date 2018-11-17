@@ -82,13 +82,13 @@ var _schoolLunch = require("./info/school/school-lunch");
 
 var _schoolLunch2 = _interopRequireDefault(_schoolLunch);
 
-var _randomPixiv = require("./info/random-pixiv");
-
-var _randomPixiv2 = _interopRequireDefault(_randomPixiv);
-
 var _storyChooser = require("./ai/trick/story-chooser");
 
 var _storyChooser2 = _interopRequireDefault(_storyChooser);
+
+var _chatlogCommand = require("./chat/chatlog-command");
+
+var _chatlogCommand2 = _interopRequireDefault(_chatlogCommand);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -164,9 +164,9 @@ class Main {
         commandManager.addCommandInfo(new _chessCommand2.default(this));
 
         commandManager.addCommandInfo(new _lyricsCommand2.default(this));
+        commandManager.addCommandInfo(new _chatlogCommand2.default(this));
 
         //commandManager.addCommandInfo(new SchoolLunch(this));
-        commandManager.addCommandInfo(new _randomPixiv2.default(this));
 
         commandManager.addCommandInfo(this.ProcessManager);
         commandManager.addCommandInfo(new _ecmaRunner2.default(this));
