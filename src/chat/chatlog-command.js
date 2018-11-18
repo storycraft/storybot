@@ -58,7 +58,9 @@ export default class ChatlogCommand extends CommandListener {
             }
         }
 
-        source.send(`최근 채팅 ${count} 개 목록`);
-        source.send(this.getChatlogs(source, count).join('\n'));
+        let logs = this.getChatlogs(source, count);
+
+        source.send(`최근 채팅 ${logs.length} 개 목록`);
+        source.send(logs.join('\n'));
     }
 }
