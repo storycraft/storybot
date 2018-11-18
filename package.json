@@ -1,6 +1,6 @@
 {
   "name": "storybot",
-  "version": "1.0.0",
+  "version": "1.7.0",
   "description": "StoryBot",
   "main": "dist/main.js",
   "scripts": {
@@ -25,7 +25,7 @@
     "canvas-prebuilt": "^1.6.11",
     "pixiv-app-api": "^0.11.1",
     "school-info-parser": "^2.0.2",
-    "storybot-core": "^1.5.3",
+    "storybot-core": "^1.5.4",
     "unzip": "^0.1.11",
     "waaai": "^0.4.11",
     "xml2js": "^0.4.19"
