@@ -3,6 +3,10 @@ export default class ReactionPlugin {
         this.manager = manager;
     }
 
+    get Manager() {
+        return this.manager;
+    }
+
     onMessage(msg){
 
     }

@@ -2,6 +2,7 @@ import Storing from "./storing";
 import { ClientUser } from 'storybot-core';
 import ChatDecoder from "./chat-decoder";
 import ReactionXd from "./reaction-xd";
+import OsuMapURLReaction from "../osu/url/osu-map-url-reaction";
 
 export default class ReactManager {
     constructor(main){
@@ -28,6 +29,7 @@ export default class ReactManager {
 
     init(){
         this.addReact(new ReactionXd(this));
+        this.addReact(new OsuMapURLReaction(this));
     }
 
     onMessage(msg){
