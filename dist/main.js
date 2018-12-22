@@ -90,6 +90,14 @@ var _chatlogCommand = require("./chat/chatlog-command");
 
 var _chatlogCommand2 = _interopRequireDefault(_chatlogCommand);
 
+var _botInfoCommand = require("./info/bot-info-command");
+
+var _botInfoCommand2 = _interopRequireDefault(_botInfoCommand);
+
+var _sayCommand = require("./chat/say-command");
+
+var _sayCommand2 = _interopRequireDefault(_sayCommand);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class Main {
@@ -157,6 +165,10 @@ class Main {
 
         commandManager.addCommandInfo(new _diveTemperature2.default(this));
         commandManager.addCommandInfo(new _weatherForecast2.default(this));
+
+        commandManager.addCommandInfo(new _sayCommand2.default(this));
+
+        commandManager.addCommandInfo(new _botInfoCommand2.default(this));
 
         commandManager.addCommandInfo(new _namuSearcher2.default(this));
         commandManager.addCommandInfo(new _searchHelper2.default(this));

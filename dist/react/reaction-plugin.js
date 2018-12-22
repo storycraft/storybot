@@ -8,6 +8,10 @@ class ReactionPlugin {
         this.manager = manager;
     }
 
+    get Manager() {
+        return this.manager;
+    }
+
     onMessage(msg) {}
 }
 exports.default = ReactionPlugin;

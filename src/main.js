@@ -24,6 +24,8 @@ import PingCommand from './info/ping-command';
 import SchoolLunch from './info/school/school-lunch';
 import StoryChooser from './ai/trick/story-chooser';
 import ChatlogCommand from './chat/chatlog-command';
+import BotInfoCommand from './info/bot-info-command';
+import SayCommand from './chat/say-command';
 
 export default class Main {
     constructor(){
@@ -90,6 +92,10 @@ export default class Main {
 
         commandManager.addCommandInfo(new DiveTemperature(this));
         commandManager.addCommandInfo(new WeatherForecast(this));
+
+        commandManager.addCommandInfo(new SayCommand(this));
+
+        commandManager.addCommandInfo(new BotInfoCommand(this));
 
         commandManager.addCommandInfo(new NamuSearcher(this));
         commandManager.addCommandInfo(new SearchHelper(this));

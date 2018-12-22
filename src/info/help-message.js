@@ -22,19 +22,17 @@ export default class HelpMessage extends CommandListener {
     onCommand(args, user, bot, source){
         var commandInfoList = this.main.CommandManager.CommandInfoList;
 
-        var infoMessage = '```json\n{\n';
+        var prefixMessage = 'Storybot이 가능한 짓 거리 목록\n 커맨드 접두사: ' + this.main.CommandManager.CommandPrefix + '\n\n```';
+        var suffixMessage = '\n```';
+        var infoMessage = '';
 
         for (let command of commandInfoList){
             let commands = command.Aliases.join(', ');
             let description = command.Description;
 
-            infoMessage += `    "${commands}": "${description}",\n`;
+            infoMessage += `${commands} > ${description}\n`;
         }
 
-        infoMessage += '}\n```';
-
-        source.send('Storybot이 가능한 짓 거리 목록\n 커맨드 접두사: ' + this.main.CommandManager.CommandPrefix).then(() => {
-            source.send(infoMessage);
-        });
+        source.send(prefixMessage + infoMessage + suffixMessage);
     }
 }

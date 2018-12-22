@@ -18,6 +18,10 @@ var _reactionXd = require("./reaction-xd");
 
 var _reactionXd2 = _interopRequireDefault(_reactionXd);
 
+var _osuMapUrlReaction = require("../osu/url/osu-map-url-reaction");
+
+var _osuMapUrlReaction2 = _interopRequireDefault(_osuMapUrlReaction);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class ReactManager {
@@ -45,6 +49,7 @@ class ReactManager {
 
     init() {
         this.addReact(new _reactionXd2.default(this));
+        this.addReact(new _osuMapUrlReaction2.default(this));
     }
 
     onMessage(msg) {
