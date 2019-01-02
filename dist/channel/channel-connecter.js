@@ -29,7 +29,7 @@ class ChannelConnecter extends _storybotCore.CommandListener {
     }
 
     get Description() {
-        return '다른 채팅 채널과 연결 하기 | *connect [remove / 키]';
+        return '다른 채팅 채널과 연결 하기 | *connect [disconnect / 키]';
     }
 
     get Aliases() {
@@ -49,7 +49,7 @@ class ChannelConnecter extends _storybotCore.CommandListener {
     }
 
     removeConnected(channel) {
-        return this.channelMap.delete(from.IdentityId);
+        return this.channelMap.delete(channel.IdentityId);
     }
 
     onCommand(args, user, bot, source) {
@@ -67,7 +67,7 @@ class ChannelConnecter extends _storybotCore.CommandListener {
         } else {
             let key = args[0];
 
-            if (key == 'remove') {
+            if (key == 'disconnect') {
                 if (this.hasConnected(source)) {
                     var connected = this.getConnected(source);
                     this.removeConnected(source);
