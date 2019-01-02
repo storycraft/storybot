@@ -22,7 +22,7 @@ export default class ChannelConnecter extends CommandListener {
     }
 
     get Aliases(){
-        return ['chatlogs'];
+        return ['connect'];
     }
 
     hasConnected(channel) {
