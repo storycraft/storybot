@@ -22,7 +22,11 @@ export default class ChatlogCommand extends CommandListener {
 
     collectMessage(message) {
         if (this.channelMap.has(message.Source)) {
-            this.channelMap.get(message.Source).push(message);
+            var list = this.channelMap.get(message.Source);
+
+            list.push(message);
+
+            this.channelMap.set(message.Source, list.slice(-100));
         }
         else {
             this.channelMap.set(message.Source, [ message ]);

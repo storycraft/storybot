@@ -26,6 +26,8 @@ import StoryChooser from './ai/trick/story-chooser';
 import ChatlogCommand from './chat/chatlog-command';
 import BotInfoCommand from './info/bot-info-command';
 import SayCommand from './chat/say-command';
+import ChannelConnecter from './channel/channel-connecter';
+import PythonRunner from './process/python-runner';
 
 export default class Main {
     constructor(){
@@ -74,6 +76,7 @@ export default class Main {
         
         this.Bot.SocketClient.registerClientId('4c3fa3fe-d5cb-41ba-be81-2919f9001d3c' , 'test');
         this.Bot.SocketClient.registerClientId('89db505b-c064-4595-aea4-d24a72426cfc' , 'kakao');
+        this.Bot.SocketClient.registerClientId('7ff28c64-cce6-4ac8-8592-e3f9d7828c79' , 'minecraft-server');
 
         this.Bot.DiscordClient.setUserName('Storybot');
         this.Bot.DiscordClient.setActivity('some Anime', { type: 'WATCHING' });
@@ -97,6 +100,8 @@ export default class Main {
 
         commandManager.addCommandInfo(new BotInfoCommand(this));
 
+        commandManager.addCommandInfo(new ChannelConnecter(this));
+
         commandManager.addCommandInfo(new NamuSearcher(this));
         commandManager.addCommandInfo(new SearchHelper(this));
 
@@ -110,6 +115,7 @@ export default class Main {
         commandManager.addCommandInfo(this.ProcessManager);
         commandManager.addCommandInfo(new EcmaRunner(this));
         commandManager.addCommandInfo(new JavaRunner(this));
+        commandManager.addCommandInfo(new PythonRunner(this));
         commandManager.addCommandInfo(new StoryChooser(this));
 
         commandManager.addCommandInfo(new UrlShortener(this));

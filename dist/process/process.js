@@ -62,7 +62,7 @@ class Process extends _events.EventEmitter {
     }
 
     createProcess(args) {
-        return _child_process2.default.spawn(this.StartCommand, args, { encoding: 'utf8' });
+        return _child_process2.default.spawn(this.StartCommand, args, { encoding: 'utf8', detached: true });
     }
 
     start(...args) {
@@ -70,6 +70,8 @@ class Process extends _events.EventEmitter {
         this.started = true;
 
         this.proc = this.createProcess(args);
+
+        this.proc.unref();
 
         this.proc.on('exit', this.onStop.bind(this));
         this.proc.on('message', (message, sendHandle) => this.emit(message, sendHandle));

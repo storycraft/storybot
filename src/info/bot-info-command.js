@@ -48,7 +48,7 @@ export default class BotInfoCommand extends CommandListener {
         let clientList = this.main.Bot.ClientList;
 
         for (let client of clientList) {
-            infoMessage += `${client.ClientName}, ${client.ClientUser.Name} ${client.ClientUser.Id}\n`;
+            infoMessage += `${client.ClientInfo}\n`;
         }
 
         source.send(infoMessage);
