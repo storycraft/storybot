@@ -98,6 +98,14 @@ var _sayCommand = require("./chat/say-command");
 
 var _sayCommand2 = _interopRequireDefault(_sayCommand);
 
+var _channelConnecter = require("./channel/channel-connecter");
+
+var _channelConnecter2 = _interopRequireDefault(_channelConnecter);
+
+var _pythonRunner = require("./process/python-runner");
+
+var _pythonRunner2 = _interopRequireDefault(_pythonRunner);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class Main {
@@ -147,6 +155,7 @@ class Main {
 
         this.Bot.SocketClient.registerClientId('4c3fa3fe-d5cb-41ba-be81-2919f9001d3c', 'test');
         this.Bot.SocketClient.registerClientId('89db505b-c064-4595-aea4-d24a72426cfc', 'kakao');
+        this.Bot.SocketClient.registerClientId('7ff28c64-cce6-4ac8-8592-e3f9d7828c79', 'minecraft-server');
 
         this.Bot.DiscordClient.setUserName('Storybot');
         this.Bot.DiscordClient.setActivity('some Anime', { type: 'WATCHING' });
@@ -170,6 +179,8 @@ class Main {
 
         commandManager.addCommandInfo(new _botInfoCommand2.default(this));
 
+        commandManager.addCommandInfo(new _channelConnecter2.default(this));
+
         commandManager.addCommandInfo(new _namuSearcher2.default(this));
         commandManager.addCommandInfo(new _searchHelper2.default(this));
 
@@ -183,6 +194,7 @@ class Main {
         commandManager.addCommandInfo(this.ProcessManager);
         commandManager.addCommandInfo(new _ecmaRunner2.default(this));
         commandManager.addCommandInfo(new _javaRunner2.default(this));
+        commandManager.addCommandInfo(new _pythonRunner2.default(this));
         commandManager.addCommandInfo(new _storyChooser2.default(this));
 
         commandManager.addCommandInfo(new _urlShortener2.default(this));
