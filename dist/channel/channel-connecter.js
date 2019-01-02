@@ -33,7 +33,7 @@ class ChannelConnecter extends _storybotCore.CommandListener {
     }
 
     get Aliases() {
-        return ['chatlogs'];
+        return ['connect'];
     }
 
     hasConnected(channel) {
