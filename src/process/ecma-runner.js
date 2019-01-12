@@ -3,6 +3,7 @@ import NodeProcess from './node-process';
 import fs from 'fs';
 
 import ProgramRunner from './program-runner';
+import RandomGenerator from '../util/random-generator';
 
 export default class EcmaRunner extends ProgramRunner { 
     constructor(main){
@@ -22,12 +23,17 @@ export default class EcmaRunner extends ProgramRunner {
         return ['js', 'ecma'];
     }
 
+    get CodeType(){
+        return 'node';
+    }
+
     async run(source, channel){
-        var path = await this.writeTempFile(source);
+        var fileName = RandomGenerator.generate() + '.js';
+        var sourcePath = await this.writeTempFile(fileName, source);
 
-        var proc = new NodeProcess(path);
+        var proc = new NodeProcess(`${sourcePath}/${fileName}`);
 
-        proc.start();
+        proc.start(sourcePath);
         channel.send(`프로세스 \`${proc.Pid}\`이(가) 실행되었습니다`);
 
         var stdoutProcess = (data) => {
@@ -74,31 +80,6 @@ export default class EcmaRunner extends ProgramRunner {
         channel.removeListener('message',this.hookMap.get(nodeProc));
     }
     
-
-    async writeTempFile(code) {
-        if (!fs.existsSync(`./code/`)) {
-            fs.mkdirSync(`./code/`, 484);
-        }
-
-        if (!fs.existsSync(`./code/node/`)) {
-            fs.mkdirSync(`./code/node/`, 484);
-        }
-
-        var fileName = 'Source-' + Math.floor(Math.random() * 100000) + '-' + new Date().getTime();
-        var path = `./code/node/` + fileName + '.js';
-
-        await new Promise((resolve, reject) => fs.writeFile(path, code, (err) => {
-            if (err){
-                reject(err);
-            }
-            else{
-                resolve();
-            }
-        }));
-
-        return path;
-    }
-
     onCommand(args, user, bot, channel){
         if (args.length < 1){
             channel.send('기본 사용법: *ecma \\\`\\\`\\\`js\n<소스>\n\\\`\\\`\\\`');

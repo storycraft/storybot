@@ -16,6 +16,10 @@ var _programRunner = require('./program-runner');
 
 var _programRunner2 = _interopRequireDefault(_programRunner);
 
+var _randomGenerator = require('../util/random-generator');
+
+var _randomGenerator2 = _interopRequireDefault(_randomGenerator);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class EcmaRunner extends _programRunner2.default {
@@ -36,12 +40,17 @@ class EcmaRunner extends _programRunner2.default {
         return ['js', 'ecma'];
     }
 
+    get CodeType() {
+        return 'node';
+    }
+
     async run(source, channel) {
-        var path = await this.writeTempFile(source);
+        var fileName = _randomGenerator2.default.generate() + '.js';
+        var sourcePath = await this.writeTempFile(fileName, source);
 
-        var proc = new _nodeProcess2.default(path);
+        var proc = new _nodeProcess2.default(`${sourcePath}/${fileName}`);
 
-        proc.start();
+        proc.start(sourcePath);
         channel.send(`프로세스 \`${proc.Pid}\`이(가) 실행되었습니다`);
 
         var stdoutProcess = data => {
@@ -84,29 +93,6 @@ class EcmaRunner extends _programRunner2.default {
         if (!this.hookMap.has(nodeProc)) throw new Error('Hook is not connected');
 
         channel.removeListener('message', this.hookMap.get(nodeProc));
-    }
-
-    async writeTempFile(code) {
-        if (!_fs2.default.existsSync(`./code/`)) {
-            _fs2.default.mkdirSync(`./code/`, 484);
-        }
-
-        if (!_fs2.default.existsSync(`./code/node/`)) {
-            _fs2.default.mkdirSync(`./code/node/`, 484);
-        }
-
-        var fileName = 'Source-' + Math.floor(Math.random() * 100000) + '-' + new Date().getTime();
-        var path = `./code/node/` + fileName + '.js';
-
-        await new Promise((resolve, reject) => _fs2.default.writeFile(path, code, err => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve();
-            }
-        }));
-
-        return path;
     }
 
     onCommand(args, user, bot, channel) {

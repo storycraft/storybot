@@ -61,15 +61,15 @@ class Process extends _events.EventEmitter {
         return this.proc.pid;
     }
 
-    createProcess(args) {
-        return _child_process2.default.spawn(this.StartCommand, args, { encoding: 'utf8', detached: true });
+    createProcess(workDir, args) {
+        return _child_process2.default.spawn(this.StartCommand, args, { cwd: workDir, encoding: 'utf8', detached: true });
     }
 
-    start(...args) {
+    start(workDir, ...args) {
         if (this.Started) throw new Error('Process already started');
         this.started = true;
 
-        this.proc = this.createProcess(args);
+        this.proc = this.createProcess(workDir, args);
 
         this.proc.unref();
 

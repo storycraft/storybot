@@ -20,6 +20,10 @@ var _programRunner = require('./program-runner');
 
 var _programRunner2 = _interopRequireDefault(_programRunner);
 
+var _randomGenerator = require('../util/random-generator');
+
+var _randomGenerator2 = _interopRequireDefault(_randomGenerator);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class PythonRunner extends _programRunner2.default {
@@ -37,16 +41,17 @@ class PythonRunner extends _programRunner2.default {
         return ['python'];
     }
 
-    get CodePath() {
-        return './code/python';
+    get CodeType() {
+        return 'py';
     }
 
     async run(source, channel) {
-        var path = await this.writeTempFile(source);
+        var fileName = _randomGenerator2.default.generate() + '.py';
+        var sourcePath = await super.writeTempFile(fileName, source);
 
         var proc = new _process2.default('python');
 
-        proc.start(path);
+        proc.start(sourcePath, `${sourcePath}/${fileName}`);
 
         channel.send(`프로세스 \`${proc.Pid}\`이(가) 실행되었습니다`);
 
@@ -58,29 +63,6 @@ class PythonRunner extends _programRunner2.default {
         proc.StdErr.on('data', stdoutProcess);
 
         this.main.ProcessManager.addProcess(proc);
-    }
-
-    async writeTempFile(code) {
-        if (!_fs2.default.existsSync(`./code/`)) {
-            _fs2.default.mkdirSync(`./code/`, 484);
-        }
-
-        if (!_fs2.default.existsSync(`./code/python/`)) {
-            _fs2.default.mkdirSync(`./code/python/`, 484);
-        }
-
-        var fileName = 'Source-' + Math.floor(Math.random() * 100000) + '-' + new Date().getTime();
-        var path = `./code/python/` + fileName + '.py';
-
-        await new Promise((resolve, reject) => _fs2.default.writeFile(path, code, err => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve();
-            }
-        }));
-
-        return path;
     }
 
     onCommand(args, user, bot, channel) {
