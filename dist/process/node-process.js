@@ -35,8 +35,9 @@ class NodeProcess extends _process2.default {
         await new Promise((resolve, reject) => this.proc.send(message, sendHandle, options, resolve));
     }
 
-    createProcess(args) {
+    createProcess(workDir, args) {
         return _child_process2.default.fork(this.modulePath, args, {
+            'cwd': workDir,
             'silent': true //stdin stdout 분리
         });
     }

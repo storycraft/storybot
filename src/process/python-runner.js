@@ -4,6 +4,7 @@ import fs from 'fs';
 import childProcess from 'child_process';
 
 import ProgramRunner from './program-runner';
+import RandomGenerator from '../util/random-generator';
 
 export default class PythonRunner extends ProgramRunner { 
     constructor(main){
@@ -20,16 +21,17 @@ export default class PythonRunner extends ProgramRunner {
         return ['python'];
     }
 
-    get CodePath(){
-        return './code/python';
+    get CodeType(){
+        return 'py';
     }
 
     async run(source, channel){
-        var path = await this.writeTempFile(source);
+        var fileName = RandomGenerator.generate() + '.py';
+        var sourcePath = await super.writeTempFile(fileName, source);
 
         var proc = new Process('python');
 
-        proc.start(path);
+        proc.start(sourcePath, `${sourcePath}/${fileName}`);
 
         channel.send(`프로세스 \`${proc.Pid}\`이(가) 실행되었습니다`);
 
@@ -41,30 +43,6 @@ export default class PythonRunner extends ProgramRunner {
         proc.StdErr.on('data', stdoutProcess);
 
         this.main.ProcessManager.addProcess(proc);
-    }
-
-    async writeTempFile(code) {
-        if (!fs.existsSync(`./code/`)) {
-            fs.mkdirSync(`./code/`, 484);
-        }
-
-        if (!fs.existsSync(`./code/python/`)) {
-            fs.mkdirSync(`./code/python/`, 484);
-        }
-
-        var fileName = 'Source-' + Math.floor(Math.random() * 100000) + '-' + new Date().getTime();
-        var path = `./code/python/` + fileName + '.py';
-
-        await new Promise((resolve, reject) => fs.writeFile(path, code, (err) => {
-            if (err){
-                reject(err);
-            }
-            else{
-                resolve();
-            }
-        }));
-
-        return path;
     }
 
     onCommand(args, user, bot, channel){

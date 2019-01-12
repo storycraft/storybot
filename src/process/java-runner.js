@@ -20,13 +20,12 @@ export default class JavaRunner extends ProgramRunner {
         return ['java'];
     }
 
-    get CodePath(){
-        return './code/java';
+    get CodeType(){
+        return 'java';
     }
 
     async run(source, mainClass, channel){
-        var projectName = this.NewProjectName;
-        var path = await this.writeTempFile(projectName, mainClass, source);
+        var sourcePath = await this.writeTempFile(mainClass + '.java', source);
     
         try{
             await this.compileJava(path);
@@ -37,7 +36,7 @@ export default class JavaRunner extends ProgramRunner {
 
         var proc = new Process('java');
 
-        proc.start('-classpath', this.CodePath + '/' + projectName, mainClass);
+        proc.start(sourcePath, '-classpath', sourcePath, mainClass);
         channel.send(`프로세스 \`${proc.Pid}\`이(가) 실행되었습니다`);
 
         var stdoutProcess = (data) => {
@@ -76,37 +75,6 @@ export default class JavaRunner extends ProgramRunner {
 
             resolve(outData);
         }));
-    }
-
-    get NewProjectName(){
-        return `project-${Math.floor(Math.random() * 100000)}-${new Date().getTime()}`;
-    }
-
-    async writeTempFile(projectPath, className,code) {
-        if (!fs.existsSync(`./code/`)) {
-            fs.mkdirSync(`./code/`, 484);
-        }
-        
-        if (!fs.existsSync(this.CodePath)) {
-            fs.mkdirSync(this.CodePath, 484);
-        }
-
-        if (!fs.existsSync(this.CodePath + '/' + projectPath)) {
-            fs.mkdirSync(this.CodePath + '/' + projectPath, 484);
-        }
-
-        var path = this.CodePath + '/' + projectPath + '/' + className + '.java';
-
-        await new Promise((resolve, reject) => fs.writeFile(path, code, (err) => {
-            if (err){
-                reject(err);
-            }
-            else{
-                resolve();
-            }
-        }));
-
-        return path;
     }
 
     onCommand(args, user, bot, channel){
