@@ -51,7 +51,7 @@ class OsuMapURLReaction extends _reactionPlugin2.default {
                     return;
                 }
             }).catch(e => {
-                msg.reply(`비트맵 정보를 가져오는중 오류가 발생 했습니다`);
+                //msg.reply(`비트맵 정보를 가져오는중 오류가 발생 했습니다`);
             });
 
             usedURL.push(url);
