@@ -52,7 +52,7 @@ export default class Process extends EventEmitter {
     }
 
     createProcess(workDir, args){
-        return childProcess.spawn(this.StartCommand, args, {cwd: workDir,encoding: 'utf8', detached: true, 'uid': 65534, 'gid': 65534});
+        return childProcess.spawn(this.StartCommand, args, {cwd: workDir, env: {},encoding: 'utf8', detached: false});
     }
 
     start(workDir, ...args){
