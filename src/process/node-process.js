@@ -27,8 +27,7 @@ export default class NodeProcess extends Process {
         return childProcess.fork(this.modulePath, args, {
             'cwd': workDir,
             'silent': true,//stdin stdout 분리
-            'env': {},
-            'detached': false
+            'env': {}
         });
     }
 }
