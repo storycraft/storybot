@@ -16,9 +16,9 @@ exports.default = {
         "enabled": true,
 
         "clientId": "412451088252272642",
-        "clientSecret": "B3am4vMVkbANR5dNa2Y6uYVIdaIuGOdz",
+        "clientSecret": _process2.default.env.DISCORD_USER_SECRET,
 
-        "userToken": "NDEyNDUxMDg4MjUyMjcyNjQy.DWKeTQ.aBS0L4a4gH5MRMP7OSYeF9aCuwk"
+        "userToken": _process2.default.env.DISCORD_USER_TOKEN
     },
 
     //라인 챗 봇 설정
@@ -51,7 +51,7 @@ exports.default = {
     //데이터 저장을 위한 firebase 설정
     "firebase-enabled": true,
     "firebase": {
-        "apiKey": "AIzaSyBFd9oKdm5nFjygPc8YyUX6N3XrFPlj1tc",
+        "apiKey": _process2.default.env.FIREBASE_API,
         "authDomain": "storybot-59085.firebaseapp.com",
         "databaseURL": "https://storybot-59085.firebaseio.com",
         "projectId": "storybot-59085",

@@ -62,7 +62,7 @@ class Process extends _events.EventEmitter {
     }
 
     createProcess(workDir, args) {
-        return _child_process2.default.spawn(this.StartCommand, args, { cwd: workDir, encoding: 'utf8', detached: true, 'uid': 65534, 'gid': 65534 });
+        return _child_process2.default.spawn(this.StartCommand, args, { cwd: workDir, env: {}, encoding: 'utf8', detached: false });
     }
 
     start(workDir, ...args) {
