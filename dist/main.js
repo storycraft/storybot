@@ -197,9 +197,9 @@ class Main {
 
                 commandManager.addCommandInfo(this.ProcessManager);
 
-                commandManager.addCommandInfo(new _ecmaRunner2.default(this));
-                commandManager.addCommandInfo(new _javaRunner2.default(this));
-                commandManager.addCommandInfo(new _pythonRunner2.default(this));
+                //commandManager.addCommandInfo(new EcmaRunner(this));
+                //commandManager.addCommandInfo(new JavaRunner(this));
+                //commandManager.addCommandInfo(new PythonRunner(this));
 
                 commandManager.addCommandInfo(new _rollCommand2.default(this));
                 commandManager.addCommandInfo(new _storyChooser2.default(this));
