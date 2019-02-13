@@ -26,7 +26,10 @@ export default class NodeProcess extends Process {
     createProcess(workDir, args){
         return childProcess.fork(this.modulePath, args, {
             'cwd': workDir,
-            'silent': true//stdin stdout 분리
+            'silent': true,//stdin stdout 분리
+            'detached': true,
+            'uid': 65534,
+            'gid': 65534
         });
     }
 }

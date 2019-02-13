@@ -115,9 +115,9 @@ export default class Main {
 
         commandManager.addCommandInfo(this.ProcessManager);
 
-        //commandManager.addCommandInfo(new EcmaRunner(this));
-        //commandManager.addCommandInfo(new JavaRunner(this));
-        //commandManager.addCommandInfo(new PythonRunner(this));
+        commandManager.addCommandInfo(new EcmaRunner(this));
+        commandManager.addCommandInfo(new JavaRunner(this));
+        commandManager.addCommandInfo(new PythonRunner(this));
 
         commandManager.addCommandInfo(new RollCommand(this));
         commandManager.addCommandInfo(new StoryChooser(this));
