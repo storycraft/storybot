@@ -25,8 +25,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 class JavaRunner extends _programRunner2.default {
     constructor(main) {
         super(main);
-
-        this.main.CommandManager.on('java', this.onCommand.bind(this));
     }
 
     get Description() {

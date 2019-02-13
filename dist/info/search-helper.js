@@ -19,9 +19,6 @@ class SearchHelper extends _storybotCore.CommandListener {
         super();
 
         this.main = main;
-
-        this.main.CommandManager.on('search', this.onCommand.bind(this));
-        this.main.CommandManager.on('검색', this.onCommand.bind(this));
     }
 
     get Description() {

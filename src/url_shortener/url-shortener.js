@@ -6,9 +6,6 @@ export default class UrlShortener extends CommandListener {
         super();
 
         this.main = main;
-
-        this.main.CommandManager.on('sturl', this.onCommand.bind(this));
-        this.main.CommandManager.on('waaai', this.onCommand.bind(this));
     }
 
     get Description(){
@@ -16,7 +13,7 @@ export default class UrlShortener extends CommandListener {
     }
 
     get Aliases(){
-        return ['url', 'waaai'];
+        return ['sturl', 'waaai'];
     }
 
     onCommand(args, user, bot, source){

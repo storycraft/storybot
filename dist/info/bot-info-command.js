@@ -17,8 +17,6 @@ class BotInfoCommand extends _storybotCore.CommandListener {
                 super();
 
                 this.main = main;
-
-                this.main.CommandManager.on('info', this.onCommand.bind(this));
         }
 
         get Description() {

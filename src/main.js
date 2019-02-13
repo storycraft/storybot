@@ -28,6 +28,7 @@ import BotInfoCommand from './info/bot-info-command';
 import SayCommand from './chat/say-command';
 import ChannelConnecter from './channel/channel-connecter';
 import PythonRunner from './process/python-runner';
+import RollCommand from './misc/roll-command';
 
 export default class Main {
     constructor(){
@@ -89,7 +90,7 @@ export default class Main {
 
         commandManager.addCommandInfo(new HelpMessage(this));
 
-        commandManager.addCommandInfo(new BalanceCommand(this));
+        //commandManager.addCommandInfo(new BalanceCommand(this));
 
         commandManager.addCommandInfo(new PingCommand(this));
 
@@ -105,17 +106,20 @@ export default class Main {
         commandManager.addCommandInfo(new NamuSearcher(this));
         commandManager.addCommandInfo(new SearchHelper(this));
 
-        commandManager.addCommandInfo(new ChessCommand(this));
+        //commandManager.addCommandInfo(new ChessCommand(this));
 
-        commandManager.addCommandInfo(new LyricsCommand(this));
+        //commandManager.addCommandInfo(new LyricsCommand(this));
         commandManager.addCommandInfo(new ChatlogCommand(this));
 
         //commandManager.addCommandInfo(new SchoolLunch(this));
 
         commandManager.addCommandInfo(this.ProcessManager);
-        commandManager.addCommandInfo(new EcmaRunner(this));
-        commandManager.addCommandInfo(new JavaRunner(this));
-        commandManager.addCommandInfo(new PythonRunner(this));
+
+        //commandManager.addCommandInfo(new EcmaRunner(this));
+        //commandManager.addCommandInfo(new JavaRunner(this));
+        //commandManager.addCommandInfo(new PythonRunner(this));
+
+        commandManager.addCommandInfo(new RollCommand(this));
         commandManager.addCommandInfo(new StoryChooser(this));
 
         commandManager.addCommandInfo(new UrlShortener(this));

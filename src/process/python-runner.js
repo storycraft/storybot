@@ -9,8 +9,6 @@ import RandomGenerator from '../util/random-generator';
 export default class PythonRunner extends ProgramRunner { 
     constructor(main){
         super(main);
-
-        this.main.CommandManager.on('python', this.onCommand.bind(this));
     }
 
     get Description(){
@@ -54,7 +52,7 @@ export default class PythonRunner extends ProgramRunner {
         var source = args.join(' ');
 
         if (!source.startsWith('```py\n') || !source.endsWith('```')){
-            channel.send('기본 사용법: *python <메인 클래스 이름> \\\`\\\`\\\`py\n<소스>\n\\\`\\\`\\\`');
+            channel.send('기본 사용법: *python \\\`\\\`\\\`py\n<소스>\n\\\`\\\`\\\`');
             return;
         }
 

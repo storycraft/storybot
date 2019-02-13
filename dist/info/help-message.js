@@ -11,10 +11,6 @@ class HelpMessage extends _storybotCore.CommandListener {
         super();
 
         this.main = main;
-
-        this.main.CommandManager.on('?', this.onCommand.bind(this));
-        this.main.CommandManager.on('help', this.onCommand.bind(this));
-        this.main.CommandManager.on('도움말', this.onCommand.bind(this));
     }
 
     get Description() {

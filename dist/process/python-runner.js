@@ -29,8 +29,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 class PythonRunner extends _programRunner2.default {
     constructor(main) {
         super(main);
-
-        this.main.CommandManager.on('python', this.onCommand.bind(this));
     }
 
     get Description() {
@@ -74,7 +72,7 @@ class PythonRunner extends _programRunner2.default {
         var source = args.join(' ');
 
         if (!source.startsWith('```py\n') || !source.endsWith('```')) {
-            channel.send('기본 사용법: *python <메인 클래스 이름> \\\`\\\`\\\`py\n<소스>\n\\\`\\\`\\\`');
+            channel.send('기본 사용법: *python \\\`\\\`\\\`py\n<소스>\n\\\`\\\`\\\`');
             return;
         }
 

@@ -9,9 +9,6 @@ export default class EcmaRunner extends ProgramRunner {
     constructor(main){
         super(main);
 
-        this.main.CommandManager.on('js', this.onCommand.bind(this));
-        this.main.CommandManager.on('ecma', this.onCommand.bind(this));
-
         this.hookMap = new Map();
     }
 

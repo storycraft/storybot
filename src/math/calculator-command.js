@@ -5,8 +5,6 @@ export default class CalculatorCommand extends CommandListener {
     constructor(main){
         super();
         this.main = main;
-
-        this.main.CommandManager.on('calc', this.onCommand.bind(this));
     }
 
     get Description(){
