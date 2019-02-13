@@ -39,8 +39,7 @@ class NodeProcess extends _process2.default {
         return _child_process2.default.fork(this.modulePath, args, {
             'cwd': workDir,
             'silent': true, //stdin stdout 분리
-            'env': {},
-            'detached': false
+            'env': {}
         });
     }
 }
