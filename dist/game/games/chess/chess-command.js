@@ -25,9 +25,6 @@ class ChessCommand extends _storybotCore.CommandListener {
         this.queueMap = new Map();
         this.queueUser = [];
         this.queueTimerMap = new Map();
-
-        this.main.CommandManager.on('체스', this.onCommand.bind(this));
-        this.main.CommandManager.on('chess', this.onCommand.bind(this));
     }
 
     get Description() {

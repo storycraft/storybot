@@ -17,9 +17,6 @@ class LyricsCommand extends _storybotCore.CommandListener {
         super();
 
         this.main = main;
-
-        this.main.CommandManager.on('lyrics', this.onCommand.bind(this));
-        this.main.CommandManager.on('lrc', this.onCommand.bind(this));
     }
 
     get Description() {

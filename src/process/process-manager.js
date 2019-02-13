@@ -7,8 +7,6 @@ export default class ProcessManager extends CommandListener {
         this.main = main;
 
         this.processes = new Map();
-
-        this.main.CommandManager.on('proc', this.onCommand.bind(this));
     }
 
     get Description(){

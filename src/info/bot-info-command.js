@@ -6,8 +6,6 @@ export default class BotInfoCommand extends CommandListener {
         super();
 
         this.main = main;
-
-        this.main.CommandManager.on('info', this.onCommand.bind(this));
     }
 
     get Description(){
@@ -50,6 +48,8 @@ export default class BotInfoCommand extends CommandListener {
         for (let client of clientList) {
             infoMessage += `${client.ClientInfo}\n`;
         }
+
+        infoMessage += `\n 디스코드: https://discordapp.com/api/oauth2/authorize?client_id=412451088252272642&permissions=67357760&scope=bot\n카카오톡 오픈 채팅: storybot\n카카오톡: storybot1\n`;
 
         source.send(infoMessage);
     }

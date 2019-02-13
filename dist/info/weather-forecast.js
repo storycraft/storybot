@@ -33,9 +33,6 @@ class WeatherForecast extends _storybotCore.CommandListener {
         super();
 
         this.main = main;
-
-        this.main.CommandManager.on('날씨', this.onCommand.bind(this));
-        this.main.CommandManager.on('weather', this.onCommand.bind(this));
     }
 
     get Description() {

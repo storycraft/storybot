@@ -13,9 +13,6 @@ class StoryChooser extends _storybotCore.CommandListener {
     constructor(main) {
         super();
         this.main = main;
-
-        //정말 적절한 커맨드
-        this.main.CommandManager.on('choose', this.onCommand.bind(this));
     }
 
     get Description() {

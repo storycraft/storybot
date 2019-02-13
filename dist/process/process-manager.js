@@ -13,8 +13,6 @@ class ProcessManager extends _storybotCore.CommandListener {
         this.main = main;
 
         this.processes = new Map();
-
-        this.main.CommandManager.on('proc', this.onCommand.bind(this));
     }
 
     get Description() {

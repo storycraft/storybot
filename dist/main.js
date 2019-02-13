@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+        value: true
 });
 
 var _storybotCore = require("storybot-core");
@@ -106,100 +106,107 @@ var _pythonRunner = require("./process/python-runner");
 
 var _pythonRunner2 = _interopRequireDefault(_pythonRunner);
 
+var _rollCommand = require("./misc/roll-command");
+
+var _rollCommand2 = _interopRequireDefault(_rollCommand);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class Main {
-    constructor() {
-        this.bot = new _storybotCore.StoryBot();
+        constructor() {
+                this.bot = new _storybotCore.StoryBot();
 
-        this.gameManager = new _gameManager2.default(this);
-        this.balanceManager = new _balanceManager2.default(this);
+                this.gameManager = new _gameManager2.default(this);
+                this.balanceManager = new _balanceManager2.default(this);
 
-        this.processManager = new _processManager2.default(this);
+                this.processManager = new _processManager2.default(this);
 
-        this.reactManager = new _reactManager2.default(this);
-    }
+                this.reactManager = new _reactManager2.default(this);
+        }
 
-    get Bot() {
-        return this.bot;
-    }
+        get Bot() {
+                return this.bot;
+        }
 
-    get CommandManager() {
-        return this.Bot.CommandManager;
-    }
+        get CommandManager() {
+                return this.Bot.CommandManager;
+        }
 
-    get FirebaseManager() {
-        return this.Bot.FirebaseManager;
-    }
+        get FirebaseManager() {
+                return this.Bot.FirebaseManager;
+        }
 
-    get GameManager() {
-        return this.gameManager;
-    }
+        get GameManager() {
+                return this.gameManager;
+        }
 
-    get BalanceManager() {
-        return this.balanceManager;
-    }
+        get BalanceManager() {
+                return this.balanceManager;
+        }
 
-    get ProcessManager() {
-        return this.processManager;
-    }
+        get ProcessManager() {
+                return this.processManager;
+        }
 
-    get ReactManager() {
-        return this.reactManager;
-    }
+        get ReactManager() {
+                return this.reactManager;
+        }
 
-    async start() {
-        this.initCommand();
+        async start() {
+                this.initCommand();
 
-        await this.Bot.initialize(_botSettings2.default);
+                await this.Bot.initialize(_botSettings2.default);
 
-        this.Bot.SocketClient.registerClientId('4c3fa3fe-d5cb-41ba-be81-2919f9001d3c', 'test');
-        this.Bot.SocketClient.registerClientId('89db505b-c064-4595-aea4-d24a72426cfc', 'kakao');
-        this.Bot.SocketClient.registerClientId('7ff28c64-cce6-4ac8-8592-e3f9d7828c79', 'minecraft-server');
+                this.Bot.SocketClient.registerClientId('4c3fa3fe-d5cb-41ba-be81-2919f9001d3c', 'test');
+                this.Bot.SocketClient.registerClientId('89db505b-c064-4595-aea4-d24a72426cfc', 'kakao');
+                this.Bot.SocketClient.registerClientId('7ff28c64-cce6-4ac8-8592-e3f9d7828c79', 'minecraft-server');
 
-        this.Bot.DiscordClient.setUserName('Storybot');
-        this.Bot.DiscordClient.setActivity('some Anime', { type: 'WATCHING' });
+                this.Bot.DiscordClient.setUserName('Storybot');
+                this.Bot.DiscordClient.setActivity('some Anime', { type: 'WATCHING' });
 
-        console.log('Storybot이 시작 되었습니다');
-    }
+                console.log('Storybot이 시작 되었습니다');
+        }
 
-    initCommand() {
-        var commandManager = this.CommandManager;
+        initCommand() {
+                var commandManager = this.CommandManager;
 
-        commandManager.addCommandInfo(new _helpMessage2.default(this));
+                commandManager.addCommandInfo(new _helpMessage2.default(this));
 
-        commandManager.addCommandInfo(new _balanceCommand2.default(this));
+                //commandManager.addCommandInfo(new BalanceCommand(this));
 
-        commandManager.addCommandInfo(new _pingCommand2.default(this));
+                commandManager.addCommandInfo(new _pingCommand2.default(this));
 
-        commandManager.addCommandInfo(new _diveTemperature2.default(this));
-        commandManager.addCommandInfo(new _weatherForecast2.default(this));
+                commandManager.addCommandInfo(new _diveTemperature2.default(this));
+                commandManager.addCommandInfo(new _weatherForecast2.default(this));
 
-        commandManager.addCommandInfo(new _sayCommand2.default(this));
+                commandManager.addCommandInfo(new _sayCommand2.default(this));
 
-        commandManager.addCommandInfo(new _botInfoCommand2.default(this));
+                commandManager.addCommandInfo(new _botInfoCommand2.default(this));
 
-        commandManager.addCommandInfo(new _channelConnecter2.default(this));
+                commandManager.addCommandInfo(new _channelConnecter2.default(this));
 
-        commandManager.addCommandInfo(new _namuSearcher2.default(this));
-        commandManager.addCommandInfo(new _searchHelper2.default(this));
+                commandManager.addCommandInfo(new _namuSearcher2.default(this));
+                commandManager.addCommandInfo(new _searchHelper2.default(this));
 
-        commandManager.addCommandInfo(new _chessCommand2.default(this));
+                //commandManager.addCommandInfo(new ChessCommand(this));
 
-        commandManager.addCommandInfo(new _lyricsCommand2.default(this));
-        commandManager.addCommandInfo(new _chatlogCommand2.default(this));
+                //commandManager.addCommandInfo(new LyricsCommand(this));
+                commandManager.addCommandInfo(new _chatlogCommand2.default(this));
 
-        //commandManager.addCommandInfo(new SchoolLunch(this));
+                //commandManager.addCommandInfo(new SchoolLunch(this));
 
-        commandManager.addCommandInfo(this.ProcessManager);
-        commandManager.addCommandInfo(new _ecmaRunner2.default(this));
-        commandManager.addCommandInfo(new _javaRunner2.default(this));
-        commandManager.addCommandInfo(new _pythonRunner2.default(this));
-        commandManager.addCommandInfo(new _storyChooser2.default(this));
+                commandManager.addCommandInfo(this.ProcessManager);
 
-        commandManager.addCommandInfo(new _urlShortener2.default(this));
-        commandManager.addCommandInfo(new _calculatorCommand2.default(this));
-    }
+                commandManager.addCommandInfo(new _ecmaRunner2.default(this));
+                commandManager.addCommandInfo(new _javaRunner2.default(this));
+                commandManager.addCommandInfo(new _pythonRunner2.default(this));
+
+                commandManager.addCommandInfo(new _rollCommand2.default(this));
+                commandManager.addCommandInfo(new _storyChooser2.default(this));
+
+                commandManager.addCommandInfo(new _urlShortener2.default(this));
+                commandManager.addCommandInfo(new _calculatorCommand2.default(this));
+        }
 }
 
 exports.default = Main;

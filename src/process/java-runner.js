@@ -8,8 +8,6 @@ import ProgramRunner from './program-runner';
 export default class JavaRunner extends ProgramRunner { 
     constructor(main){
         super(main);
-
-        this.main.CommandManager.on('java', this.onCommand.bind(this));
     }
 
     get Description(){

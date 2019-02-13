@@ -16,9 +16,6 @@ class NamuSearcher extends _storybotCore.CommandListener {
         super();
 
         this.main = main;
-
-        this.main.CommandManager.on('namu', this.onCommand.bind(this));
-        this.main.CommandManager.on('나무위키', this.onCommand.bind(this));
     }
 
     get Description() {
